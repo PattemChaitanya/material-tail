@@ -1,0 +1,187 @@
+# Slider
+
+The Slider component allows users to make selections from a range of values. It supports different variants, orientations, and can include marks and value labels.
+
+## Basic Usage
+
+```jsx
+import { Slider } from "./Slider";
+
+const [value, setValue] = React.useState(50);
+
+<Slider.Root value={value} onChange={setValue} min={0} max={100} step={1} />;
+```
+
+## Variants
+
+The Slider component comes in three variants:
+
+```jsx
+// Continuous slider (default)
+<Slider.Root
+  value={value}
+  onChange={setValue}
+  variant="continuous"
+/>
+
+// Discrete slider
+<Slider.Root
+  value={value}
+  onChange={setValue}
+  variant="discrete"
+  step={10}
+  marks
+/>
+
+// Range slider
+<Slider.Root
+  value={[20, 80]}
+  onChange={setValue}
+  variant="range"
+/>
+```
+
+## Colors
+
+The Slider component supports different colors from the theme palette:
+
+```jsx
+<Slider.Root
+  value={value}
+  onChange={setValue}
+  color="primary"
+/>
+
+<Slider.Root
+  value={value}
+  onChange={setValue}
+  color="secondary"
+/>
+```
+
+## Orientation
+
+The Slider can be oriented horizontally or vertically:
+
+```jsx
+// Horizontal slider (default)
+<Slider.Root
+  value={value}
+  onChange={setValue}
+  orientation="horizontal"
+/>
+
+// Vertical slider
+<Slider.Root
+  value={value}
+  onChange={setValue}
+  orientation="vertical"
+/>
+```
+
+## Marks
+
+You can add marks to the slider:
+
+```jsx
+// Simple marks
+<Slider.Root
+  value={value}
+  onChange={setValue}
+  marks
+/>
+
+// Custom marks
+<Slider.Root
+  value={value}
+  onChange={setValue}
+  marks={[
+    { value: 0, label: "0°C" },
+    { value: 20, label: "20°C" },
+    { value: 40, label: "40°C" },
+    { value: 60, label: "60°C" },
+    { value: 80, label: "80°C" },
+    { value: 100, label: "100°C" },
+  ]}
+/>
+```
+
+## Value Labels
+
+You can display value labels in different ways:
+
+```jsx
+// Always show value label
+<Slider.Root
+  value={value}
+  onChange={setValue}
+  valueLabelDisplay="on"
+/>
+
+// Show value label on hover
+<Slider.Root
+  value={value}
+  onChange={setValue}
+  valueLabelDisplay="auto"
+/>
+
+// Custom value label format
+<Slider.Root
+  value={value}
+  onChange={setValue}
+  valueLabelDisplay="on"
+  valueLabelFormat={(value) => `${value}°C`}
+/>
+```
+
+## Size
+
+The Slider comes in two sizes:
+
+```jsx
+// Small slider
+<Slider.Root
+  value={value}
+  onChange={setValue}
+  size="small"
+/>
+
+// Medium slider (default)
+<Slider.Root
+  value={value}
+  onChange={setValue}
+  size="medium"
+/>
+```
+
+## Disabled State
+
+You can disable the slider:
+
+```jsx
+<Slider.Root value={value} onChange={setValue} disabled />
+```
+
+## API Reference
+
+### Slider.Root Props
+
+| Name              | Type                                                                                 | Default      | Description                                                    |
+| ----------------- | ------------------------------------------------------------------------------------ | ------------ | -------------------------------------------------------------- |
+| variant           | 'continuous' \| 'discrete' \| 'range'                                                | 'continuous' | The variant to use.                                            |
+| color             | 'primary' \| 'secondary' \| 'error' \| 'warning' \| 'info' \| 'success' \| 'default' | 'primary'    | The color of the component.                                    |
+| orientation       | 'horizontal' \| 'vertical'                                                           | 'horizontal' | The orientation of the slider.                                 |
+| size              | 'small' \| 'medium'                                                                  | 'medium'     | The size of the slider.                                        |
+| min               | number                                                                               | 0            | The minimum allowed value.                                     |
+| max               | number                                                                               | 100          | The maximum allowed value.                                     |
+| step              | number                                                                               | 1            | The granularity with which the slider can step through values. |
+| marks             | boolean \| { value: number; label: string }[]                                        | false        | Display marks on the track.                                    |
+| value             | number \| number[]                                                                   | -            | The value of the slider.                                       |
+| onChange          | (value: number \| number[]) => void                                                  | -            | Callback fired when the value changes.                         |
+| disabled          | boolean                                                                              | false        | If true, the slider will be disabled.                          |
+| valueLabelDisplay | 'auto' \| 'on' \| 'off'                                                              | 'off'        | Controls when the value label is displayed.                    |
+| valueLabelFormat  | (value: number) => string                                                            | -            | A function that returns the value label's text.                |
+
+```
+
+```

@@ -1,0 +1,102 @@
+# Chip
+
+The Chip component represents a compact element that can be used to display labels, tags, or categories. It can be interactive (clickable) and can include icons, avatars, or a delete button.
+
+## Basic Usage
+
+```jsx
+import { Chip } from './Chip';
+
+// Basic chip
+<Chip label="Basic" />
+
+// Clickable chip
+<Chip label="Clickable" clickable onClick={() => console.log('Clicked!')} />
+
+// Deletable chip
+<Chip label="Deletable" deletable onDelete={() => console.log('Deleted!')} />
+```
+
+## Variants
+
+The Chip component comes in three variants:
+
+```jsx
+<Chip label="Filled" variant="filled" />
+<Chip label="Outlined" variant="outlined" />
+<Chip label="Text" variant="text" />
+```
+
+## Colors
+
+The Chip component supports different colors from the theme palette:
+
+```jsx
+<Chip label="Primary" color="primary" />
+<Chip label="Secondary" color="secondary" />
+<Chip label="Error" color="error" />
+<Chip label="Warning" color="warning" />
+<Chip label="Info" color="info" />
+<Chip label="Success" color="success" />
+<Chip label="Default" color="default" />
+```
+
+## Sizes
+
+The Chip component comes in three sizes:
+
+```jsx
+<Chip label="Small" size="small" />
+<Chip label="Medium" size="medium" />
+<Chip label="Large" size="large" />
+```
+
+## With Icons
+
+```jsx
+<Chip
+  label="With Start Icon"
+  startIcon={<span>★</span>}
+/>
+<Chip
+  label="With End Icon"
+  endIcon={<span>→</span>}
+/>
+```
+
+## With Avatar
+
+```jsx
+<Chip label="With Avatar" avatar={<img src="avatar.jpg" alt="User" />} />
+```
+
+## Disabled State
+
+```jsx
+<Chip label="Disabled" disabled />
+<Chip label="Disabled Clickable" clickable disabled />
+<Chip label="Disabled Deletable" deletable disabled />
+```
+
+## API Reference
+
+### Props
+
+| Name      | Type                                                                                 | Default   | Description                                     |
+| --------- | ------------------------------------------------------------------------------------ | --------- | ----------------------------------------------- |
+| variant   | 'filled' \| 'outlined' \| 'text'                                                     | 'filled'  | The variant to use.                             |
+| color     | 'primary' \| 'secondary' \| 'error' \| 'warning' \| 'info' \| 'success' \| 'default' | 'default' | The color of the component.                     |
+| size      | 'small' \| 'medium' \| 'large'                                                       | 'medium'  | The size of the component.                      |
+| disabled  | boolean                                                                              | false     | If true, the chip will be disabled.             |
+| clickable | boolean                                                                              | false     | If true, the chip will be clickable.            |
+| deletable | boolean                                                                              | false     | If true, the chip will be deletable.            |
+| label     | string                                                                               | -         | The label of the chip.                          |
+| onClick   | () => void                                                                           | -         | Callback fired when the chip is clicked.        |
+| onDelete  | () => void                                                                           | -         | Callback fired when the delete icon is clicked. |
+| startIcon | React.ReactNode                                                                      | -         | Icon to display at the start of the chip.       |
+| endIcon   | React.ReactNode                                                                      | -         | Icon to display at the end of the chip.         |
+| avatar    | React.ReactNode                                                                      | -         | Avatar to display at the start of the chip.     |
+
+```
+
+```

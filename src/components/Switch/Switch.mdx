@@ -1,0 +1,79 @@
+# Switch
+
+The Switch component is a toggle control that allows users to turn an option on or off. It supports multiple variants, colors, and sizes, along with features like error handling and accessibility.
+
+## Basic Usage
+
+```jsx
+import { Switch } from './Switch';
+
+// Basic switch
+<Switch />
+
+// With label
+<Switch label="Enable notifications" />
+
+// Required field
+<Switch label="Required" required />
+```
+
+## Variants
+
+The Switch component comes in two variants:
+
+```jsx
+<Switch variant="default" label="Default" />
+<Switch variant="outlined" label="Outlined" />
+```
+
+## Colors
+
+The Switch component supports different colors from the theme palette:
+
+```jsx
+<Switch color="primary" label="Primary" />
+<Switch color="secondary" label="Secondary" />
+<Switch color="error" label="Error" />
+<Switch color="warning" label="Warning" />
+<Switch color="info" label="Info" />
+<Switch color="success" label="Success" />
+```
+
+## Sizes
+
+The Switch component comes in three sizes:
+
+```jsx
+<Switch size="small" label="Small" />
+<Switch size="medium" label="Medium" />
+<Switch size="large" label="Large" />
+```
+
+## Error State
+
+```jsx
+<Switch error label="Error" />
+```
+
+## Disabled State
+
+```jsx
+<Switch disabled label="Disabled" />
+<Switch disabled checked label="Disabled Checked" />
+```
+
+## API Reference
+
+### Props
+
+| Name     | Type                                                                    | Default   | Description                                              |
+| -------- | ----------------------------------------------------------------------- | --------- | -------------------------------------------------------- |
+| variant  | 'default' \| 'outlined'                                                 | 'default' | The variant to use.                                      |
+| color    | 'primary' \| 'secondary' \| 'error' \| 'warning' \| 'info' \| 'success' | 'primary' | The color of the component.                              |
+| size     | 'small' \| 'medium' \| 'large'                                          | 'medium'  | The size of the component.                               |
+| label    | string                                                                  | -         | The label text.                                          |
+| error    | boolean                                                                 | false     | If true, the switch will be displayed in an error state. |
+| required | boolean                                                                 | false     | If true, the switch will be required.                    |
+| disabled | boolean                                                                 | false     | If true, the switch will be disabled.                    |
+
+The Switch component also accepts all standard checkbox HTML attributes.

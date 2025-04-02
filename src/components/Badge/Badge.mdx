@@ -1,0 +1,102 @@
+# Badge
+
+The Badge component generates a small badge to the top-right of its child(ren). It can be used to display status indicators, notifications, or counts.
+
+## Basic Usage
+
+```jsx
+import { Badge } from './Badge';
+
+// Basic badge with number
+<Badge badgeContent={4}>
+  <span>Notifications</span>
+</Badge>
+
+// Badge with custom content
+<Badge badgeContent="New">
+  <span>Messages</span>
+</Badge>
+
+// Dot badge
+<Badge variant="dot">
+  <span>Status</span>
+</Badge>
+```
+
+## Variants
+
+The Badge component comes in two variants:
+
+```jsx
+<Badge badgeContent={4} variant="standard" />
+<Badge variant="dot" />
+```
+
+## Colors
+
+The Badge component supports different colors from the theme palette:
+
+```jsx
+<Badge badgeContent={4} color="primary" />
+<Badge badgeContent={4} color="secondary" />
+<Badge badgeContent={4} color="error" />
+<Badge badgeContent={4} color="warning" />
+<Badge badgeContent={4} color="info" />
+<Badge badgeContent={4} color="success" />
+<Badge badgeContent={4} color="default" />
+```
+
+## Sizes
+
+The Badge component comes in three sizes:
+
+```jsx
+<Badge badgeContent={4} size="small" />
+<Badge badgeContent={4} size="medium" />
+<Badge badgeContent={4} size="large" />
+```
+
+## Positions
+
+The Badge can be positioned in four different locations:
+
+```jsx
+<Badge badgeContent={4} position="top-right" />
+<Badge badgeContent={4} position="top-left" />
+<Badge badgeContent={4} position="bottom-right" />
+<Badge badgeContent={4} position="bottom-left" />
+```
+
+## Maximum Value
+
+The Badge can display a maximum value with a plus sign:
+
+```jsx
+<Badge badgeContent={100} max={99}>
+  <span>Notifications</span>
+</Badge>
+```
+
+## Show Zero
+
+Control whether to show the badge when the value is zero:
+
+```jsx
+<Badge badgeContent={0} showZero />
+<Badge badgeContent={0} showZero={false} />
+```
+
+## API Reference
+
+### Props
+
+| Name         | Type                                                                                 | Default     | Description                                             |
+| ------------ | ------------------------------------------------------------------------------------ | ----------- | ------------------------------------------------------- |
+| variant      | 'standard' \| 'dot'                                                                  | 'standard'  | The variant to use.                                     |
+| color        | 'primary' \| 'secondary' \| 'error' \| 'warning' \| 'info' \| 'success' \| 'default' | 'default'   | The color of the component.                             |
+| size         | 'small' \| 'medium' \| 'large'                                                       | 'medium'    | The size of the component.                              |
+| position     | 'top-right' \| 'top-left' \| 'bottom-right' \| 'bottom-left'                         | 'top-right' | The position of the badge.                              |
+| max          | number                                                                               | 99          | Max count to show.                                      |
+| showZero     | boolean                                                                              | false       | If true, the badge will show when badgeContent is zero. |
+| children     | React.ReactNode                                                                      | -           | The wrapped element.                                    |
+| badgeContent | React.ReactNode                                                                      | -           | The content rendered within the badge.                  |

@@ -1,0 +1,85 @@
+# Alert
+
+The Alert component displays important messages or notifications to the user. It can be used to show success messages, warnings, errors, or informational content.
+
+## Basic Usage
+
+```jsx
+import { Alert } from './Alert';
+
+// Basic alert
+<Alert>This is an alert message</Alert>
+
+// Alert with icon
+<Alert icon={<span>⚠️</span>}>This is a warning alert</Alert>
+
+// Dismissible alert
+<Alert onClose={() => console.log('Closed!')}>
+  This alert can be dismissed
+</Alert>
+
+// Alert with action
+<Alert action={<button>Action</button>}>
+  This alert has an action button
+</Alert>
+```
+
+## Variants
+
+The Alert component comes in three variants:
+
+```jsx
+<Alert variant="filled">Filled Alert</Alert>
+<Alert variant="outlined">Outlined Alert</Alert>
+<Alert variant="text">Text Alert</Alert>
+```
+
+## Colors
+
+The Alert component supports different colors from the theme palette:
+
+```jsx
+<Alert color="primary">Primary Alert</Alert>
+<Alert color="secondary">Secondary Alert</Alert>
+<Alert color="error">Error Alert</Alert>
+<Alert color="warning">Warning Alert</Alert>
+<Alert color="info">Info Alert</Alert>
+<Alert color="success">Success Alert</Alert>
+<Alert color="default">Default Alert</Alert>
+```
+
+## Sizes
+
+The Alert component comes in three sizes:
+
+```jsx
+<Alert size="small">Small Alert</Alert>
+<Alert size="medium">Medium Alert</Alert>
+<Alert size="large">Large Alert</Alert>
+```
+
+## With Icon and Action
+
+```jsx
+<Alert
+  icon={<span>✓</span>}
+  action={<button>Undo</button>}
+  onClose={() => console.log("Closed!")}
+>
+  Action completed successfully
+</Alert>
+```
+
+## API Reference
+
+### Props
+
+| Name     | Type                                                                                 | Default   | Description                                        |
+| -------- | ------------------------------------------------------------------------------------ | --------- | -------------------------------------------------- |
+| variant  | 'filled' \| 'outlined' \| 'text'                                                     | 'filled'  | The variant to use.                                |
+| color    | 'primary' \| 'secondary' \| 'error' \| 'warning' \| 'info' \| 'success' \| 'default' | 'default' | The color of the component.                        |
+| size     | 'small' \| 'medium' \| 'large'                                                       | 'medium'  | The size of the component.                         |
+| icon     | React.ReactNode                                                                      | -         | Icon to display at the start of the alert.         |
+| action   | React.ReactNode                                                                      | -         | Action element to display at the end of the alert. |
+| onClose  | () => void                                                                           | -         | Callback fired when the close icon is clicked.     |
+| children | React.ReactNode                                                                      | -         | The content of the alert.                          |

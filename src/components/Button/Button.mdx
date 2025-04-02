@@ -1,0 +1,83 @@
+# Button
+
+The Button component is a versatile component that supports multiple variants, colors, and sizes.
+
+## Basic Usage
+
+```jsx
+import { Button } from './Button';
+
+// Default contained button
+<Button>Click me</Button>
+
+// Text button
+<Button variant="text">Text Button</Button>
+
+// Outlined button
+<Button variant="outlined">Outlined Button</Button>
+
+// Elevated button
+<Button variant="elevated">Elevated Button</Button>
+```
+
+## Colors
+
+The Button component supports different colors from the theme palette:
+
+```jsx
+<Button color="primary">Primary</Button>
+<Button color="secondary">Secondary</Button>
+<Button color="error">Error</Button>
+<Button color="warning">Warning</Button>
+<Button color="info">Info</Button>
+<Button color="success">Success</Button>
+```
+
+## Sizes
+
+The Button component comes in three sizes:
+
+```jsx
+<Button size="small">Small</Button>
+<Button size="medium">Medium</Button>
+<Button size="large">Large</Button>
+```
+
+## Icons
+
+You can add icons to the button using the `startIcon` and `endIcon` props:
+
+```jsx
+<Button startIcon={<IconComponent />}>Start Icon</Button>
+<Button endIcon={<IconComponent />}>End Icon</Button>
+```
+
+## Full Width
+
+Make the button span the full width of its container:
+
+```jsx
+<Button fullWidth>Full Width Button</Button>
+```
+
+## Disabled State
+
+```jsx
+<Button disabled>Disabled Button</Button>
+```
+
+## API Reference
+
+### Props
+
+| Name      | Type                                                                    | Default     | Description                                                       |
+| --------- | ----------------------------------------------------------------------- | ----------- | ----------------------------------------------------------------- |
+| variant   | 'text' \| 'outlined' \| 'contained' \| 'elevated'                       | 'contained' | The variant to use.                                               |
+| color     | 'primary' \| 'secondary' \| 'error' \| 'warning' \| 'info' \| 'success' | 'primary'   | The color of the component.                                       |
+| size      | 'small' \| 'medium' \| 'large'                                          | 'medium'    | The size of the component.                                        |
+| fullWidth | boolean                                                                 | false       | If true, the button will take up the full width of its container. |
+| startIcon | ReactNode                                                               | -           | Element placed before the children.                               |
+| endIcon   | ReactNode                                                               | -           | Element placed after the children.                                |
+| disabled  | boolean                                                                 | false       | If true, the button will be disabled.                             |
+
+The Button component also accepts all standard button HTML attributes.

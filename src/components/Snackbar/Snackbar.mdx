@@ -1,0 +1,181 @@
+# Snackbar
+
+The Snackbar component displays brief messages and notifications. It supports different variants, colors, positions, and can include an action button.
+
+## Basic Usage
+
+```jsx
+import { Snackbar, Button } from "./Snackbar";
+
+// Basic snackbar
+const [open, setOpen] = React.useState(false);
+
+<>
+  <Button onClick={() => setOpen(true)}>Show Snackbar</Button>
+  <Snackbar
+    open={open}
+    onClose={() => setOpen(false)}
+    message="This is a basic snackbar"
+  />
+</>
+
+// Snackbar with action
+<Snackbar
+  open={open}
+  onClose={() => setOpen(false)}
+  message="This is a snackbar with an action"
+  action={
+    <Button color="inherit" size="small" onClick={() => setOpen(false)}>
+      UNDO
+    </Button>
+  }
+/>
+```
+
+## Variants
+
+The Snackbar component comes in two variants:
+
+```jsx
+// Standard snackbar (default)
+<Snackbar
+  open={open}
+  onClose={handleClose}
+  message="Standard snackbar"
+  variant="standard"
+/>
+
+// Outlined snackbar
+<Snackbar
+  open={open}
+  onClose={handleClose}
+  message="Outlined snackbar"
+  variant="outlined"
+/>
+```
+
+## Colors
+
+The Snackbar component supports different colors from the theme palette:
+
+```jsx
+<Snackbar
+  open={open}
+  onClose={handleClose}
+  message="Primary snackbar"
+  color="primary"
+/>
+
+<Snackbar
+  open={open}
+  onClose={handleClose}
+  message="Secondary snackbar"
+  color="secondary"
+/>
+
+<Snackbar
+  open={open}
+  onClose={handleClose}
+  message="Error snackbar"
+  color="error"
+/>
+```
+
+## Positions
+
+The Snackbar can be positioned in six different locations:
+
+```jsx
+// Top center (default)
+<Snackbar
+  open={open}
+  onClose={handleClose}
+  message="Top center snackbar"
+  position="top"
+/>
+
+// Bottom center
+<Snackbar
+  open={open}
+  onClose={handleClose}
+  message="Bottom center snackbar"
+  position="bottom"
+/>
+
+// Top left
+<Snackbar
+  open={open}
+  onClose={handleClose}
+  message="Top left snackbar"
+  position="top-left"
+/>
+
+// Top right
+<Snackbar
+  open={open}
+  onClose={handleClose}
+  message="Top right snackbar"
+  position="top-right"
+/>
+
+// Bottom left
+<Snackbar
+  open={open}
+  onClose={handleClose}
+  message="Bottom left snackbar"
+  position="bottom-left"
+/>
+
+// Bottom right
+<Snackbar
+  open={open}
+  onClose={handleClose}
+  message="Bottom right snackbar"
+  position="bottom-right"
+/>
+```
+
+## Auto-hide Duration
+
+The Snackbar can automatically hide after a specified duration:
+
+```jsx
+// Auto-hide after 6 seconds (default)
+<Snackbar
+  open={open}
+  onClose={handleClose}
+  message="Auto-hide snackbar"
+/>
+
+// Auto-hide after 3 seconds
+<Snackbar
+  open={open}
+  onClose={handleClose}
+  message="Quick auto-hide snackbar"
+  autoHideDuration={3000}
+/>
+
+// Disable auto-hide
+<Snackbar
+  open={open}
+  onClose={handleClose}
+  message="Manual close snackbar"
+  autoHideDuration={null}
+/>
+```
+
+## API Reference
+
+### Props
+
+| Name             | Type                                                                                 | Default    | Description                                                      |
+| ---------------- | ------------------------------------------------------------------------------------ | ---------- | ---------------------------------------------------------------- |
+| variant          | 'standard' \| 'outlined'                                                             | 'standard' | The variant to use.                                              |
+| color            | 'primary' \| 'secondary' \| 'error' \| 'warning' \| 'info' \| 'success' \| 'default' | 'default'  | The color of the component.                                      |
+| position         | 'top' \| 'bottom' \| 'top-left' \| 'top-right' \| 'bottom-left' \| 'bottom-right'    | 'bottom'   | The position of the snackbar.                                    |
+| open             | boolean                                                                              | -          | If true, the snackbar is open.                                   |
+| onClose          | () => void                                                                           | -          | Callback fired when the snackbar is closed.                      |
+| message          | React.ReactNode                                                                      | -          | The message to display.                                          |
+| action           | React.ReactNode                                                                      | -          | The action to display.                                           |
+| autoHideDuration | number \| null                                                                       | 6000       | The number of milliseconds to wait before automatically closing. |
+| anchorOrigin     | { vertical: 'top' \| 'bottom', horizontal: 'left' \| 'center' \| 'right' }           | -          | The anchor origin of the snackbar.                               |

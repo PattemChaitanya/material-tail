@@ -1,0 +1,274 @@
+# Header
+
+The Header component is used to create a top navigation bar with branding, navigation links, and user actions. It supports various features like elevation, positioning, and different variants.
+
+## Basic Usage
+
+```jsx
+import { Header } from "./Header";
+
+<Header.Root>
+  <Header.Toolbar>
+    <Header.Brand title="My App" />
+    <Header.Nav>
+      <Button>Home</Button>
+      <Button>About</Button>
+      <Button>Contact</Button>
+    </Header.Nav>
+    <Header.Actions>
+      <IconButton>
+        <SearchIcon />
+      </IconButton>
+      <IconButton>
+        <AccountIcon />
+      </IconButton>
+    </Header.Actions>
+  </Header.Toolbar>
+</Header.Root>;
+```
+
+## Colors
+
+The Header component supports different colors from the theme palette:
+
+```jsx
+<Header.Root color="primary">
+  <Header.Toolbar>
+    <Header.Brand title="Primary Header" />
+    <Header.Nav>
+      <Button>Home</Button>
+    </Header.Nav>
+  </Header.Toolbar>
+</Header.Root>
+
+<Header.Root color="secondary">
+  <Header.Toolbar>
+    <Header.Brand title="Secondary Header" />
+    <Header.Nav>
+      <Button>Home</Button>
+    </Header.Nav>
+  </Header.Toolbar>
+</Header.Root>
+```
+
+## Variants
+
+The Header component supports different variants:
+
+```jsx
+<Header.Root variant="elevation">
+  <Header.Toolbar>
+    <Header.Brand title="Elevated Header" />
+    <Header.Nav>
+      <Button>Home</Button>
+    </Header.Nav>
+  </Header.Toolbar>
+</Header.Root>
+
+<Header.Root variant="outlined">
+  <Header.Toolbar>
+    <Header.Brand title="Outlined Header" />
+    <Header.Nav>
+      <Button>Home</Button>
+    </Header.Nav>
+  </Header.Toolbar>
+</Header.Root>
+```
+
+## Position
+
+You can control the position of the header:
+
+```jsx
+<Header.Root position="fixed">
+  <Header.Toolbar>
+    <Header.Brand title="Fixed Header" />
+    <Header.Nav>
+      <Button>Home</Button>
+    </Header.Nav>
+  </Header.Toolbar>
+</Header.Root>
+
+<Header.Root position="sticky">
+  <Header.Toolbar>
+    <Header.Brand title="Sticky Header" />
+    <Header.Nav>
+      <Button>Home</Button>
+    </Header.Nav>
+  </Header.Toolbar>
+</Header.Root>
+```
+
+## Elevation
+
+You can control the elevation level of the header:
+
+```jsx
+<Header.Root elevation={0}>
+  <Header.Toolbar>
+    <Header.Brand title="Flat Header" />
+    <Header.Nav>
+      <Button>Home</Button>
+    </Header.Nav>
+  </Header.Toolbar>
+</Header.Root>
+
+<Header.Root elevation={4}>
+  <Header.Toolbar>
+    <Header.Brand title="Raised Header" />
+    <Header.Nav>
+      <Button>Home</Button>
+    </Header.Nav>
+  </Header.Toolbar>
+</Header.Root>
+```
+
+## Square Corners
+
+You can remove the border radius:
+
+```jsx
+<Header.Root square>
+  <Header.Toolbar>
+    <Header.Brand title="Square Header" />
+    <Header.Nav>
+      <Button>Home</Button>
+    </Header.Nav>
+  </Header.Toolbar>
+</Header.Root>
+```
+
+## Branding
+
+The header can include a logo and title:
+
+```jsx
+<Header.Root>
+  <Header.Toolbar>
+    <Header.Brand logo={<img src="logo.png" alt="Logo" />} title="My App" />
+    <Header.Nav>
+      <Button>Home</Button>
+    </Header.Nav>
+  </Header.Toolbar>
+</Header.Root>
+```
+
+## Navigation
+
+The header can include navigation links:
+
+```jsx
+<Header.Root>
+  <Header.Toolbar>
+    <Header.Brand title="My App" />
+    <Header.Nav>
+      <Button>Home</Button>
+      <Button>About</Button>
+      <Button>Contact</Button>
+    </Header.Nav>
+  </Header.Toolbar>
+</Header.Root>
+```
+
+## Actions
+
+The header can include action buttons:
+
+```jsx
+<Header.Root>
+  <Header.Toolbar>
+    <Header.Brand title="My App" />
+    <Header.Nav>
+      <Button>Home</Button>
+    </Header.Nav>
+    <Header.Actions>
+      <IconButton>
+        <SearchIcon />
+      </IconButton>
+      <IconButton>
+        <AccountIcon />
+      </IconButton>
+    </Header.Actions>
+  </Header.Toolbar>
+</Header.Root>
+```
+
+## Toolbar Variants
+
+The toolbar can be regular or dense:
+
+```jsx
+<Header.Root>
+  <Header.Toolbar variant="regular">
+    <Header.Brand title="Regular Toolbar" />
+    <Header.Nav>
+      <Button>Home</Button>
+    </Header.Nav>
+  </Header.Toolbar>
+</Header.Root>
+
+<Header.Root>
+  <Header.Toolbar variant="dense">
+    <Header.Brand title="Dense Toolbar" />
+    <Header.Nav>
+      <Button>Home</Button>
+    </Header.Nav>
+  </Header.Toolbar>
+</Header.Root>
+```
+
+## Disable Gutters
+
+You can remove the default padding:
+
+```jsx
+<Header.Root>
+  <Header.Toolbar disableGutters>
+    <Header.Brand title="No Gutters" />
+    <Header.Nav>
+      <Button>Home</Button>
+    </Header.Nav>
+  </Header.Toolbar>
+</Header.Root>
+```
+
+## API Reference
+
+### Header.Root Props
+
+| Name      | Type                                                                                 | Default     | Description                                   |
+| --------- | ------------------------------------------------------------------------------------ | ----------- | --------------------------------------------- |
+| color     | 'primary' \| 'secondary' \| 'error' \| 'warning' \| 'info' \| 'success' \| 'default' | 'primary'   | The color of the component.                   |
+| variant   | 'elevation' \| 'outlined'                                                            | 'elevation' | The variant to use.                           |
+| elevation | number                                                                               | 1           | The elevation level of the header.            |
+| position  | 'fixed' \| 'absolute' \| 'sticky' \| 'static' \| 'relative'                          | 'static'    | The position of the header.                   |
+| square    | boolean                                                                              | false       | If true, the header will have square corners. |
+| children  | React.ReactNode                                                                      | -           | The content of the header.                    |
+
+### Header.Toolbar Props
+
+| Name           | Type                 | Default   | Description                                   |
+| -------------- | -------------------- | --------- | --------------------------------------------- |
+| disableGutters | boolean              | false     | If true, the default padding will be removed. |
+| variant        | 'regular' \| 'dense' | 'regular' | The variant to use.                           |
+| children       | React.ReactNode      | -         | The content of the toolbar.                   |
+
+### Header.Brand Props
+
+| Name     | Type            | Default | Description                               |
+| -------- | --------------- | ------- | ----------------------------------------- |
+| logo     | React.ReactNode | -       | The logo element to display.              |
+| title    | React.ReactNode | -       | The title of the header.                  |
+| children | React.ReactNode | -       | Additional content for the brand section. |
+
+### Header.Nav Props
+
+| Name     | Type            | Default | Description                         |
+| -------- | --------------- | ------- | ----------------------------------- |
+| children | React.ReactNode | -       | The navigation elements to display. |
+
+### Header.Actions Props
+
+| Name     | Type            | Default | Description                     |
+| -------- | --------------- | ------- | ------------------------------- |
+| children | React.ReactNode | -       | The action elements to display. |
