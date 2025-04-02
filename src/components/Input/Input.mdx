@@ -1,0 +1,106 @@
+# Input
+
+The Input component is a versatile form control that supports multiple variants, colors, and sizes. It includes features like labels, helper text, icons, and error states.
+
+## Basic Usage
+
+```jsx
+import { Input } from './Input';
+
+// Basic input
+<Input placeholder="Enter text" />
+
+// With label
+<Input label="Username" />
+
+// With helper text
+<Input label="Password" helperText="Must be at least 8 characters" />
+```
+
+## Variants
+
+The Input component comes in three variants:
+
+```jsx
+<Input variant="outlined" label="Outlined" />
+<Input variant="filled" label="Filled" />
+<Input variant="standard" label="Standard" />
+```
+
+## Colors
+
+The Input component supports different colors from the theme palette:
+
+```jsx
+<Input color="primary" label="Primary" />
+<Input color="secondary" label="Secondary" />
+<Input color="error" label="Error" />
+<Input color="warning" label="Warning" />
+<Input color="info" label="Info" />
+<Input color="success" label="Success" />
+```
+
+## Sizes
+
+The Input component comes in three sizes:
+
+```jsx
+<Input size="small" label="Small" />
+<Input size="medium" label="Medium" />
+<Input size="large" label="Large" />
+```
+
+## Icons
+
+You can add icons to the input using the `startIcon` and `endIcon` props:
+
+```jsx
+<Input startIcon={<IconComponent />} label="Start Icon" />
+<Input endIcon={<IconComponent />} label="End Icon" />
+```
+
+## Error State
+
+```jsx
+<Input label="Error" error helperText="This field is required" />
+```
+
+## Required Field
+
+```jsx
+<Input label="Required" required />
+```
+
+## Disabled State
+
+```jsx
+<Input label="Disabled" disabled />
+```
+
+## Full Width
+
+Make the input span the full width of its container:
+
+```jsx
+<Input label="Full Width" fullWidth />
+```
+
+## API Reference
+
+### Props
+
+| Name       | Type                                                                    | Default    | Description                                                      |
+| ---------- | ----------------------------------------------------------------------- | ---------- | ---------------------------------------------------------------- |
+| variant    | 'outlined' \| 'filled' \| 'standard'                                    | 'outlined' | The variant to use.                                              |
+| color      | 'primary' \| 'secondary' \| 'error' \| 'warning' \| 'info' \| 'success' | 'primary'  | The color of the component.                                      |
+| size       | 'small' \| 'medium' \| 'large'                                          | 'medium'   | The size of the component.                                       |
+| label      | string                                                                  | -          | The label text.                                                  |
+| error      | boolean                                                                 | false      | If true, the input will be displayed in an error state.          |
+| helperText | string                                                                  | -          | The helper text content.                                         |
+| fullWidth  | boolean                                                                 | false      | If true, the input will take up the full width of its container. |
+| startIcon  | ReactNode                                                               | -          | Element placed before the input.                                 |
+| endIcon    | ReactNode                                                               | -          | Element placed after the input.                                  |
+| required   | boolean                                                                 | false      | If true, the input will be required.                             |
+| disabled   | boolean                                                                 | false      | If true, the input will be disabled.                             |
+
+The Input component also accepts all standard input HTML attributes.

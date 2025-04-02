@@ -1,0 +1,134 @@
+# Pagination
+
+The Pagination component provides a way to navigate through a set of data by displaying page numbers and controls for changing pages.
+
+## Basic Usage
+
+```jsx
+import { Pagination } from "./Pagination";
+
+const [page, setPage] = useState(0);
+const [rowsPerPage, setRowsPerPage] = useState(10);
+
+<Pagination.Root
+  page={page}
+  count={100}
+  rowsPerPage={rowsPerPage}
+  onPageChange={setPage}
+  onRowsPerPageChange={setRowsPerPage}
+/>;
+```
+
+## Colors
+
+The Pagination component supports different colors from the theme palette:
+
+```jsx
+<Pagination.Root
+  page={page}
+  count={100}
+  rowsPerPage={rowsPerPage}
+  onPageChange={setPage}
+  color="primary"
+/>
+
+<Pagination.Root
+  page={page}
+  count={100}
+  rowsPerPage={rowsPerPage}
+  onPageChange={setPage}
+  color="secondary"
+/>
+```
+
+## Variants
+
+The Pagination component supports different button variants:
+
+```jsx
+<Pagination.Root
+  page={page}
+  count={100}
+  rowsPerPage={rowsPerPage}
+  onPageChange={setPage}
+  variant="text"
+/>
+
+<Pagination.Root
+  page={page}
+  count={100}
+  rowsPerPage={rowsPerPage}
+  onPageChange={setPage}
+  variant="outlined"
+/>
+
+<Pagination.Root
+  page={page}
+  count={100}
+  rowsPerPage={rowsPerPage}
+  onPageChange={setPage}
+  variant="contained"
+/>
+```
+
+## First/Last Buttons
+
+You can show or hide the First and Last page buttons:
+
+```jsx
+<Pagination.Root
+  page={page}
+  count={100}
+  rowsPerPage={rowsPerPage}
+  onPageChange={setPage}
+  showFirstButton={false}
+  showLastButton={false}
+/>
+```
+
+## Rows Per Page
+
+Customize the available rows per page options:
+
+```jsx
+<Pagination.Root
+  page={page}
+  count={100}
+  rowsPerPage={rowsPerPage}
+  rowsPerPageOptions={[10, 20, 50, 100]}
+  onPageChange={setPage}
+  onRowsPerPageChange={setRowsPerPage}
+/>
+```
+
+## Disabled State
+
+You can disable the entire pagination component:
+
+```jsx
+<Pagination.Root
+  page={page}
+  count={100}
+  rowsPerPage={rowsPerPage}
+  onPageChange={setPage}
+  disabled
+/>
+```
+
+## API Reference
+
+### Pagination.Root Props
+
+| Name                | Type                                                                                 | Default         | Description                                       |
+| ------------------- | ------------------------------------------------------------------------------------ | --------------- | ------------------------------------------------- |
+| page                | number                                                                               | -               | The current page number (0-based).                |
+| count               | number                                                                               | -               | The total number of items.                        |
+| rowsPerPage         | number                                                                               | -               | The number of items per page.                     |
+| rowsPerPageOptions  | number[]                                                                             | [5, 10, 25, 50] | The available options for rows per page.          |
+| color               | 'primary' \| 'secondary' \| 'error' \| 'warning' \| 'info' \| 'success' \| 'default' | 'primary'       | The color of the component.                       |
+| variant             | 'text' \| 'outlined' \| 'contained'                                                  | 'text'          | The variant to use for the buttons.               |
+| showFirstButton     | boolean                                                                              | true            | If true, shows the First page button.             |
+| showLastButton      | boolean                                                                              | true            | If true, shows the Last page button.              |
+| disabled            | boolean                                                                              | false           | If true, disables the entire component.           |
+| onPageChange        | (page: number) => void                                                               | -               | Callback fired when the page is changed.          |
+| onRowsPerPageChange | (rowsPerPage: number) => void                                                        | -               | Callback fired when the rows per page is changed. |

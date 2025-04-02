@@ -1,0 +1,142 @@
+# Select
+
+The Select component is a form control that allows users to select one or more options from a list. It supports multiple variants, colors, and sizes, along with features like error handling, helper text, and icons.
+
+## Basic Usage
+
+```jsx
+import { Select } from './Select';
+
+const options = [
+  { value: 'option1', label: 'Option 1' },
+  { value: 'option2', label: 'Option 2' },
+  { value: 'option3', label: 'Option 3' },
+];
+
+// Basic select
+<Select options={options} />
+
+// With label
+<Select label="Select an option" options={options} />
+
+// Required field
+<Select label="Required" required options={options} />
+```
+
+## Variants
+
+The Select component comes in three variants:
+
+```jsx
+<Select variant="outlined" label="Outlined" options={options} />
+<Select variant="filled" label="Filled" options={options} />
+<Select variant="standard" label="Standard" options={options} />
+```
+
+## Colors
+
+The Select component supports different colors from the theme palette:
+
+```jsx
+<Select color="primary" label="Primary" options={options} />
+<Select color="secondary" label="Secondary" options={options} />
+<Select color="error" label="Error" options={options} />
+<Select color="warning" label="Warning" options={options} />
+<Select color="info" label="Info" options={options} />
+<Select color="success" label="Success" options={options} />
+```
+
+## Sizes
+
+The Select component comes in three sizes:
+
+```jsx
+<Select size="small" label="Small" options={options} />
+<Select size="medium" label="Medium" options={options} />
+<Select size="large" label="Large" options={options} />
+```
+
+## Multiple Selection
+
+```jsx
+<Select
+  multiple
+  label="Multiple Selection"
+  options={options}
+  onChange={(value) => console.log(value)}
+/>
+```
+
+## With Icons
+
+```jsx
+import { Search, Filter } from "@mui/icons-material";
+
+<Select
+  startIcon={<Search />}
+  endIcon={<Filter />}
+  label="With Icons"
+  options={options}
+/>;
+```
+
+## Error State
+
+```jsx
+<Select
+  error
+  label="Error"
+  helperText="This field is required"
+  options={options}
+/>
+```
+
+## Disabled State
+
+```jsx
+<Select disabled label="Disabled" options={options} />
+<Select
+  disabled
+  options={[
+    { value: 'option1', label: 'Option 1' },
+    { value: 'option2', label: 'Option 2', disabled: true },
+    { value: 'option3', label: 'Option 3' },
+  ]}
+/>
+```
+
+## With Placeholder
+
+```jsx
+<Select placeholder="Select an option" options={options} />
+```
+
+## API Reference
+
+### Props
+
+| Name        | Type                                                                    | Default    | Description                                                 |
+| ----------- | ----------------------------------------------------------------------- | ---------- | ----------------------------------------------------------- |
+| variant     | 'outlined' \| 'filled' \| 'standard'                                    | 'outlined' | The variant to use.                                         |
+| color       | 'primary' \| 'secondary' \| 'error' \| 'warning' \| 'info' \| 'success' | 'primary'  | The color of the component.                                 |
+| size        | 'small' \| 'medium' \| 'large'                                          | 'medium'   | The size of the component.                                  |
+| label       | string                                                                  | -          | The label text.                                             |
+| error       | boolean                                                                 | false      | If true, the select will be displayed in an error state.    |
+| helperText  | string                                                                  | -          | The helper text to display below the select.                |
+| required    | boolean                                                                 | false      | If true, the select will be required.                       |
+| disabled    | boolean                                                                 | false      | If true, the select will be disabled.                       |
+| multiple    | boolean                                                                 | false      | If true, multiple options can be selected.                  |
+| value       | string \| string[]                                                      | -          | The value of the select.                                    |
+| onChange    | (value: string \| string[]) => void                                     | -          | Callback fired when the value changes.                      |
+| options     | SelectOption[]                                                          | -          | The options to display in the select.                       |
+| startIcon   | React.ReactNode                                                         | -          | The icon to display at the start of the select.             |
+| endIcon     | React.ReactNode                                                         | -          | The icon to display at the end of the select.               |
+| placeholder | string                                                                  | -          | The placeholder text to display when no option is selected. |
+
+### SelectOption Interface
+
+| Name     | Type    | Default | Description                           |
+| -------- | ------- | ------- | ------------------------------------- |
+| value    | string  | -       | The value of the option.              |
+| label    | string  | -       | The label text of the option.         |
+| disabled | boolean | false   | If true, the option will be disabled. |

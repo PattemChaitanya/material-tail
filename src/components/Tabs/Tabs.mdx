@@ -1,0 +1,153 @@
+# Tabs
+
+The Tabs component organizes content into separate views where only one view can be visible at a time. It supports different variants, orientations, and can include icons.
+
+## Basic Usage
+
+```jsx
+import { Tabs } from "./Tabs";
+
+const [value, setValue] = React.useState(0);
+
+<Tabs.Root value={value} onChange={setValue}>
+  <Tabs.Panel label="Tab 1">Content for Tab 1</Tabs.Panel>
+  <Tabs.Panel label="Tab 2">Content for Tab 2</Tabs.Panel>
+  <Tabs.Panel label="Tab 3">Content for Tab 3</Tabs.Panel>
+</Tabs.Root>;
+```
+
+## Variants
+
+The Tabs component comes in three variants:
+
+```jsx
+// Standard tabs (default)
+<Tabs.Root value={value} onChange={setValue} variant="standard">
+  <Tabs.Panel label="Tab 1">Content 1</Tabs.Panel>
+  <Tabs.Panel label="Tab 2">Content 2</Tabs.Panel>
+</Tabs.Root>
+
+// Contained tabs
+<Tabs.Root value={value} onChange={setValue} variant="contained">
+  <Tabs.Panel label="Tab 1">Content 1</Tabs.Panel>
+  <Tabs.Panel label="Tab 2">Content 2</Tabs.Panel>
+</Tabs.Root>
+
+// Full width tabs
+<Tabs.Root value={value} onChange={setValue} variant="fullWidth">
+  <Tabs.Panel label="Tab 1">Content 1</Tabs.Panel>
+  <Tabs.Panel label="Tab 2">Content 2</Tabs.Panel>
+</Tabs.Root>
+```
+
+## Colors
+
+The Tabs component supports different colors from the theme palette:
+
+```jsx
+<Tabs.Root value={value} onChange={setValue} color="primary">
+  <Tabs.Panel label="Primary Tab 1">Content 1</Tabs.Panel>
+  <Tabs.Panel label="Primary Tab 2">Content 2</Tabs.Panel>
+</Tabs.Root>
+
+<Tabs.Root value={value} onChange={setValue} color="secondary">
+  <Tabs.Panel label="Secondary Tab 1">Content 1</Tabs.Panel>
+  <Tabs.Panel label="Secondary Tab 2">Content 2</Tabs.Panel>
+</Tabs.Root>
+```
+
+## Orientation
+
+The Tabs can be oriented horizontally or vertically:
+
+```jsx
+// Horizontal tabs (default)
+<Tabs.Root value={value} onChange={setValue} orientation="horizontal">
+  <Tabs.Panel label="Tab 1">Content 1</Tabs.Panel>
+  <Tabs.Panel label="Tab 2">Content 2</Tabs.Panel>
+</Tabs.Root>
+
+// Vertical tabs
+<Tabs.Root value={value} onChange={setValue} orientation="vertical">
+  <Tabs.Panel label="Tab 1">Content 1</Tabs.Panel>
+  <Tabs.Panel label="Tab 2">Content 2</Tabs.Panel>
+</Tabs.Root>
+```
+
+## Alignment
+
+The Tabs can be aligned in different positions:
+
+```jsx
+// Start alignment (default)
+<Tabs.Root value={value} onChange={setValue} alignment="start">
+  <Tabs.Panel label="Tab 1">Content 1</Tabs.Panel>
+  <Tabs.Panel label="Tab 2">Content 2</Tabs.Panel>
+</Tabs.Root>
+
+// Center alignment
+<Tabs.Root value={value} onChange={setValue} alignment="center">
+  <Tabs.Panel label="Tab 1">Content 1</Tabs.Panel>
+  <Tabs.Panel label="Tab 2">Content 2</Tabs.Panel>
+</Tabs.Root>
+
+// End alignment
+<Tabs.Root value={value} onChange={setValue} alignment="end">
+  <Tabs.Panel label="Tab 1">Content 1</Tabs.Panel>
+  <Tabs.Panel label="Tab 2">Content 2</Tabs.Panel>
+</Tabs.Root>
+```
+
+## Icons and Labels
+
+Tabs can include both icons and labels:
+
+```jsx
+<Tabs.Root value={value} onChange={setValue}>
+  <Tabs.Panel icon={<Icon>phone</Icon>} label="Phone">
+    Phone content
+  </Tabs.Panel>
+  <Tabs.Panel icon={<Icon>favorite</Icon>} label="Favorite">
+    Favorite content
+  </Tabs.Panel>
+</Tabs.Root>
+```
+
+## Scrollable Tabs
+
+When there are too many tabs to fit the width:
+
+```jsx
+<Tabs.Root value={value} onChange={setValue} scrollable>
+  <Tabs.Panel label="Tab 1">Content 1</Tabs.Panel>
+  <Tabs.Panel label="Tab 2">Content 2</Tabs.Panel>
+  <Tabs.Panel label="Tab 3">Content 3</Tabs.Panel>
+  <Tabs.Panel label="Tab 4">Content 4</Tabs.Panel>
+  <Tabs.Panel label="Tab 5">Content 5</Tabs.Panel>
+  <Tabs.Panel label="Tab 6">Content 6</Tabs.Panel>
+</Tabs.Root>
+```
+
+## API Reference
+
+### Tabs.Root Props
+
+| Name        | Type                                                                                 | Default      | Description                            |
+| ----------- | ------------------------------------------------------------------------------------ | ------------ | -------------------------------------- |
+| variant     | 'standard' \| 'contained' \| 'fullWidth'                                             | 'standard'   | The variant to use.                    |
+| color       | 'primary' \| 'secondary' \| 'error' \| 'warning' \| 'info' \| 'success' \| 'default' | 'primary'    | The color of the component.            |
+| orientation | 'horizontal' \| 'vertical'                                                           | 'horizontal' | The orientation of the tabs.           |
+| alignment   | 'start' \| 'center' \| 'end'                                                         | 'start'      | The alignment of the tabs.             |
+| value       | number                                                                               | -            | The index of the selected tab.         |
+| onChange    | (value: number) => void                                                              | -            | Callback fired when the value changes. |
+| scrollable  | boolean                                                                              | false        | If true, the tabs will be scrollable.  |
+
+### Tabs.Panel Props
+
+| Name     | Type            | Default | Description                        |
+| -------- | --------------- | ------- | ---------------------------------- |
+| value    | number          | -       | The value of the tab.              |
+| label    | React.ReactNode | -       | The label element.                 |
+| icon     | React.ReactNode | -       | The icon element.                  |
+| disabled | boolean         | false   | If true, the tab will be disabled. |
+| children | React.ReactNode | -       | The content of the tab.            |

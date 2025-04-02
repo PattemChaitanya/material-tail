@@ -1,0 +1,119 @@
+# Tooltip
+
+The Tooltip component displays additional information when hovering over an element. It supports different variants, colors, positions, and can include an arrow pointer.
+
+## Basic Usage
+
+```jsx
+import { Tooltip } from './Tooltip';
+
+// Basic tooltip
+<Tooltip title="This is a tooltip">
+  <span>Hover me</span>
+</Tooltip>
+
+// Tooltip with arrow
+<Tooltip title="With arrow" arrow>
+  <span>Hover me</span>
+</Tooltip>
+
+// Tooltip with delay
+<Tooltip title="Delayed tooltip" enterDelay={200} leaveDelay={200}>
+  <span>Hover me</span>
+</Tooltip>
+```
+
+## Variants
+
+The Tooltip component comes in three variants:
+
+```jsx
+<Tooltip title="Standard tooltip" variant="standard">
+  <span>Hover me</span>
+</Tooltip>
+<Tooltip title="Light tooltip" variant="light">
+  <span>Hover me</span>
+</Tooltip>
+<Tooltip title="Dark tooltip" variant="dark">
+  <span>Hover me</span>
+</Tooltip>
+```
+
+## Colors
+
+The Tooltip component supports different colors from the theme palette:
+
+```jsx
+<Tooltip title="Primary tooltip" color="primary">
+  <span>Hover me</span>
+</Tooltip>
+<Tooltip title="Secondary tooltip" color="secondary">
+  <span>Hover me</span>
+</Tooltip>
+<Tooltip title="Error tooltip" color="error">
+  <span>Hover me</span>
+</Tooltip>
+<Tooltip title="Warning tooltip" color="warning">
+  <span>Hover me</span>
+</Tooltip>
+<Tooltip title="Info tooltip" color="info">
+  <span>Hover me</span>
+</Tooltip>
+<Tooltip title="Success tooltip" color="success">
+  <span>Hover me</span>
+</Tooltip>
+<Tooltip title="Default tooltip" color="default">
+  <span>Hover me</span>
+</Tooltip>
+```
+
+## Sizes
+
+The Tooltip component comes in three sizes:
+
+```jsx
+<Tooltip title="Small tooltip" size="small">
+  <span>Hover me</span>
+</Tooltip>
+<Tooltip title="Medium tooltip" size="medium">
+  <span>Hover me</span>
+</Tooltip>
+<Tooltip title="Large tooltip" size="large">
+  <span>Hover me</span>
+</Tooltip>
+```
+
+## Positions
+
+The Tooltip can be positioned in four different locations:
+
+```jsx
+<Tooltip title="Top tooltip" position="top">
+  <span>Hover me</span>
+</Tooltip>
+<Tooltip title="Bottom tooltip" position="bottom">
+  <span>Hover me</span>
+</Tooltip>
+<Tooltip title="Left tooltip" position="left">
+  <span>Hover me</span>
+</Tooltip>
+<Tooltip title="Right tooltip" position="right">
+  <span>Hover me</span>
+</Tooltip>
+```
+
+## API Reference
+
+### Props
+
+| Name       | Type                                                                                 | Default    | Description                                                    |
+| ---------- | ------------------------------------------------------------------------------------ | ---------- | -------------------------------------------------------------- |
+| variant    | 'standard' \| 'light' \| 'dark'                                                      | 'standard' | The variant to use.                                            |
+| color      | 'primary' \| 'secondary' \| 'error' \| 'warning' \| 'info' \| 'success' \| 'default' | 'default'  | The color of the component.                                    |
+| size       | 'small' \| 'medium' \| 'large'                                                       | 'medium'   | The size of the component.                                     |
+| position   | 'top' \| 'bottom' \| 'left' \| 'right'                                               | 'top'      | The position of the tooltip.                                   |
+| arrow      | boolean                                                                              | false      | If true, adds an arrow to the tooltip.                         |
+| enterDelay | number                                                                               | 0          | The number of milliseconds to wait before showing the tooltip. |
+| leaveDelay | number                                                                               | 0          | The number of milliseconds to wait before hiding the tooltip.  |
+| children   | React.ReactNode                                                                      | -          | The element that triggers the tooltip.                         |
+| title      | React.ReactNode                                                                      | -          | The content of the tooltip.                                    |

@@ -1,0 +1,136 @@
+# Mention
+
+The Mention component allows users to mention or tag other users in text input. It provides a rich text input experience with user suggestions and keyboard navigation.
+
+## Basic Usage
+
+```jsx
+import { Mention } from "./Mention";
+
+const [value, setValue] = React.useState("");
+const users = [
+  { id: "1", name: "John Doe", avatar: "https://example.com/avatar1.jpg" },
+  { id: "2", name: "Jane Smith", avatar: "https://example.com/avatar2.jpg" },
+  { id: "3", name: "Bob Johnson", avatar: "https://example.com/avatar3.jpg" },
+];
+
+<Mention.Root
+  value={value}
+  onChange={setValue}
+  users={users}
+  placeholder="Type @ to mention someone..."
+/>;
+```
+
+## Colors
+
+The Mention component supports different colors from the theme palette:
+
+```jsx
+<Mention.Root
+  value={value}
+  onChange={setValue}
+  users={users}
+  color="primary"
+/>
+
+<Mention.Root
+  value={value}
+  onChange={setValue}
+  users={users}
+  color="secondary"
+/>
+```
+
+## States
+
+The Mention component supports different states:
+
+```jsx
+// Disabled state
+<Mention.Root
+  value={value}
+  onChange={setValue}
+  users={users}
+  disabled
+/>
+
+// Read-only state
+<Mention.Root
+  value={value}
+  onChange={setValue}
+  users={users}
+  readOnly
+/>
+```
+
+## Character Limits
+
+You can set minimum and maximum character limits:
+
+```jsx
+<Mention.Root
+  value={value}
+  onChange={setValue}
+  users={users}
+  minLength={10}
+  maxLength={500}
+/>
+```
+
+## Event Handlers
+
+The Mention component provides various event handlers:
+
+```jsx
+<Mention.Root
+  value={value}
+  onChange={setValue}
+  users={users}
+  onMentionSelect={(user) => {
+    console.log("Selected user:", user);
+  }}
+  onKeyDown={(event) => {
+    console.log("Key pressed:", event.key);
+  }}
+  onFocus={(event) => {
+    console.log("Input focused");
+  }}
+  onBlur={(event) => {
+    console.log("Input blurred");
+  }}
+/>
+```
+
+## Keyboard Navigation
+
+The Mention component supports keyboard navigation:
+
+- Type `@` to trigger user suggestions
+- Use `↑` and `↓` arrow keys to navigate through suggestions
+- Press `Enter` or `Tab` to select a user
+- Press `Escape` to close suggestions
+
+## API Reference
+
+### Mention.Root Props
+
+| Name            | Type                                                                                 | Default   | Description                                              |
+| --------------- | ------------------------------------------------------------------------------------ | --------- | -------------------------------------------------------- |
+| value           | string                                                                               | -         | The value of the input.                                  |
+| onChange        | (value: string) => void                                                              | -         | Callback fired when the value changes.                   |
+| users           | { id: string; name: string; avatar?: string }[]                                      | -         | Array of users that can be mentioned.                    |
+| color           | 'primary' \| 'secondary' \| 'error' \| 'warning' \| 'info' \| 'success' \| 'default' | 'primary' | The color of the component.                              |
+| placeholder     | string                                                                               | -         | The placeholder text.                                    |
+| disabled        | boolean                                                                              | false     | If true, the input will be disabled.                     |
+| readOnly        | boolean                                                                              | false     | If true, the input will be read-only.                    |
+| maxLength       | number                                                                               | -         | The maximum number of characters allowed.                |
+| minLength       | number                                                                               | -         | The minimum number of characters required.               |
+| onMentionSelect | (user: { id: string; name: string; avatar?: string }) => void                        | -         | Callback fired when a user is selected from suggestions. |
+| onKeyDown       | (event: React.KeyboardEvent<HTMLTextAreaElement>) => void                            | -         | Callback fired when a key is pressed.                    |
+| onFocus         | (event: React.FocusEvent<HTMLTextAreaElement>) => void                               | -         | Callback fired when the input is focused.                |
+| onBlur          | (event: React.FocusEvent<HTMLTextAreaElement>) => void                               | -         | Callback fired when the input is blurred.                |
+
+```
+
+```

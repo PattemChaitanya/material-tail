@@ -1,0 +1,128 @@
+# Menu
+
+The Menu component displays a list of choices on a temporary surface. It appears when the user interacts with a button, or other control.
+
+## Basic Usage
+
+```jsx
+import { Menu, Button } from "./Menu";
+
+// Basic menu
+const [anchorEl, setAnchorEl] = React.useState(null);
+
+<>
+  <Button onClick={(e) => setAnchorEl(e.currentTarget)}>Open Menu</Button>
+  <Menu.Root
+    open={Boolean(anchorEl)}
+    anchorEl={anchorEl}
+    onClose={() => setAnchorEl(null)}
+  >
+    <Menu.Item onClick={() => console.log("Item 1")}>Item 1</Menu.Item>
+    <Menu.Item onClick={() => console.log("Item 2")}>Item 2</Menu.Item>
+    <Menu.Item onClick={() => console.log("Item 3")}>Item 3</Menu.Item>
+  </Menu.Root>
+</>;
+```
+
+## Variants
+
+The Menu component comes in two variants:
+
+```jsx
+// Standard menu (default)
+<Menu.Root open={open} anchorEl={anchorEl} onClose={handleClose}>
+  <Menu.Item>Standard Item 1</Menu.Item>
+  <Menu.Item>Standard Item 2</Menu.Item>
+</Menu.Root>
+
+// Dense menu
+<Menu.Root
+  open={open}
+  anchorEl={anchorEl}
+  onClose={handleClose}
+  dense
+>
+  <Menu.Item>Dense Item 1</Menu.Item>
+  <Menu.Item>Dense Item 2</Menu.Item>
+</Menu.Root>
+```
+
+## Menu Items
+
+The Menu component supports different types of items:
+
+```jsx
+// Regular items
+<Menu.Root open={open} anchorEl={anchorEl} onClose={handleClose}>
+  <Menu.Item>Regular Item</Menu.Item>
+  <Menu.Item disabled>Disabled Item</Menu.Item>
+  <Menu.Item selected>Selected Item</Menu.Item>
+  <Menu.Item divider>Item with Divider</Menu.Item>
+</Menu.Root>
+
+// Items with icons
+<Menu.Root open={open} anchorEl={anchorEl} onClose={handleClose}>
+  <Menu.Item>
+    <Icon>edit</Icon>
+    <span>Edit</span>
+  </Menu.Item>
+  <Menu.Item>
+    <Icon>delete</Icon>
+    <span>Delete</span>
+  </Menu.Item>
+</Menu.Root>
+```
+
+## Position
+
+The Menu can be positioned relative to its anchor element:
+
+```jsx
+// Bottom-left alignment (default)
+<Menu.Root
+  open={open}
+  anchorEl={anchorEl}
+  onClose={handleClose}
+  anchorOrigin={{
+    vertical: 'bottom',
+    horizontal: 'left',
+  }}
+/>
+
+// Top-right alignment
+<Menu.Root
+  open={open}
+  anchorEl={anchorEl}
+  onClose={handleClose}
+  anchorOrigin={{
+    vertical: 'top',
+    horizontal: 'right',
+  }}
+/>
+```
+
+## API Reference
+
+### Menu.Root Props
+
+| Name            | Type                                                                                 | Default                                    | Description                                    |
+| --------------- | ------------------------------------------------------------------------------------ | ------------------------------------------ | ---------------------------------------------- |
+| variant         | 'standard' \| 'dense'                                                                | 'standard'                                 | The variant to use.                            |
+| color           | 'primary' \| 'secondary' \| 'error' \| 'warning' \| 'info' \| 'success' \| 'default' | 'default'                                  | The color of the component.                    |
+| open            | boolean                                                                              | -                                          | If true, the menu is open.                     |
+| onClose         | () => void                                                                           | -                                          | Callback fired when the menu is closed.        |
+| anchorEl        | HTMLElement \| null                                                                  | -                                          | The DOM element used to set the menu position. |
+| anchorOrigin    | { vertical: 'top' \| 'bottom', horizontal: 'left' \| 'right' }                       | { vertical: 'bottom', horizontal: 'left' } | The menu anchor origin.                        |
+| transformOrigin | { vertical: 'top' \| 'bottom', horizontal: 'left' \| 'right' }                       | { vertical: 'top', horizontal: 'left' }    | The menu transform origin.                     |
+| elevation       | number                                                                               | 8                                          | The elevation of the menu.                     |
+| dense           | boolean                                                                              | false                                      | If true, compact vertical padding is used.     |
+
+### Menu.Item Props
+
+| Name     | Type       | Default | Description                                          |
+| -------- | ---------- | ------- | ---------------------------------------------------- |
+| onClick  | () => void | -       | Callback fired when the menu item is clicked.        |
+| disabled | boolean    | false   | If true, the menu item is disabled.                  |
+| selected | boolean    | false   | If true, the menu item is selected.                  |
+| dense    | boolean    | false   | If true, compact vertical padding is used.           |
+| divider  | boolean    | false   | If true, a divider is displayed below the menu item. |

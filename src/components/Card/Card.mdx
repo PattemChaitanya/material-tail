@@ -1,0 +1,215 @@
+# Card
+
+The Card component is used to display content in a structured format. It supports various features like headers, media, actions, and different variants.
+
+## Basic Usage
+
+```jsx
+import { Card } from "./Card";
+
+<Card.Root>
+  <Card.Header title="Card Title" />
+  <Card.Content>Card content goes here.</Card.Content>
+  <Card.Actions>
+    <Button>Learn More</Button>
+    <Button>Share</Button>
+  </Card.Actions>
+</Card.Root>;
+```
+
+## Colors
+
+The Card component supports different colors from the theme palette:
+
+```jsx
+<Card.Root color="primary">
+  <Card.Header title="Primary Card" />
+  <Card.Content>
+    This card uses the primary color.
+  </Card.Content>
+</Card.Root>
+
+<Card.Root color="secondary">
+  <Card.Header title="Secondary Card" />
+  <Card.Content>
+    This card uses the secondary color.
+  </Card.Content>
+</Card.Root>
+```
+
+## Variants
+
+The Card component supports different variants:
+
+```jsx
+<Card.Root variant="elevation">
+  <Card.Header title="Elevated Card" />
+  <Card.Content>
+    This card has elevation.
+  </Card.Content>
+</Card.Root>
+
+<Card.Root variant="outlined">
+  <Card.Header title="Outlined Card" />
+  <Card.Content>
+    This card has an outline.
+  </Card.Content>
+</Card.Root>
+```
+
+## Elevation
+
+You can control the elevation level of the card:
+
+```jsx
+<Card.Root elevation={0}>
+  <Card.Header title="Flat Card" />
+  <Card.Content>
+    This card has no elevation.
+  </Card.Content>
+</Card.Root>
+
+<Card.Root elevation={4}>
+  <Card.Header title="Raised Card" />
+  <Card.Content>
+    This card has high elevation.
+  </Card.Content>
+</Card.Root>
+```
+
+## Square Corners
+
+You can remove the border radius:
+
+```jsx
+<Card.Root square>
+  <Card.Header title="Square Card" />
+  <Card.Content>This card has square corners.</Card.Content>
+</Card.Root>
+```
+
+## Headers
+
+Card headers can include avatars, titles, subheaders, and actions:
+
+```jsx
+<Card.Root>
+  <Card.Header
+    avatar={<Avatar>JD</Avatar>}
+    title="Card Title"
+    subheader="Card Subheader"
+    action={
+      <IconButton>
+        <MoreIcon />
+      </IconButton>
+    }
+  />
+  <Card.Content>Card content goes here.</Card.Content>
+</Card.Root>
+```
+
+## Media
+
+You can add media content to the card:
+
+```jsx
+<Card.Root>
+  <Card.Media image="https://source.unsplash.com/random/800x600" height={200} />
+  <Card.Header title="Card with Media" />
+  <Card.Content>This card includes an image.</Card.Content>
+</Card.Root>
+```
+
+## Custom Media Component
+
+You can use a custom component for the media section:
+
+```jsx
+<Card.Root>
+  <Card.Media component="video" height={200}>
+    <video controls>
+      <source src="video.mp4" type="video/mp4" />
+    </video>
+  </Card.Media>
+  <Card.Header title="Card with Video" />
+  <Card.Content>This card includes a video.</Card.Content>
+</Card.Root>
+```
+
+## Actions
+
+Card actions can be used for buttons or other interactive elements:
+
+```jsx
+<Card.Root>
+  <Card.Header title="Card with Actions" />
+  <Card.Content>Card content goes here.</Card.Content>
+  <Card.Actions>
+    <Button>Learn More</Button>
+    <Button>Share</Button>
+  </Card.Actions>
+</Card.Root>
+```
+
+## Disable Action Spacing
+
+You can remove the spacing between action items:
+
+```jsx
+<Card.Root>
+  <Card.Header title="Card with Compact Actions" />
+  <Card.Content>Card content goes here.</Card.Content>
+  <Card.Actions disableSpacing>
+    <IconButton>
+      <ShareIcon />
+    </IconButton>
+    <IconButton>
+      <MoreIcon />
+    </IconButton>
+  </Card.Actions>
+</Card.Root>
+```
+
+## API Reference
+
+### Card.Root Props
+
+| Name      | Type                                                                                 | Default     | Description                                 |
+| --------- | ------------------------------------------------------------------------------------ | ----------- | ------------------------------------------- |
+| color     | 'primary' \| 'secondary' \| 'error' \| 'warning' \| 'info' \| 'success' \| 'default' | 'primary'   | The color of the component.                 |
+| variant   | 'elevation' \| 'outlined'                                                            | 'elevation' | The variant to use.                         |
+| elevation | number                                                                               | 1           | The elevation level of the card.            |
+| square    | boolean                                                                              | false       | If true, the card will have square corners. |
+| children  | React.ReactNode                                                                      | -           | The content of the card.                    |
+
+### Card.Header Props
+
+| Name              | Type            | Default | Description                                  |
+| ----------------- | --------------- | ------- | -------------------------------------------- |
+| avatar            | React.ReactNode | -       | The avatar element to display.               |
+| title             | React.ReactNode | -       | The title of the card.                       |
+| subheader         | React.ReactNode | -       | The subheader of the card.                   |
+| action            | React.ReactNode | -       | The action element to display.               |
+| disableTypography | boolean         | false   | If true, typography styles will be disabled. |
+
+### Card.Media Props
+
+| Name      | Type              | Default | Description                               |
+| --------- | ----------------- | ------- | ----------------------------------------- |
+| image     | string            | -       | The image source to display.              |
+| component | React.ElementType | 'div'   | The component used for the media wrapper. |
+| height    | number \| string  | 194px   | The height of the media section.          |
+| children  | React.ReactNode   | -       | The content of the media section.         |
+
+### Card.Content Props
+
+| Name     | Type            | Default | Description              |
+| -------- | --------------- | ------- | ------------------------ |
+| children | React.ReactNode | -       | The content of the card. |
+
+### Card.Actions Props
+
+| Name           | Type            | Default | Description                                       |
+| -------------- | --------------- | ------- | ------------------------------------------------- |
+| disableSpacing | boolean         | false   | If true, spacing between actions will be removed. |
+| children       | React.ReactNode | -       | The action elements to display.                   |

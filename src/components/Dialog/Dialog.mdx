@@ -1,0 +1,219 @@
+# Dialog
+
+The Dialog component displays content in a modal dialog or popup. It supports different variants, sizes, and can include a title, content, and action buttons.
+
+## Basic Usage
+
+```jsx
+import { Dialog, Button } from "./Dialog";
+
+// Basic dialog
+const [open, setOpen] = React.useState(false);
+
+<>
+  <Button onClick={() => setOpen(true)}>Open Dialog</Button>
+  <Dialog open={open} onClose={() => setOpen(false)} title="Basic Dialog">
+    <p>This is a basic dialog with a title.</p>
+    <DialogActions>
+      <Button onClick={() => setOpen(false)}>Cancel</Button>
+      <Button color="primary" onClick={() => setOpen(false)}>
+        Confirm
+      </Button>
+    </DialogActions>
+  </Dialog>
+</>;
+```
+
+## Variants
+
+The Dialog component comes in two variants:
+
+```jsx
+// Standard dialog
+<Dialog
+  open={open}
+  onClose={handleClose}
+  title="Standard Dialog"
+  variant="standard"
+>
+  <p>This is a standard dialog.</p>
+</Dialog>
+
+// Fullscreen dialog
+<Dialog
+  open={open}
+  onClose={handleClose}
+  title="Fullscreen Dialog"
+  variant="fullscreen"
+>
+  <p>This is a fullscreen dialog.</p>
+</Dialog>
+```
+
+## Sizes
+
+The Dialog component comes in four sizes:
+
+```jsx
+// Small dialog
+<Dialog
+  open={open}
+  onClose={handleClose}
+  title="Small Dialog"
+  size="small"
+>
+  <p>This is a small dialog.</p>
+</Dialog>
+
+// Medium dialog (default)
+<Dialog
+  open={open}
+  onClose={handleClose}
+  title="Medium Dialog"
+  size="medium"
+>
+  <p>This is a medium dialog.</p>
+</Dialog>
+
+// Large dialog
+<Dialog
+  open={open}
+  onClose={handleClose}
+  title="Large Dialog"
+  size="large"
+>
+  <p>This is a large dialog.</p>
+</Dialog>
+
+// Fullscreen dialog
+<Dialog
+  open={open}
+  onClose={handleClose}
+  title="Fullscreen Dialog"
+  size="fullscreen"
+>
+  <p>This is a fullscreen dialog.</p>
+</Dialog>
+```
+
+## Colors
+
+The Dialog component supports different colors from the theme palette:
+
+```jsx
+<Dialog
+  open={open}
+  onClose={handleClose}
+  title="Primary Dialog"
+  color="primary"
+>
+  <p>This is a primary colored dialog.</p>
+</Dialog>
+
+<Dialog
+  open={open}
+  onClose={handleClose}
+  title="Secondary Dialog"
+  color="secondary"
+>
+  <p>This is a secondary colored dialog.</p>
+</Dialog>
+```
+
+## Width Options
+
+The Dialog component supports different width options:
+
+```jsx
+// Fixed width (default)
+<Dialog
+  open={open}
+  onClose={handleClose}
+  title="Fixed Width Dialog"
+>
+  <p>This is a fixed width dialog.</p>
+</Dialog>
+
+// Full width
+<Dialog
+  open={open}
+  onClose={handleClose}
+  title="Full Width Dialog"
+  fullWidth
+>
+  <p>This is a full width dialog.</p>
+</Dialog>
+
+// Maximum width
+<Dialog
+  open={open}
+  onClose={handleClose}
+  title="Maximum Width Dialog"
+  maxWidth
+>
+  <p>This is a maximum width dialog.</p>
+</Dialog>
+```
+
+## Close Options
+
+The Dialog component supports different close behaviors:
+
+```jsx
+// Close on backdrop click (default)
+<Dialog
+  open={open}
+  onClose={handleClose}
+  title="Close on Backdrop Click"
+>
+  <p>Click outside to close.</p>
+</Dialog>
+
+// Close on ESC key (default)
+<Dialog
+  open={open}
+  onClose={handleClose}
+  title="Close on ESC"
+>
+  <p>Press ESC to close.</p>
+</Dialog>
+
+// Disable close on backdrop click
+<Dialog
+  open={open}
+  onClose={handleClose}
+  title="No Backdrop Close"
+  closeOnBackdropClick={false}
+>
+  <p>Click outside will not close this dialog.</p>
+</Dialog>
+
+// Disable close on ESC
+<Dialog
+  open={open}
+  onClose={handleClose}
+  title="No ESC Close"
+  closeOnEsc={false}
+>
+  <p>ESC key will not close this dialog.</p>
+</Dialog>
+```
+
+## API Reference
+
+### Props
+
+| Name                 | Type                                                                                 | Default    | Description                                           |
+| -------------------- | ------------------------------------------------------------------------------------ | ---------- | ----------------------------------------------------- |
+| variant              | 'standard' \| 'fullscreen'                                                           | 'standard' | The variant to use.                                   |
+| size                 | 'small' \| 'medium' \| 'large' \| 'fullscreen'                                       | 'medium'   | The size of the component.                            |
+| color                | 'primary' \| 'secondary' \| 'error' \| 'warning' \| 'info' \| 'success' \| 'default' | 'default'  | The color of the component.                           |
+| open                 | boolean                                                                              | -          | If true, the dialog is open.                          |
+| onClose              | () => void                                                                           | -          | Callback fired when the dialog is closed.             |
+| title                | React.ReactNode                                                                      | -          | The title of the dialog.                              |
+| children             | React.ReactNode                                                                      | -          | The content of the dialog.                            |
+| actions              | React.ReactNode                                                                      | -          | The actions to display in the dialog.                 |
+| closeOnBackdropClick | boolean                                                                              | true       | If true, clicking the backdrop will close the dialog. |
+| closeOnEsc           | boolean                                                                              | true       | If true, pressing ESC will close the dialog.          |
+| maxWidth             | boolean                                                                              | false      | If true, the dialog will take up the maximum width.   |
+| fullWidth            | boolean                                                                              | false      | If true, the dialog will take up the full width.      |

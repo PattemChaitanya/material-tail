@@ -1,0 +1,110 @@
+# TextField
+
+The TextField component is a wrapper around the Input component that provides additional features like labels, helper text, and error states. It's commonly used in forms and provides a consistent look and feel across different input types.
+
+## Basic Usage
+
+```jsx
+import { TextField } from './TextField';
+
+// Basic text field
+<TextField />
+
+// With label
+<TextField label="Username" />
+
+// Required field
+<TextField label="Required" required />
+```
+
+## Variants
+
+The TextField component comes in three variants:
+
+```jsx
+<TextField variant="outlined" label="Outlined" />
+<TextField variant="filled" label="Filled" />
+<TextField variant="standard" label="Standard" />
+```
+
+## Colors
+
+The TextField component supports different colors from the theme palette:
+
+```jsx
+<TextField color="primary" label="Primary" />
+<TextField color="secondary" label="Secondary" />
+<TextField color="error" label="Error" />
+<TextField color="warning" label="Warning" />
+<TextField color="info" label="Info" />
+<TextField color="success" label="Success" />
+```
+
+## Sizes
+
+The TextField component comes in three sizes:
+
+```jsx
+<TextField size="small" label="Small" />
+<TextField size="medium" label="Medium" />
+<TextField size="large" label="Large" />
+```
+
+## With Icons
+
+```jsx
+import { Search, Filter } from "@mui/icons-material";
+
+<TextField startIcon={<Search />} endIcon={<Filter />} label="With Icons" />;
+```
+
+## Error State
+
+```jsx
+<TextField error label="Error" helperText="This field is required" />
+```
+
+## Disabled State
+
+```jsx
+<TextField disabled label="Disabled" />
+```
+
+## Full Width
+
+```jsx
+<TextField fullWidth label="Full Width" />
+<TextField label="Auto Width" />
+```
+
+## Multiline
+
+```jsx
+<TextField
+  multiline
+  rows={4}
+  label="Multiline"
+  placeholder="Enter multiple lines of text"
+/>
+```
+
+## API Reference
+
+### Props
+
+| Name       | Type                                                                    | Default    | Description                                                   |
+| ---------- | ----------------------------------------------------------------------- | ---------- | ------------------------------------------------------------- |
+| variant    | 'outlined' \| 'filled' \| 'standard'                                    | 'outlined' | The variant to use.                                           |
+| color      | 'primary' \| 'secondary' \| 'error' \| 'warning' \| 'info' \| 'success' | 'primary'  | The color of the component.                                   |
+| size       | 'small' \| 'medium' \| 'large'                                          | 'medium'   | The size of the component.                                    |
+| label      | string                                                                  | -          | The label text.                                               |
+| error      | boolean                                                                 | false      | If true, the text field will be displayed in an error state.  |
+| helperText | string                                                                  | -          | The helper text to display below the text field.              |
+| required   | boolean                                                                 | false      | If true, the text field will be required.                     |
+| disabled   | boolean                                                                 | false      | If true, the text field will be disabled.                     |
+| startIcon  | React.ReactNode                                                         | -          | The icon to display at the start of the text field.           |
+| endIcon    | React.ReactNode                                                         | -          | The icon to display at the end of the text field.             |
+| fullWidth  | boolean                                                                 | false      | If true, the text field will take up the full width.          |
+| multiline  | boolean                                                                 | false      | If true, the text field will be multiline.                    |
+| rows       | number                                                                  | -          | The number of rows to display when multiline is true.         |
+| maxRows    | number                                                                  | -          | The maximum number of rows to display when multiline is true. |

@@ -1,0 +1,253 @@
+# Sidebar
+
+The Sidebar component is used to create a vertical navigation panel with sections, items, and actions. It supports various features like elevation, positioning, and different variants.
+
+## Basic Usage
+
+```jsx
+import { Sidebar } from "./Sidebar";
+
+<Sidebar.Root>
+  <Sidebar.Header>
+    <Typography variant="h6">My App</Typography>
+  </Sidebar.Header>
+  <Sidebar.Content>
+    <Sidebar.Section title="Navigation">
+      <Sidebar.Item
+        icon={<HomeIcon />}
+        label="Home"
+        selected
+        onClick={() => {}}
+      />
+      <Sidebar.Item
+        icon={<SettingsIcon />}
+        label="Settings"
+        onClick={() => {}}
+      />
+    </Sidebar.Section>
+  </Sidebar.Content>
+  <Sidebar.Footer>
+    <Button fullWidth>Logout</Button>
+  </Sidebar.Footer>
+</Sidebar.Root>;
+```
+
+## Colors
+
+The Sidebar component supports different colors from the theme palette:
+
+```jsx
+<Sidebar.Root color="primary">
+  <Sidebar.Content>
+    <Sidebar.Section title="Primary Sidebar">
+      <Sidebar.Item label="Item 1" onClick={() => {}} />
+    </Sidebar.Section>
+  </Sidebar.Content>
+</Sidebar.Root>
+
+<Sidebar.Root color="secondary">
+  <Sidebar.Content>
+    <Sidebar.Section title="Secondary Sidebar">
+      <Sidebar.Item label="Item 1" onClick={() => {}} />
+    </Sidebar.Section>
+  </Sidebar.Content>
+</Sidebar.Root>
+```
+
+## Variants
+
+The Sidebar component supports different variants:
+
+```jsx
+<Sidebar.Root variant="elevation">
+  <Sidebar.Content>
+    <Sidebar.Section title="Elevated Sidebar">
+      <Sidebar.Item label="Item 1" onClick={() => {}} />
+    </Sidebar.Section>
+  </Sidebar.Content>
+</Sidebar.Root>
+
+<Sidebar.Root variant="outlined">
+  <Sidebar.Content>
+    <Sidebar.Section title="Outlined Sidebar">
+      <Sidebar.Item label="Item 1" onClick={() => {}} />
+    </Sidebar.Section>
+  </Sidebar.Content>
+</Sidebar.Root>
+```
+
+## Width
+
+You can control the width of the sidebar:
+
+```jsx
+<Sidebar.Root width={200}>
+  <Sidebar.Content>
+    <Sidebar.Section title="Narrow Sidebar">
+      <Sidebar.Item label="Item 1" onClick={() => {}} />
+    </Sidebar.Section>
+  </Sidebar.Content>
+</Sidebar.Root>
+
+<Sidebar.Root width={300}>
+  <Sidebar.Content>
+    <Sidebar.Section title="Wide Sidebar">
+      <Sidebar.Item label="Item 1" onClick={() => {}} />
+    </Sidebar.Section>
+  </Sidebar.Content>
+</Sidebar.Root>
+```
+
+## Elevation
+
+You can control the elevation level of the sidebar:
+
+```jsx
+<Sidebar.Root elevation={0}>
+  <Sidebar.Content>
+    <Sidebar.Section title="Flat Sidebar">
+      <Sidebar.Item label="Item 1" onClick={() => {}} />
+    </Sidebar.Section>
+  </Sidebar.Content>
+</Sidebar.Root>
+
+<Sidebar.Root elevation={4}>
+  <Sidebar.Content>
+    <Sidebar.Section title="Raised Sidebar">
+      <Sidebar.Item label="Item 1" onClick={() => {}} />
+    </Sidebar.Section>
+  </Sidebar.Content>
+</Sidebar.Root>
+```
+
+## Square Corners
+
+You can remove the border radius:
+
+```jsx
+<Sidebar.Root square>
+  <Sidebar.Content>
+    <Sidebar.Section title="Square Sidebar">
+      <Sidebar.Item label="Item 1" onClick={() => {}} />
+    </Sidebar.Section>
+  </Sidebar.Content>
+</Sidebar.Root>
+```
+
+## Sections
+
+The sidebar can be organized into sections:
+
+```jsx
+<Sidebar.Root>
+  <Sidebar.Content>
+    <Sidebar.Section title="Navigation">
+      <Sidebar.Item label="Home" onClick={() => {}} />
+      <Sidebar.Item label="About" onClick={() => {}} />
+    </Sidebar.Section>
+    <Sidebar.Section title="Settings">
+      <Sidebar.Item label="Profile" onClick={() => {}} />
+      <Sidebar.Item label="Preferences" onClick={() => {}} />
+    </Sidebar.Section>
+  </Sidebar.Content>
+</Sidebar.Root>
+```
+
+## Items
+
+Sidebar items can include icons and handle selection:
+
+```jsx
+<Sidebar.Root>
+  <Sidebar.Content>
+    <Sidebar.Section title="Navigation">
+      <Sidebar.Item
+        icon={<HomeIcon />}
+        label="Home"
+        selected
+        onClick={() => {}}
+      />
+      <Sidebar.Item
+        icon={<SettingsIcon />}
+        label="Settings"
+        onClick={() => {}}
+      />
+      <Sidebar.Item
+        icon={<HelpIcon />}
+        label="Help"
+        disabled
+        onClick={() => {}}
+      />
+    </Sidebar.Section>
+  </Sidebar.Content>
+</Sidebar.Root>
+```
+
+## Header and Footer
+
+The sidebar can include header and footer sections:
+
+```jsx
+<Sidebar.Root>
+  <Sidebar.Header>
+    <Typography variant="h6">My App</Typography>
+  </Sidebar.Header>
+  <Sidebar.Content>
+    <Sidebar.Section title="Navigation">
+      <Sidebar.Item label="Home" onClick={() => {}} />
+    </Sidebar.Section>
+  </Sidebar.Content>
+  <Sidebar.Footer>
+    <Button fullWidth>Logout</Button>
+  </Sidebar.Footer>
+</Sidebar.Root>
+```
+
+## API Reference
+
+### Sidebar.Root Props
+
+| Name      | Type                                                                                 | Default     | Description                                    |
+| --------- | ------------------------------------------------------------------------------------ | ----------- | ---------------------------------------------- |
+| color     | 'primary' \| 'secondary' \| 'error' \| 'warning' \| 'info' \| 'success' \| 'default' | 'primary'   | The color of the component.                    |
+| variant   | 'elevation' \| 'outlined'                                                            | 'elevation' | The variant to use.                            |
+| elevation | number                                                                               | 1           | The elevation level of the sidebar.            |
+| width     | number                                                                               | 240         | The width of the sidebar in pixels.            |
+| square    | boolean                                                                              | false       | If true, the sidebar will have square corners. |
+| children  | React.ReactNode                                                                      | -           | The content of the sidebar.                    |
+
+### Sidebar.Header Props
+
+| Name     | Type            | Default | Description                        |
+| -------- | --------------- | ------- | ---------------------------------- |
+| children | React.ReactNode | -       | The content of the header section. |
+
+### Sidebar.Content Props
+
+| Name     | Type            | Default | Description                      |
+| -------- | --------------- | ------- | -------------------------------- |
+| children | React.ReactNode | -       | The content of the main section. |
+
+### Sidebar.Footer Props
+
+| Name     | Type            | Default | Description                        |
+| -------- | --------------- | ------- | ---------------------------------- |
+| children | React.ReactNode | -       | The content of the footer section. |
+
+### Sidebar.Section Props
+
+| Name     | Type            | Default | Description                 |
+| -------- | --------------- | ------- | --------------------------- |
+| title    | string          | -       | The title of the section.   |
+| children | React.ReactNode | -       | The content of the section. |
+
+### Sidebar.Item Props
+
+| Name     | Type            | Default | Description                                  |
+| -------- | --------------- | ------- | -------------------------------------------- |
+| icon     | React.ReactNode | -       | The icon to display before the label.        |
+| label    | string          | -       | The text label of the item.                  |
+| selected | boolean         | false   | If true, the item will be highlighted.       |
+| disabled | boolean         | false   | If true, the item will be disabled.          |
+| onClick  | () => void      | -       | The callback fired when the item is clicked. |
+| children | React.ReactNode | -       | Additional content for the item.             |

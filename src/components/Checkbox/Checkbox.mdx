@@ -1,0 +1,88 @@
+# Checkbox
+
+The Checkbox component is a form control that allows users to select one or more options from a set. It supports multiple variants, colors, and sizes, along with features like indeterminate state and error handling.
+
+## Basic Usage
+
+```jsx
+import { Checkbox } from './Checkbox';
+
+// Basic checkbox
+<Checkbox />
+
+// With label
+<Checkbox label="Accept terms" />
+
+// Required field
+<Checkbox label="Required" required />
+```
+
+## Variants
+
+The Checkbox component comes in two variants:
+
+```jsx
+<Checkbox variant="default" label="Default" />
+<Checkbox variant="outlined" label="Outlined" />
+```
+
+## Colors
+
+The Checkbox component supports different colors from the theme palette:
+
+```jsx
+<Checkbox color="primary" label="Primary" />
+<Checkbox color="secondary" label="Secondary" />
+<Checkbox color="error" label="Error" />
+<Checkbox color="warning" label="Warning" />
+<Checkbox color="info" label="Info" />
+<Checkbox color="success" label="Success" />
+```
+
+## Sizes
+
+The Checkbox component comes in three sizes:
+
+```jsx
+<Checkbox size="small" label="Small" />
+<Checkbox size="medium" label="Medium" />
+<Checkbox size="large" label="Large" />
+```
+
+## Indeterminate State
+
+The indeterminate state is useful when you have a parent checkbox that represents a group of child checkboxes:
+
+```jsx
+<Checkbox indeterminate label="Indeterminate" />
+```
+
+## Error State
+
+```jsx
+<Checkbox error label="Error" />
+```
+
+## Disabled State
+
+```jsx
+<Checkbox disabled label="Disabled" />
+<Checkbox disabled checked label="Disabled Checked" />
+```
+
+## API Reference
+
+### Props
+
+| Name          | Type                                                                    | Default   | Description                                                        |
+| ------------- | ----------------------------------------------------------------------- | --------- | ------------------------------------------------------------------ |
+| variant       | 'default' \| 'outlined'                                                 | 'default' | The variant to use.                                                |
+| color         | 'primary' \| 'secondary' \| 'error' \| 'warning' \| 'info' \| 'success' | 'primary' | The color of the component.                                        |
+| size          | 'small' \| 'medium' \| 'large'                                          | 'medium'  | The size of the component.                                         |
+| label         | string                                                                  | -         | The label text.                                                    |
+| error         | boolean                                                                 | false     | If true, the checkbox will be displayed in an error state.         |
+| indeterminate | boolean                                                                 | false     | If true, the checkbox will be displayed in an indeterminate state. |
+| required      | boolean                                                                 | false     | If true, the checkbox will be required.                            |
+| disabled      | boolean                                                                 | false     | If true, the checkbox will be disabled.                            |
+
+The Checkbox component also accepts all standard checkbox HTML attributes.

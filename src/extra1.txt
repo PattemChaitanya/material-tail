@@ -1,0 +1,114 @@
+Yes, you can use the `robots.txt` file to discover the sitemap URLs and then scrape the site based on the URLs listed in the sitemaps. Here's how you can do it:
+ 
+1. **Fetch the `robots.txt` file to find the sitemap URLs.**
+2. **Parse the sitemaps to get the URLs you want to scrape.**
+3. **Check if each URL is allowed to be scraped based on the `robots.txt` rules.**
+ 
+Here's how you can achieve this in JavaScript:
+ 
+### Installation
+First, install the necessary libraries:
+```bash
+npm install axios robots-parser xml2js
+```
+ 
+### Code Example
+```javascript
+const axios = require('axios');
+const robotsParser = require('robots-parser');
+const xml2js = require('xml2js');
+ 
+// Fetch and parse robots.txt to find sitemap URLs
+async function getSitemapsFromRobots(robotsUrl) {
+  try {
+    const response = await axios.get(robotsUrl);
+    const robotsTxt = response.data;
+    const sitemaps = [];
+ 
+    // Parse the robots.txt file
+    const lines = robotsTxt.split('\n');
+    for (let line of lines) {
+      line = line.trim();
+      if (line.toLowerCase().startsWith('sitemap:')) {
+        const sitemapUrl = line.split(':')[1].trim();
+        sitemaps.push(sitemapUrl);
+      }
+    }
+    return sitemaps;
+  } catch (error) {
+    console.error(`Error fetching robots.txt: ${error}`);
+    return [];
+  }
+}
+ 
+// Fetch and parse sitemap to get URLs
+async function fetchSitemap(sitemapUrl) {
+  try {
+    const response = await axios.get(sitemapUrl);
+    const sitemapXml = response.data;
+ 
+    const parser = new xml2js.Parser();
+    const parsedSitemap = await parser.parseStringPromise(sitemapXml);
+    const urls = parsedSitemap.urlset.url.map(entry => entry.loc[0]);
+    return urls;
+  } catch (error) {
+    console.error(`Error fetching sitemap: ${error}`);
+    return [];
+  }
+}
+ 
+// Check if URL can be fetched according to robots.txt
+async function canFetch(url, userAgent = '*') {
+  try {
+    const parsedUrl = new URL(url);
+    const robotsUrl = `${parsedUrl.origin}/robots.txt`;
+ 
+    const response = await axios.get(robotsUrl);
+    const robotsTxt = response.data;
+ 
+    const robots = robotsParser(robotsUrl, robotsTxt);
+    return robots.isAllowed(url, userAgent);
+  } catch (error) {
+    console.error(`Error checking robots.txt: ${error}`);
+    return false;
+  }
+}
+ 
+(async () => {
+  const websiteUrl = 'https://example.com';
+  const robotsUrl = `${websiteUrl}/robots.txt`;
+ 
+  // Get sitemap URLs from robots.txt
+  const sitemapUrls = await getSitemapsFromRobots(robotsUrl);
+  console.log(`Sitemap URLs found: ${sitemapUrls}`);
+ 
+  for (const sitemapUrl of sitemapUrls) {
+    // Fetch URLs from sitemap
+    const urls = await fetchSitemap(sitemapUrl);
+    console.log(`URLs found in ${sitemapUrl}: ${urls.length}`);
+ 
+    for (const url of urls) {
+      const allowed = await canFetch(url);
+      if (allowed) {
+        console.log(`URL allowed to scrape: ${url}`);
+        // Proceed with your scraping logic here
+      } else {
+        console.log(`URL not allowed to scrape: ${url}`);
+      }
+    }
+  }
+})();
+```
+ 
+### Explanation
+1. **`getSitemapsFromRobots(robotsUrl)`:** Fetches the `robots.txt` file and extracts sitemap URLs.
+2. **`fetchSitemap(sitemapUrl)`:** Fetches and parses the sitemap XML to get the URLs listed in the sitemap.
+3. **`canFetch(url, userAgent)`:** Checks if a URL is allowed to be scraped based on the `robots.txt` rules.
+4. **Main Function:** Integrates the above steps to:
+   - Fetch and parse `robots.txt`.
+   - Extract and parse sitemaps.
+   - Check if each URL from the sitemap can be fetched.
+ 
+### Summary
+By fetching the `robots.txt` file and parsing it to find sitemap URLs, you can then proceed to scrape the URLs listed in the sitemaps, while ensuring each URL is allowed based on the `robots.txt` rules. This approach makes your web scraping process compliant and efficient.
+ 

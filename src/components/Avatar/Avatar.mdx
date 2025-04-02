@@ -1,0 +1,85 @@
+# Avatar
+
+The Avatar component is used to represent a user, and can display an image, initials, or an icon. It supports different variants, colors, and sizes.
+
+## Basic Usage
+
+```jsx
+import { Avatar } from './Avatar';
+
+// Image avatar
+<Avatar src="/path/to/image.jpg" alt="User name" />
+
+// Initials avatar
+<Avatar>John Doe</Avatar>
+
+// Icon avatar
+<Avatar icon={<span>👤</span>} />
+
+// Fallback avatar
+<Avatar
+  src="/path/to/image.jpg"
+  alt="User name"
+  fallback={<span>JD</span>}
+/>
+```
+
+## Variants
+
+The Avatar component comes in three variants:
+
+```jsx
+<Avatar variant="circular">Circular</Avatar>
+<Avatar variant="rounded">Rounded</Avatar>
+<Avatar variant="square">Square</Avatar>
+```
+
+## Colors
+
+The Avatar component supports different colors from the theme palette:
+
+```jsx
+<Avatar color="primary">JD</Avatar>
+<Avatar color="secondary">JD</Avatar>
+<Avatar color="error">JD</Avatar>
+<Avatar color="warning">JD</Avatar>
+<Avatar color="info">JD</Avatar>
+<Avatar color="success">JD</Avatar>
+<Avatar color="default">JD</Avatar>
+```
+
+## Sizes
+
+The Avatar component comes in three sizes:
+
+```jsx
+<Avatar size="small">JD</Avatar>
+<Avatar size="medium">JD</Avatar>
+<Avatar size="large">JD</Avatar>
+```
+
+## With Image and Fallback
+
+```jsx
+<Avatar
+  src="/path/to/image.jpg"
+  alt="User name"
+  fallback={<span>JD</span>}
+  onError={() => console.log("Image failed to load")}
+/>
+```
+
+## API Reference
+
+### Props
+
+| Name     | Type                                                                                 | Default    | Description                                    |
+| -------- | ------------------------------------------------------------------------------------ | ---------- | ---------------------------------------------- |
+| variant  | 'circular' \| 'rounded' \| 'square'                                                  | 'circular' | The variant to use.                            |
+| color    | 'primary' \| 'secondary' \| 'error' \| 'warning' \| 'info' \| 'success' \| 'default' | 'default'  | The color of the component.                    |
+| size     | 'small' \| 'medium' \| 'large'                                                       | 'medium'   | The size of the component.                     |
+| src      | string                                                                               | -          | The image source.                              |
+| alt      | string                                                                               | -          | The alt text for the image.                    |
+| children | React.ReactNode                                                                      | -          | The content of the avatar (used for initials). |
+| icon     | React.ReactNode                                                                      | -          | Icon to display in the avatar.                 |
+| fallback | React.ReactNode                                                                      | -          | Fallback content when image fails to load.     |

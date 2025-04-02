@@ -1,0 +1,234 @@
+# List
+
+The List component is used to display a collection of items in a structured format. It supports various features like selection, dividers, icons, avatars, and nested items.
+
+## Basic Usage
+
+```jsx
+import { List } from "./List";
+
+<List.Root>
+  <List.Item>
+    <List.ItemText primary="List Item 1" />
+  </List.Item>
+  <List.Item>
+    <List.ItemText primary="List Item 2" />
+  </List.Item>
+</List.Root>;
+```
+
+## Colors
+
+The List component supports different colors from the theme palette:
+
+```jsx
+<List.Root color="primary">
+  <List.Item>
+    <List.ItemText primary="Primary List" />
+  </List.Item>
+</List.Root>
+
+<List.Root color="secondary">
+  <List.Item>
+    <List.ItemText primary="Secondary List" />
+  </List.Item>
+</List.Root>
+```
+
+## Variants
+
+The List component supports different variants:
+
+```jsx
+<List.Root variant="text">
+  <List.Item>
+    <List.ItemText primary="Text List" />
+  </List.Item>
+</List.Root>
+
+<List.Root variant="outlined">
+  <List.Item>
+    <List.ItemText primary="Outlined List" />
+  </List.Item>
+</List.Root>
+
+<List.Root variant="contained">
+  <List.Item>
+    <List.ItemText primary="Contained List" />
+  </List.Item>
+</List.Root>
+```
+
+## Dense Mode
+
+You can use dense mode to display more items in a smaller space:
+
+```jsx
+<List.Root dense>
+  <List.Item>
+    <List.ItemText primary="Dense List Item" />
+  </List.Item>
+  <List.Item>
+    <List.ItemText primary="Dense List Item" />
+  </List.Item>
+</List.Root>
+```
+
+## Disable Padding
+
+You can disable the default padding:
+
+```jsx
+<List.Root disablePadding>
+  <List.Item>
+    <List.ItemText primary="No Padding List Item" />
+  </List.Item>
+</List.Root>
+```
+
+## Interactive Items
+
+List items can be interactive with selection and click handling:
+
+```jsx
+const [selected, setSelected] = useState(0);
+
+<List.Root>
+  <List.Item button selected={selected === 0} onClick={() => setSelected(0)}>
+    <List.ItemText primary="Selected Item" />
+  </List.Item>
+  <List.Item button selected={selected === 1} onClick={() => setSelected(1)}>
+    <List.ItemText primary="Clickable Item" />
+  </List.Item>
+</List.Root>;
+```
+
+## Icons and Avatars
+
+You can add icons and avatars to list items:
+
+```jsx
+<List.Root>
+  <List.Item>
+    <List.ItemIcon>
+      <StarIcon />
+    </List.ItemIcon>
+    <List.ItemText primary="Item with Icon" />
+  </List.Item>
+  <List.Item>
+    <List.ItemAvatar>
+      <Avatar>JD</Avatar>
+    </List.ItemAvatar>
+    <List.ItemText primary="Item with Avatar" />
+  </List.Item>
+</List.Root>
+```
+
+## Secondary Text
+
+List items can have primary and secondary text:
+
+```jsx
+<List.Root>
+  <List.Item>
+    <List.ItemText primary="Primary Text" secondary="Secondary Text" />
+  </List.Item>
+</List.Root>
+```
+
+## Dividers
+
+You can add dividers between list items:
+
+```jsx
+<List.Root>
+  <List.Item>
+    <List.ItemText primary="Item 1" />
+  </List.Item>
+  <List.Item divider>
+    <List.ItemText primary="Item 2" />
+  </List.Item>
+</List.Root>
+```
+
+## Subheaders
+
+You can add subheaders to group list items:
+
+```jsx
+<List.Root>
+  <List.Subheader>Section 1</List.Subheader>
+  <List.Item>
+    <List.ItemText primary="Item 1" />
+  </List.Item>
+  <List.Item>
+    <List.ItemText primary="Item 2" />
+  </List.Item>
+  <List.Subheader inset>Section 2</List.Subheader>
+  <List.Item>
+    <List.ItemText primary="Item 3" />
+  </List.Item>
+</List.Root>
+```
+
+## Disabled State
+
+List items can be disabled:
+
+```jsx
+<List.Root>
+  <List.Item disabled>
+    <List.ItemText primary="Disabled Item" />
+  </List.Item>
+</List.Root>
+```
+
+## API Reference
+
+### List.Root Props
+
+| Name           | Type                                                                                 | Default   | Description                                     |
+| -------------- | ------------------------------------------------------------------------------------ | --------- | ----------------------------------------------- |
+| color          | 'primary' \| 'secondary' \| 'error' \| 'warning' \| 'info' \| 'success' \| 'default' | 'primary' | The color of the component.                     |
+| variant        | 'text' \| 'outlined' \| 'contained'                                                  | 'text'    | The variant to use.                             |
+| dense          | boolean                                                                              | false     | If true, compact vertical padding will be used. |
+| disablePadding | boolean                                                                              | false     | If true, vertical padding will be removed.      |
+| children       | React.ReactNode                                                                      | -         | The content of the list.                        |
+
+### List.Item Props
+
+| Name     | Type            | Default | Description                                       |
+| -------- | --------------- | ------- | ------------------------------------------------- |
+| button   | boolean         | false   | If true, the list item will be clickable.         |
+| selected | boolean         | false   | If true, the list item will be selected.          |
+| disabled | boolean         | false   | If true, the list item will be disabled.          |
+| divider  | boolean         | false   | If true, a divider will be placed after the item. |
+| onClick  | () => void      | -       | Callback fired when the item is clicked.          |
+| children | React.ReactNode | -       | The content of the list item.                     |
+
+### List.ItemText Props
+
+| Name      | Type            | Default | Description                             |
+| --------- | --------------- | ------- | --------------------------------------- |
+| primary   | React.ReactNode | -       | The primary content of the list item.   |
+| secondary | React.ReactNode | -       | The secondary content of the list item. |
+| inset     | boolean         | false   | If true, the text will be indented.     |
+
+### List.ItemIcon Props
+
+| Name     | Type            | Default | Description       |
+| -------- | --------------- | ------- | ----------------- |
+| children | React.ReactNode | -       | The icon element. |
+
+### List.ItemAvatar Props
+
+| Name     | Type            | Default | Description         |
+| -------- | --------------- | ------- | ------------------- |
+| children | React.ReactNode | -       | The avatar element. |
+
+### List.Subheader Props
+
+| Name     | Type            | Default | Description                              |
+| -------- | --------------- | ------- | ---------------------------------------- |
+| inset    | boolean         | false   | If true, the subheader will be indented. |
+| children | React.ReactNode | -       | The content of the subheader.            |

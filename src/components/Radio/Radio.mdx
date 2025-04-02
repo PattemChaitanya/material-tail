@@ -1,0 +1,112 @@
+# Radio
+
+The Radio component is a form control that allows users to select a single option from a set of mutually exclusive options. It supports multiple variants, colors, and sizes, along with features like error handling and accessibility.
+
+## Basic Usage
+
+```jsx
+import { Radio } from './Radio';
+
+// Basic radio
+<Radio />
+
+// With label
+<Radio label="Option 1" />
+
+// Required field
+<Radio label="Required" required />
+```
+
+## Radio Group Example
+
+```jsx
+import { Radio } from "./Radio";
+
+const RadioGroup = () => {
+  const [value, setValue] = React.useState("option1");
+
+  return (
+    <div>
+      <Radio
+        label="Option 1"
+        value="option1"
+        checked={value === "option1"}
+        onChange={(e) => setValue(e.target.value)}
+      />
+      <Radio
+        label="Option 2"
+        value="option2"
+        checked={value === "option2"}
+        onChange={(e) => setValue(e.target.value)}
+      />
+      <Radio
+        label="Option 3"
+        value="option3"
+        checked={value === "option3"}
+        onChange={(e) => setValue(e.target.value)}
+      />
+    </div>
+  );
+};
+```
+
+## Variants
+
+The Radio component comes in two variants:
+
+```jsx
+<Radio variant="default" label="Default" />
+<Radio variant="outlined" label="Outlined" />
+```
+
+## Colors
+
+The Radio component supports different colors from the theme palette:
+
+```jsx
+<Radio color="primary" label="Primary" />
+<Radio color="secondary" label="Secondary" />
+<Radio color="error" label="Error" />
+<Radio color="warning" label="Warning" />
+<Radio color="info" label="Info" />
+<Radio color="success" label="Success" />
+```
+
+## Sizes
+
+The Radio component comes in three sizes:
+
+```jsx
+<Radio size="small" label="Small" />
+<Radio size="medium" label="Medium" />
+<Radio size="large" label="Large" />
+```
+
+## Error State
+
+```jsx
+<Radio error label="Error" />
+```
+
+## Disabled State
+
+```jsx
+<Radio disabled label="Disabled" />
+<Radio disabled checked label="Disabled Checked" />
+```
+
+## API Reference
+
+### Props
+
+| Name     | Type                                                                    | Default   | Description                                             |
+| -------- | ----------------------------------------------------------------------- | --------- | ------------------------------------------------------- |
+| variant  | 'default' \| 'outlined'                                                 | 'default' | The variant to use.                                     |
+| color    | 'primary' \| 'secondary' \| 'error' \| 'warning' \| 'info' \| 'success' | 'primary' | The color of the component.                             |
+| size     | 'small' \| 'medium' \| 'large'                                          | 'medium'  | The size of the component.                              |
+| label    | string                                                                  | -         | The label text.                                         |
+| error    | boolean                                                                 | false     | If true, the radio will be displayed in an error state. |
+| required | boolean                                                                 | false     | If true, the radio will be required.                    |
+| disabled | boolean                                                                 | false     | If true, the radio will be disabled.                    |
+
+The Radio component also accepts all standard radio HTML attributes.
