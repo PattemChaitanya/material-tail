@@ -1,8 +1,9 @@
 import React from "react";
 import { useTheme } from "../../theme";
-import { Theme as ThemeType } from "../../theme/types";
-import { styled } from "../../utils/styled";
+import { Theme } from "../../theme/types";
+import styled from "../../utils/styled";
 
+export type SidebarVariant = "permanent" | "persistent" | "temporary";
 export type SidebarColor =
   | "primary"
   | "secondary"
@@ -12,319 +13,205 @@ export type SidebarColor =
   | "success"
   | "default";
 
-export type SidebarVariant = "elevation" | "outlined";
-
 export interface SidebarProps {
-  color?: SidebarColor;
   variant?: SidebarVariant;
-  elevation?: number;
+  color?: SidebarColor;
+  open?: boolean;
+  onClose?: () => void;
+  children: React.ReactNode;
   width?: number;
-  square?: boolean;
-  children?: React.ReactNode;
+  elevation?: number;
 }
-
-export interface SidebarHeaderProps {
-  children?: React.ReactNode;
-}
-
-export interface SidebarContentProps {
-  children?: React.ReactNode;
-}
-
-export interface SidebarFooterProps {
-  children?: React.ReactNode;
-}
-
-export interface SidebarSectionProps {
-  title?: string;
-  children?: React.ReactNode;
-}
-
-export interface SidebarItemProps {
-  icon?: React.ReactNode;
-  label: string;
-  selected?: boolean;
-  disabled?: boolean;
-  onClick?: () => void;
-  children?: React.ReactNode;
-}
-
-type Theme = ThemeType & {
-  palette: {
-    action: {
-      selected: string;
-      hover: string;
-    };
-    default: {
-      main: string;
-    };
-  };
-  shadows: string[];
-};
 
 interface SidebarWrapperProps {
-  color?: SidebarColor;
   variant?: SidebarVariant;
-  elevation?: number;
+  color?: SidebarColor;
+  open?: boolean;
   width?: number;
-  square?: boolean;
+  elevation?: number;
   theme: Theme;
 }
 
-interface SidebarHeaderWrapperProps {
-  theme: Theme;
-}
+const StyledSidebarWrapper = styled.div<SidebarWrapperProps>`
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: ${(props) => props.width || 240}px;
+  background-color: ${(props) => props.theme.palette.background.paper};
+  box-shadow: ${(props) => props.theme.shadows[props.elevation || 0]};
+  z-index: 1200;
+  transition: all 0.2s ease-in-out;
 
-interface SidebarContentWrapperProps {
-  theme: Theme;
-}
-
-interface SidebarFooterWrapperProps {
-  theme: Theme;
-}
-
-interface SidebarSectionWrapperProps {
-  theme: Theme;
-}
-
-interface SidebarSectionTitleProps {
-  theme: Theme;
-}
-
-interface SidebarItemWrapperProps {
-  selected?: boolean;
-  disabled?: boolean;
-  theme: Theme;
-}
-
-interface SidebarItemIconProps {
-  theme: Theme;
-}
-
-interface SidebarItemLabelProps {
-  theme: Theme;
-}
-
-const SidebarWrapper = styled<"aside", SidebarWrapperProps>(
-  "aside",
-  ({
-    color = "primary",
-    variant = "elevation",
-    elevation = 1,
-    width = 240,
-    square,
-    theme,
-  }) => `
-    display: flex;
-    flex-direction: column;
-    width: ${width}px;
-    height: 100%;
-    background-color: ${theme.palette.background.paper};
-    color: ${theme.palette.text.primary};
-    border-radius: ${square ? 0 : theme.shape.borderRadius}px;
-    border: ${
-      variant === "outlined"
-        ? `1px solid ${
-            color === "default"
-              ? theme.palette.default.main
-              : theme.palette[color].main
-          }`
-        : "none"
-    };
-    box-shadow: ${variant === "elevation" ? theme.shadows[elevation] : "none"};
-  `
-);
-
-const SidebarHeaderWrapper = styled<"div", SidebarHeaderWrapperProps>(
-  "div",
-  ({ theme }) => `
-    display: flex;
-    align-items: center;
-    padding: ${Number(theme.spacing) * 2}px;
-    border-bottom: 1px solid ${theme.palette.divider};
-  `
-);
-
-const SidebarContentWrapper = styled<"div", SidebarContentWrapperProps>(
-  "div",
-  ({ theme }) => `
-    flex: 1;
-    overflow-y: auto;
-    padding: ${Number(theme.spacing)}px;
-  `
-);
-
-const SidebarFooterWrapper = styled<"div", SidebarFooterWrapperProps>(
-  "div",
-  ({ theme }) => `
-    display: flex;
-    align-items: center;
-    padding: ${Number(theme.spacing) * 2}px;
-    border-top: 1px solid ${theme.palette.divider};
-  `
-);
-
-const SidebarSectionWrapper = styled<"div", SidebarSectionWrapperProps>(
-  "div",
-  ({ theme }) => `
-    display: flex;
-    flex-direction: column;
-    gap: ${Number(theme.spacing)}px;
-    padding: ${Number(theme.spacing)}px;
-  `
-);
-
-const SidebarSectionTitle = styled<"div", SidebarSectionTitleProps>(
-  "div",
-  ({ theme }) => `
-    color: ${theme.palette.text.secondary};
-    font-size: 0.75rem;
-    font-family: ${theme.typography.fontFamily};
-    font-weight: 400;
-    line-height: 1.66;
-    letter-spacing: 0.03333em;
-    text-transform: uppercase;
-    padding: ${Number(theme.spacing)}px;
-  `
-);
-
-const SidebarItemWrapper = styled<"div", SidebarItemWrapperProps>(
-  "div",
-  ({ selected, disabled, theme }) => `
-    display: flex;
-    align-items: center;
-    gap: ${Number(theme.spacing)}px;
-    padding: ${Number(theme.spacing)}px;
-    border-radius: ${theme.shape.borderRadius}px;
-    cursor: ${disabled ? "not-allowed" : "pointer"};
-    opacity: ${disabled ? 0.5 : 1};
-    background-color: ${
-      selected ? theme.palette.action.selected : "transparent"
-    };
-    color: ${
-      selected ? theme.palette.primary.main : theme.palette.text.primary
-    };
-    transition: background-color 0.2s ease-in-out;
-
-    &:hover {
-      background-color: ${
-        disabled ? "transparent" : theme.palette.action.hover
-      };
+  ${(props) => {
+    const width = props.width || 240;
+    const transform = props.open ? "0" : `-${width}px`;
+    switch (props.variant) {
+      case "permanent":
+        return "";
+      case "persistent":
+        return `transform: translateX(${transform});`;
+      case "temporary":
+        return `
+          transform: translateX(${transform});
+          position: fixed;
+        `;
+      default:
+        return "";
     }
-  `
-);
+  }}
+`;
 
-const SidebarItemIcon = styled<"div", SidebarItemIconProps>(
-  "div",
-  ({ theme }) => `
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: ${Number(theme.spacing) * 2}px;
-    height: ${Number(theme.spacing) * 2}px;
-  `
-);
+export interface SidebarContentProps {
+  variant?: SidebarVariant;
+  color?: SidebarColor;
+  theme: Theme;
+  children?: React.ReactNode;
+}
 
-const SidebarItemLabel = styled<"div", SidebarItemLabelProps>(
-  "div",
-  ({ theme }) => `
-    flex: 1;
-    font-size: ${theme.typography.body1.fontSize};
-    font-family: ${theme.typography.fontFamily};
-    font-weight: ${theme.typography.body1.fontWeight};
-    line-height: ${theme.typography.body1.lineHeight};
-  `
-);
+const StyledSidebarContent = styled.div<SidebarContentProps>`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: ${(props) => props.theme.spacing.getSpacing(2)}px;
+`;
 
-export const SidebarComponent = ({
+export interface SidebarHeaderProps {
+  variant?: SidebarVariant;
+  color?: SidebarColor;
+  theme: Theme;
+  children?: React.ReactNode;
+}
+
+const StyledSidebarHeader = styled.div<SidebarHeaderProps>`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: ${(props) => props.theme.spacing.getSpacing(2)}px;
+  border-bottom: 1px solid ${(props) => props.theme.palette.divider};
+`;
+
+export interface SidebarTitleProps {
+  variant?: SidebarVariant;
+  color?: SidebarColor;
+  theme: Theme;
+  children?: React.ReactNode;
+}
+
+const StyledSidebarTitle = styled.div<SidebarTitleProps>`
+  font-family: ${(props) => props.theme.typography.fontFamily};
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: ${(props) => props.theme.palette.text.primary};
+`;
+
+export interface SidebarBodyProps {
+  variant?: SidebarVariant;
+  color?: SidebarColor;
+  theme: Theme;
+  children?: React.ReactNode;
+}
+
+const StyledSidebarBody = styled.div<SidebarBodyProps>`
+  flex: 1;
+  overflow-y: auto;
+  padding: ${(props) => props.theme.spacing.getSpacing(2)}px;
+`;
+
+export interface SidebarFooterProps {
+  variant?: SidebarVariant;
+  color?: SidebarColor;
+  theme: Theme;
+  children?: React.ReactNode;
+}
+
+const StyledSidebarFooter = styled.div<SidebarFooterProps>`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: ${(props) => props.theme.spacing.getSpacing(2)}px;
+  border-top: 1px solid ${(props) => props.theme.palette.divider};
+`;
+
+export const Sidebar: React.FC<SidebarProps> = ({
+  variant = "permanent",
   color = "primary",
-  variant = "elevation",
-  elevation = 1,
+  open = true,
+  onClose,
+  children,
   width = 240,
-  square = false,
-  children,
-}: SidebarProps) => {
+  elevation = 0,
+}) => {
   const theme = useTheme();
 
   return (
-    <SidebarWrapper
-      color={color}
+    <StyledSidebarWrapper
       variant={variant}
-      elevation={elevation}
+      color={color}
+      open={open}
       width={width}
-      square={square}
+      elevation={elevation}
       theme={theme}
     >
-      {children}
-    </SidebarWrapper>
+      <StyledSidebarContent variant={variant} color={color} theme={theme}>
+        {children}
+      </StyledSidebarContent>
+    </StyledSidebarWrapper>
   );
 };
 
-export const SidebarHeaderComponent = ({ children }: SidebarHeaderProps) => {
-  const theme = useTheme();
-
-  return <SidebarHeaderWrapper theme={theme}>{children}</SidebarHeaderWrapper>;
-};
-
-export const SidebarContentComponent = ({ children }: SidebarContentProps) => {
-  const theme = useTheme();
-
-  return (
-    <SidebarContentWrapper theme={theme}>{children}</SidebarContentWrapper>
-  );
-};
-
-export const SidebarFooterComponent = ({ children }: SidebarFooterProps) => {
-  const theme = useTheme();
-
-  return <SidebarFooterWrapper theme={theme}>{children}</SidebarFooterWrapper>;
-};
-
-export const SidebarSectionComponent = ({
-  title,
+export const SidebarHeader: React.FC<SidebarHeaderProps> = ({
+  variant,
+  color,
   children,
-}: SidebarSectionProps) => {
+}) => {
   const theme = useTheme();
 
   return (
-    <SidebarSectionWrapper theme={theme}>
-      {title && (
-        <SidebarSectionTitle theme={theme}>{title}</SidebarSectionTitle>
-      )}
+    <StyledSidebarHeader variant={variant} color={color} theme={theme}>
       {children}
-    </SidebarSectionWrapper>
+    </StyledSidebarHeader>
   );
 };
 
-export const SidebarItemComponent = ({
-  icon,
-  label,
-  selected = false,
-  disabled = false,
-  onClick,
+export const SidebarTitle: React.FC<SidebarTitleProps> = ({
+  variant,
+  color,
   children,
-}: SidebarItemProps) => {
+}) => {
   const theme = useTheme();
 
   return (
-    <SidebarItemWrapper
-      selected={selected}
-      disabled={disabled}
-      onClick={disabled ? undefined : onClick}
-      theme={theme}
-    >
-      {icon && <SidebarItemIcon theme={theme}>{icon}</SidebarItemIcon>}
-      <SidebarItemLabel theme={theme}>{label}</SidebarItemLabel>
+    <StyledSidebarTitle variant={variant} color={color} theme={theme}>
       {children}
-    </SidebarItemWrapper>
+    </StyledSidebarTitle>
   );
 };
 
-export const Sidebar = {
-  Root: SidebarComponent,
-  Header: SidebarHeaderComponent,
-  Content: SidebarContentComponent,
-  Footer: SidebarFooterComponent,
-  Section: SidebarSectionComponent,
-  Item: SidebarItemComponent,
+export const SidebarBody: React.FC<SidebarBodyProps> = ({
+  variant,
+  color,
+  children,
+}) => {
+  const theme = useTheme();
+
+  return (
+    <StyledSidebarBody variant={variant} color={color} theme={theme}>
+      {children}
+    </StyledSidebarBody>
+  );
+};
+
+export const SidebarFooter: React.FC<SidebarFooterProps> = ({
+  variant,
+  color,
+  children,
+}) => {
+  const theme = useTheme();
+
+  return (
+    <StyledSidebarFooter variant={variant} color={color} theme={theme}>
+      {children}
+    </StyledSidebarFooter>
+  );
 };

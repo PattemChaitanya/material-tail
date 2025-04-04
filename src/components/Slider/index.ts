@@ -1,8 +1,8 @@
 export { Slider } from "./Slider";
 export type {
   SliderProps,
-  SliderVariant,
   SliderColor,
-  SliderOrientation,
-  SliderSize,
+  // SliderVariant,
+  // SliderOrientation,
+  // SliderSize,
 } from "./Slider";

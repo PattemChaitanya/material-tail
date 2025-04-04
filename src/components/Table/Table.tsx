@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo, useState } from "react";
-import { styled } from "../../utils/styled";
 import { useTheme } from "../../theme";
+import { Theme } from "../../theme/types";
+import styled from "../../utils/styled";
 
 export type TableColor =
   | "primary"
@@ -51,267 +52,233 @@ export interface TableProps<T> {
 
 interface TableWrapperProps {
   color?: TableColor;
-  theme: any;
+  theme: Theme;
 }
+
+const TableWrapper = styled.div<TableWrapperProps>`
+  width: 100%;
+  border: 1px solid ${(props) => props.theme.palette.divider};
+  border-radius: ${(props) => props.theme.shape.borderRadius}px;
+  overflow: hidden;
+`;
+
+const TableContainer = styled.div`
+  width: 100%;
+  overflow-x: auto;
+`;
+
+const StyledTable = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+`;
 
 interface TableHeadProps {
   color?: TableColor;
-  theme: any;
+  theme: Theme;
 }
+
+const TableHead = styled.thead<TableHeadProps>`
+  background-color: ${(props) =>
+    props.theme.palette[props.color || "primary"].light};
+`;
 
 interface TableBodyProps {
   color?: TableColor;
-  theme: any;
+  theme: Theme;
 }
+
+const TableBody = styled.tbody<TableBodyProps>`
+  background-color: ${(props) => props.theme.palette.background.paper};
+`;
 
 interface TableRowProps {
   selected?: boolean;
   clickable?: boolean;
   color?: TableColor;
-  theme: any;
+  theme: Theme;
 }
+
+const TableRow = styled.tr<TableRowProps>`
+  &:hover {
+    background-color: ${(props) =>
+      props.theme.palette[props.color || "primary"].lighter};
+  }
+
+  ${(props) =>
+    props.selected &&
+    `
+    background-color: ${props.theme.palette[props.color || "primary"].light};
+    &:hover {
+      background-color: ${props.theme.palette[props.color || "primary"].light};
+    }
+  `}
+
+  ${(props) => (props.clickable ? "cursor: pointer;" : "")}
+`;
 
 interface TableCellProps {
   align?: "left" | "center" | "right";
   padding?: "none" | "normal" | "checkbox";
-  theme: any;
+  theme: Theme;
 }
+
+const TableCell = styled.td<TableCellProps>`
+  padding: ${(props) =>
+    props.padding === "none"
+      ? 0
+      : props.padding === "checkbox"
+      ? "0 0 0 16px"
+      : "16px"};
+  text-align: ${(props) => props.align || "left"};
+  color: ${(props) => props.theme.palette.text.primary};
+  font-size: 0.875rem;
+  line-height: 1.5;
+  border-bottom: 1px solid ${(props) => props.theme.palette.divider};
+`;
 
 interface TableHeaderCellProps {
   align?: "left" | "center" | "right";
   padding?: "none" | "normal" | "checkbox";
   sortable?: boolean;
   color?: TableColor;
-  theme: any;
+  theme: Theme;
 }
+
+const TableHeaderCell = styled.th<TableHeaderCellProps>`
+  padding: ${(props) =>
+    props.padding === "none"
+      ? 0
+      : props.padding === "checkbox"
+      ? "0 0 0 16px"
+      : "16px"};
+  text-align: ${(props) => props.align || "left"};
+  color: ${(props) => props.theme.palette[props.color || "primary"].main};
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.5;
+  border-bottom: 1px solid ${(props) => props.theme.palette.divider};
+  background-color: ${(props) =>
+    props.theme.palette[props.color || "primary"].light};
+  cursor: ${(props) => (props.sortable ? "pointer" : "default")};
+  user-select: none;
+
+  &:hover {
+    background-color: ${(props) =>
+      props.theme.palette[props.color || "primary"].main};
+    color: ${(props) => props.theme.palette.common.white};
+  }
+`;
 
 interface TableCheckboxProps {
   color?: TableColor;
-  theme: any;
+  theme: Theme;
   indeterminate?: boolean;
 }
 
+const TableCheckbox = styled.input<TableCheckboxProps>`
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  cursor: pointer;
+  accent-color: ${(props) =>
+    props.theme.palette[props.color || "primary"].main};
+`;
+
 interface TableEmptyMessageProps {
   color?: TableColor;
-  theme: any;
+  theme: Theme;
 }
+
+const TableEmptyMessage = styled.div<TableEmptyMessageProps>`
+  padding: 32px;
+  text-align: center;
+  color: ${(props) => props.theme.palette.text.secondary};
+  font-size: 0.875rem;
+`;
 
 interface TableLoadingOverlayProps {
   color?: TableColor;
-  theme: any;
+  theme: Theme;
 }
+
+const TableLoadingOverlay = styled.div<TableLoadingOverlayProps>`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: ${(props) => props.theme.palette.background.paper};
+  opacity: 0.7;
+  z-index: 1;
+`;
 
 interface TablePaginationProps {
   color?: TableColor;
-  theme: any;
+  theme: Theme;
 }
+
+const TablePagination = styled.div<TablePaginationProps>`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 16px;
+  border-top: 1px solid ${(props) => props.theme.palette.divider};
+  background-color: ${(props) => props.theme.palette.background.paper};
+`;
 
 interface TablePaginationSelectProps {
   color?: TableColor;
-  theme: any;
+  theme: Theme;
 }
+
+const TablePaginationSelect = styled.select<TablePaginationSelectProps>`
+  padding: 4px 8px;
+  margin: 0 8px;
+  border: 1px solid ${(props) => props.theme.palette.divider};
+  border-radius: ${(props) => props.theme.shape.borderRadius}px;
+  background-color: ${(props) => props.theme.palette.background.paper};
+  color: ${(props) => props.theme.palette.text.primary};
+  font-size: 0.875rem;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+    border-color: ${(props) =>
+      props.theme.palette[props.color || "primary"].main};
+  }
+`;
 
 interface TablePaginationButtonProps {
   color?: TableColor;
   disabled?: boolean;
-  theme: any;
+  theme: Theme;
 }
 
-const TableWrapper = styled<"div", TableWrapperProps>(
-  "div",
-  ({ theme }) => `
-    width: 100%;
-    border: 1px solid ${theme.palette.divider};
-    border-radius: ${theme.shape.borderRadius}px;
-    overflow: hidden;
-  `
-);
+const TablePaginationButton = styled.button<TablePaginationButtonProps>`
+  padding: 4px 8px;
+  margin: 0 4px;
+  border: 1px solid ${(props) => props.theme.palette.divider};
+  border-radius: ${(props) => props.theme.shape.borderRadius}px;
+  background-color: ${(props) => props.theme.palette.background.paper};
+  color: ${(props) =>
+    props.disabled
+      ? props.theme.palette.action.disabled
+      : props.theme.palette.text.primary};
+  font-size: 0.875rem;
+  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
+  opacity: ${(props) => (props.disabled ? 0.5 : 1)};
 
-const TableContainer = styled<"div">(
-  "div",
-  () => `
-    width: 100%;
-    overflow-x: auto;
-  `
-);
-
-const StyledTable = styled<"table">(
-  "table",
-  () => `
-    width: 100%;
-    border-collapse: collapse;
-  `
-);
-
-const TableHead = styled<"thead", TableHeadProps>(
-  "thead",
-  ({ color = "primary", theme }) => `
-    background-color: ${theme.palette[color].light};
-  `
-);
-
-const TableBody = styled<"tbody", TableBodyProps>(
-  "tbody",
-  ({ theme }) => `
-    background-color: ${theme.palette.background.paper};
-  `
-);
-
-const TableRow = styled<"tr", TableRowProps>(
-  "tr",
-  ({ selected, clickable, color = "primary", theme }) => `
-    &:hover {
-      background-color: ${theme.palette[color].lighter};
-    }
-
-    ${
-      selected &&
-      `
-      background-color: ${theme.palette[color].light};
-      &:hover {
-        background-color: ${theme.palette[color].light};
-      }
-    `
-    }
-
-    ${clickable ? "cursor: pointer;" : ""}
-  `
-);
-
-const TableCell = styled<"td", TableCellProps>(
-  "td",
-  ({ align = "left", padding = "normal", theme }) => `
-    padding: ${
-      padding === "none" ? 0 : padding === "checkbox" ? "0 0 0 16px" : "16px"
-    };
-    text-align: ${align};
-    color: ${theme.palette.text.primary};
-    font-size: 0.875rem;
-    line-height: 1.5;
-    border-bottom: 1px solid ${theme.palette.divider};
-  `
-);
-
-const TableHeaderCell = styled<"th", TableHeaderCellProps>(
-  "th",
-  ({
-    align = "left",
-    padding = "normal",
-    sortable,
-    color = "primary",
-    theme,
-  }) => `
-    padding: ${
-      padding === "none" ? 0 : padding === "checkbox" ? "0 0 0 16px" : "16px"
-    };
-    text-align: ${align};
-    color: ${theme.palette[color].main};
-    font-size: 0.875rem;
-    font-weight: 500;
-    line-height: 1.5;
-    border-bottom: 1px solid ${theme.palette.divider};
-    background-color: ${theme.palette[color].light};
-    cursor: ${sortable ? "pointer" : "default"};
-    user-select: none;
-
-    &:hover {
-      background-color: ${theme.palette[color].main};
-      color: ${theme.palette.common.white};
-    }
-  `
-);
-
-const TableCheckbox = styled<"input", TableCheckboxProps>(
-  "input",
-  ({ color = "primary", theme }) => `
-    width: 16px;
-    height: 16px;
-    margin: 0;
-    cursor: pointer;
-    accent-color: ${theme.palette[color].main};
-  `
-);
-
-const TableEmptyMessage = styled<"div", TableEmptyMessageProps>(
-  "div",
-  ({ theme }) => `
-    padding: 32px;
-    text-align: center;
-    color: ${theme.palette.text.secondary};
-    font-size: 0.875rem;
-  `
-);
-
-const TableLoadingOverlay = styled<"div", TableLoadingOverlayProps>(
-  "div",
-  ({ theme }) => `
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: ${theme.palette.background.paper};
-    opacity: 0.7;
-    z-index: 1;
-  `
-);
-
-const TablePagination = styled<"div", TablePaginationProps>(
-  "div",
-  ({ theme }) => `
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    padding: 16px;
-    border-top: 1px solid ${theme.palette.divider};
-    background-color: ${theme.palette.background.paper};
-  `
-);
-
-const TablePaginationSelect = styled<"select", TablePaginationSelectProps>(
-  "select",
-  ({ color = "primary", theme }) => `
-    padding: 4px 8px;
-    margin: 0 8px;
-    border: 1px solid ${theme.palette.divider};
-    border-radius: ${theme.shape.borderRadius}px;
-    background-color: ${theme.palette.background.paper};
-    color: ${theme.palette.text.primary};
-    font-size: 0.875rem;
-    cursor: pointer;
-
-    &:focus {
-      outline: none;
-      border-color: ${theme.palette[color].main};
-    }
-  `
-);
-
-const TablePaginationButton = styled<"button", TablePaginationButtonProps>(
-  "button",
-  ({ color = "primary", disabled, theme }) => `
-    padding: 4px 8px;
-    margin: 0 4px;
-    border: 1px solid ${theme.palette.divider};
-    border-radius: ${theme.shape.borderRadius}px;
-    background-color: ${theme.palette.background.paper};
-    color: ${
-      disabled ? theme.palette.action.disabled : theme.palette.text.primary
-    };
-    font-size: 0.875rem;
-    cursor: ${disabled ? "not-allowed" : "pointer"};
-    opacity: ${disabled ? 0.5 : 1};
-
-    &:hover:not(:disabled) {
-      background-color: ${theme.palette[color].light};
-      border-color: ${theme.palette[color].main};
-      color: ${theme.palette[color].main};
-    }
-  `
-);
+  &:hover:not(:disabled) {
+    background-color: ${(props) =>
+      props.theme.palette[props.color || "primary"].light};
+    border-color: ${(props) =>
+      props.theme.palette[props.color || "primary"].main};
+    color: ${(props) => props.theme.palette[props.color || "primary"].main};
+  }
+`;
 
 export const TableComponent = <T extends { id: string; [key: string]: any }>({
   columns,

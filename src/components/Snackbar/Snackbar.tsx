@@ -1,6 +1,7 @@
 import React from "react";
 import { useTheme } from "../../theme";
-import { styled } from "../../utils/styled";
+import { Theme } from "../../theme/types";
+import styled from "../../utils/styled";
 
 export type SnackbarVariant = "standard" | "outlined";
 export type SnackbarColor =
@@ -38,165 +39,153 @@ interface SnackbarWrapperProps {
   variant?: SnackbarVariant;
   color?: SnackbarColor;
   position?: SnackbarPosition;
-  theme: any;
+  theme: Theme;
 }
 
 interface SnackbarMessageProps {
-  theme: any;
+  theme: Theme;
 }
 
 interface SnackbarActionProps {
-  theme: any;
+  theme: Theme;
 }
 
 interface CloseButtonProps {
-  theme: any;
+  theme: Theme;
   size?: "small" | "medium" | "large";
 }
 
-const SnackbarWrapper = styled<"div", SnackbarWrapperProps>(
-  "div",
-  ({ variant = "standard", color = "default", position = "bottom", theme }) => `
-    position: fixed;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 6px 16px;
-    border-radius: ${theme.shape.borderRadius}px;
-    background: ${
-      variant === "outlined"
-        ? theme.palette.background.paper
-        : theme.palette[color].main
-    };
-    color: ${
-      variant === "outlined"
-        ? theme.palette[color].main
-        : theme.palette[color].contrastText
-    };
-    border: ${
-      variant === "outlined" ? `1px solid ${theme.palette[color].main}` : "none"
-    };
-    box-shadow: ${theme.shadows[3]};
-    z-index: 1400;
-    min-width: 288px;
-    max-width: 568px;
-    transform: translateY(100%);
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.2s ease-in-out;
+const SnackbarWrapper = styled.div<SnackbarWrapperProps>`
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 16px;
+  border-radius: ${(props) => props.theme.shape.borderRadius}px;
+  background: ${(props) =>
+    props.variant === "outlined"
+      ? props.theme.palette.background.paper
+      : props.theme.palette[props.color || "primary"].main};
+  color: ${(props) =>
+    props.variant === "outlined"
+      ? props.theme.palette[props.color || "primary"].main
+      : props.theme.palette[props.color || "primary"].contrastText};
+  border: ${(props) =>
+    props.variant === "outlined"
+      ? `1px solid ${props.theme.palette[props.color || "primary"].main}`
+      : "none"};
+  box-shadow: ${(props) => props.theme.shadows[3]};
+  z-index: 1400;
+  min-width: 288px;
+  max-width: 568px;
+  transform: translateY(100%);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease-in-out;
 
-    &.open {
-      transform: translateY(0);
-      opacity: 1;
-      visibility: visible;
+  &.open {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+
+  ${(props) => {
+    switch (props.position) {
+      case "top":
+        return `
+          top: ${props.theme.spacing.getSpacing(2)}px;
+          left: 50%;
+          transform: translateX(-50%) translateY(-100%);
+          &.open {
+            transform: translateX(-50%) translateY(0);
+          }
+        `;
+      case "bottom":
+        return `
+          bottom: ${props.theme.spacing.getSpacing(2)}px;
+          left: 50%;
+          transform: translateX(-50%) translateY(100%);
+          &.open {
+            transform: translateX(-50%) translateY(0);
+          }
+        `;
+      case "top-left":
+        return `
+          top: ${props.theme.spacing.getSpacing(2)}px;
+          left: ${props.theme.spacing.getSpacing(2)}px;
+          transform: translateX(-100%);
+          &.open {
+            transform: translateX(0);
+          }
+        `;
+      case "top-right":
+        return `
+          top: ${props.theme.spacing.getSpacing(2)}px;
+          right: ${props.theme.spacing.getSpacing(2)}px;
+          transform: translateX(100%);
+          &.open {
+            transform: translateX(0);
+          }
+        `;
+      case "bottom-left":
+        return `
+          bottom: ${props.theme.spacing.getSpacing(2)}px;
+          left: ${props.theme.spacing.getSpacing(2)}px;
+          transform: translateX(-100%);
+          &.open {
+            transform: translateX(0);
+          }
+        `;
+      case "bottom-right":
+        return `
+          bottom: ${props.theme.spacing.getSpacing(2)}px;
+          right: ${props.theme.spacing.getSpacing(2)}px;
+          transform: translateX(100%);
+          &.open {
+            transform: translateX(0);
+          }
+        `;
+      default:
+        return "";
     }
+  }}
+`;
 
-    ${(() => {
-      switch (position) {
-        case "top":
-          return `
-            top: ${theme.spacing(2)}px;
-            left: 50%;
-            transform: translateX(-50%) translateY(-100%);
-            &.open {
-              transform: translateX(-50%) translateY(0);
-            }
-          `;
-        case "bottom":
-          return `
-            bottom: ${theme.spacing(2)}px;
-            left: 50%;
-            transform: translateX(-50%) translateY(100%);
-            &.open {
-              transform: translateX(-50%) translateY(0);
-            }
-          `;
-        case "top-left":
-          return `
-            top: ${theme.spacing(2)}px;
-            left: ${theme.spacing(2)}px;
-            transform: translateX(-100%);
-            &.open {
-              transform: translateX(0);
-            }
-          `;
-        case "top-right":
-          return `
-            top: ${theme.spacing(2)}px;
-            right: ${theme.spacing(2)}px;
-            transform: translateX(100%);
-            &.open {
-              transform: translateX(0);
-            }
-          `;
-        case "bottom-left":
-          return `
-            bottom: ${theme.spacing(2)}px;
-            left: ${theme.spacing(2)}px;
-            transform: translateX(-100%);
-            &.open {
-              transform: translateX(0);
-            }
-          `;
-        case "bottom-right":
-          return `
-            bottom: ${theme.spacing(2)}px;
-            right: ${theme.spacing(2)}px;
-            transform: translateX(100%);
-            &.open {
-              transform: translateX(0);
-            }
-          `;
-        default:
-          return "";
-      }
-    })()}
-  `
-);
+const SnackbarMessage = styled.div<SnackbarMessageProps>`
+  padding: 8px 0;
+  margin-right: 8px;
+  font-size: 0.875rem;
+  line-height: 1.43;
+  letter-spacing: 0.01071em;
+  flex: 1;
+`;
 
-const SnackbarMessage = styled<"div", SnackbarMessageProps>(
-  "div",
-  ({ theme }) => `
-    padding: 8px 0;
-    margin-right: 8px;
-    font-size: 0.875rem;
-    line-height: 1.43;
-    letter-spacing: 0.01071em;
-    flex: 1;
-  `
-);
+const SnackbarAction = styled.div<SnackbarActionProps>`
+  display: flex;
+  align-items: center;
+  margin-left: 8px;
+  padding-left: 8px;
+  border-left: 1px solid ${(props) => props.theme.palette.divider};
+`;
 
-const SnackbarAction = styled<"div", SnackbarActionProps>(
-  "div",
-  ({ theme }) => `
-    display: flex;
-    align-items: center;
-    margin-left: 8px;
-    padding-left: 8px;
-    border-left: 1px solid ${theme.palette.divider};
-  `
-);
+const CloseButton = styled.button<CloseButtonProps>`
+  padding: ${(props) =>
+    props.size === "small" ? "4px" : props.size === "large" ? "8px" : "6px"};
+  margin-left: 8px;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.2s;
 
-const CloseButton = styled<"button", CloseButtonProps>(
-  "button",
-  ({ theme, size = "medium" }) => `
-    padding: ${size === "small" ? "4px" : size === "large" ? "8px" : "6px"};
-    margin-left: 8px;
-    color: inherit;
-    background: none;
-    border: none;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    transition: background-color 0.2s;
-
-    &:hover {
-      background-color: rgba(0, 0, 0, 0.04);
-    }
-  `
-);
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+`;
 
 export const Snackbar: React.FC<SnackbarProps> = ({
   variant = "standard",
@@ -210,7 +199,7 @@ export const Snackbar: React.FC<SnackbarProps> = ({
   anchorOrigin,
 }) => {
   const theme = useTheme();
-  const timerRef = React.useRef<NodeJS.Timeout>();
+  const timerRef = React.useRef<NodeJS.Timeout | undefined>(undefined);
 
   React.useEffect(() => {
     if (open && autoHideDuration > 0 && onClose) {

@@ -1,7 +1,7 @@
 import React, { createContext, useContext } from "react";
 import { useTheme } from "../../theme";
 import { Theme } from "../../theme/types";
-import { styled } from "../../utils/styled";
+import styled from "../../utils/styled";
 
 export type ListColor =
   | "primary"
@@ -65,27 +65,23 @@ interface ListWrapperProps {
   theme: Theme;
 }
 
-const ListWrapper = styled<"ul", ListWrapperProps>(
-  "ul",
-  (props) => `
+const ListWrapper = styled.ul<ListWrapperProps>`
   margin: 0;
-  padding: ${
-    props.dense || props.disablePadding ? 0 : props.theme.spacing.getSpacing(1)
-  }px;
+  padding: ${(props) =>
+    props.dense || props.disablePadding
+      ? 0
+      : props.theme.spacing.getSpacing(1)}px;
   list-style: none;
-  background-color: ${
+  background-color: ${(props) =>
     props.variant === "contained"
       ? props.theme.palette[props.color || "primary"].main
-      : props.theme.palette.background.paper
-  };
-  border: ${
+      : props.theme.palette.background.paper};
+  border: ${(props) =>
     props.variant === "outlined"
       ? `1px solid ${props.theme.palette[props.color || "primary"].main}`
-      : "none"
-  };
-  border-radius: ${props.theme.shape.borderRadius}px;
-`
-);
+      : "none"};
+  border-radius: ${(props) => props.theme.shape.borderRadius}px;
+`;
 
 interface ListItemWrapperProps {
   button?: boolean;
@@ -99,40 +95,32 @@ interface ListItemWrapperProps {
   theme: Theme;
 }
 
-const ListItemWrapper = styled<"li", ListItemWrapperProps>(
-  "li",
-  (props) => `
+const ListItemWrapper = styled.li<ListItemWrapperProps>`
   display: flex;
   align-items: center;
-  padding: ${
+  padding: ${(props) =>
     props.dense
       ? props.theme.spacing.getSpacing(0.5)
       : props.disablePadding
       ? 0
-      : props.theme.spacing.getSpacing(1)
-  }px;
-  cursor: ${
-    props.disabled ? "not-allowed" : props.button ? "pointer" : "default"
-  };
-  opacity: ${props.disabled ? 0.5 : 1};
-  background-color: ${
+      : props.theme.spacing.getSpacing(1)}px;
+  cursor: ${(props) =>
+    props.disabled ? "not-allowed" : props.button ? "pointer" : "default"};
+  opacity: ${(props) => (props.disabled ? 0.5 : 1)};
+  background-color: ${(props) =>
     props.selected
       ? props.theme.palette[props.color || "primary"].light
-      : "transparent"
-  };
-  border-bottom: ${
-    props.divider ? `1px solid ${props.theme.palette.divider}` : "none"
-  };
+      : "transparent"};
+  border-bottom: ${(props) =>
+    props.divider ? `1px solid ${props.theme.palette.divider}` : "none"};
 
   &:hover:not(:disabled) {
-    background-color: ${
+    background-color: ${(props) =>
       props.selected
         ? props.theme.palette[props.color || "primary"].light
-        : props.theme.palette.action.hover
-    };
+        : props.theme.palette.action.hover};
   }
-`
-);
+`;
 
 interface ListItemTextWrapperProps {
   inset?: boolean;
@@ -141,11 +129,9 @@ interface ListItemTextWrapperProps {
   theme: Theme;
 }
 
-const ListItemTextWrapper = styled<"div", ListItemTextWrapperProps>(
-  "div",
-  (props) => `
+const ListItemTextWrapper = styled.div<ListItemTextWrapperProps>`
   flex: 1;
-  padding: ${(() => {
+  padding: ${(props) => {
     if (props.inset) {
       return props.dense
         ? props.theme.spacing.getSpacing(0.5)
@@ -156,9 +142,8 @@ const ListItemTextWrapper = styled<"div", ListItemTextWrapperProps>(
       : props.dense
       ? props.theme.spacing.getSpacing(0.5)
       : props.theme.spacing.getSpacing(1);
-  })()}px;
-`
-);
+  }}px;
+`;
 
 interface ListItemPrimaryTextProps {
   color?: ListColor;
@@ -166,18 +151,14 @@ interface ListItemPrimaryTextProps {
   theme: Theme;
 }
 
-const ListItemPrimaryText = styled<"div", ListItemPrimaryTextProps>(
-  "div",
-  (props) => `
-  color: ${
+const ListItemPrimaryText = styled.div<ListItemPrimaryTextProps>`
+  color: ${(props) =>
     props.variant === "contained"
       ? props.theme.palette.common.white
-      : props.theme.palette.text.primary
-  };
+      : props.theme.palette.text.primary};
   font-size: 1rem;
   line-height: 1.5;
-`
-);
+`;
 
 interface ListItemSecondaryTextProps {
   color?: ListColor;
@@ -185,18 +166,14 @@ interface ListItemSecondaryTextProps {
   theme: Theme;
 }
 
-const ListItemSecondaryText = styled<"div", ListItemSecondaryTextProps>(
-  "div",
-  (props) => `
-  color: ${
+const ListItemSecondaryText = styled.div<ListItemSecondaryTextProps>`
+  color: ${(props) =>
     props.variant === "contained"
       ? props.theme.palette.common.white
-      : props.theme.palette.text.secondary
-  };
+      : props.theme.palette.text.secondary};
   font-size: 0.875rem;
   line-height: 1.43;
-`
-);
+`;
 
 interface ListItemIconWrapperProps {
   dense?: boolean;
@@ -204,17 +181,15 @@ interface ListItemIconWrapperProps {
   theme: Theme;
 }
 
-const ListItemIconWrapper = styled<"div", ListItemIconWrapperProps>(
-  "div",
-  (props) => `
+const ListItemIconWrapper = styled.div<ListItemIconWrapperProps>`
   display: flex;
   align-items: center;
-  padding: ${
-    props.dense || props.disablePadding ? 0 : props.theme.spacing.getSpacing(1)
-  }px;
-  color: ${props.theme.palette.action.active};
-`
-);
+  padding: ${(props) =>
+    props.dense || props.disablePadding
+      ? 0
+      : props.theme.spacing.getSpacing(1)}px;
+  color: ${(props) => props.theme.palette.action.active};
+`;
 
 interface ListItemAvatarWrapperProps {
   dense?: boolean;
@@ -222,16 +197,14 @@ interface ListItemAvatarWrapperProps {
   theme: Theme;
 }
 
-const ListItemAvatarWrapper = styled<"div", ListItemAvatarWrapperProps>(
-  "div",
-  (props) => `
+const ListItemAvatarWrapper = styled.div<ListItemAvatarWrapperProps>`
   display: flex;
   align-items: center;
-  padding: ${
-    props.dense || props.disablePadding ? 0 : props.theme.spacing.getSpacing(1)
-  }px;
-`
-);
+  padding: ${(props) =>
+    props.dense || props.disablePadding
+      ? 0
+      : props.theme.spacing.getSpacing(1)}px;
+`;
 
 interface ListSubheaderWrapperProps {
   inset?: boolean;
@@ -242,10 +215,8 @@ interface ListSubheaderWrapperProps {
   theme: Theme;
 }
 
-const ListSubheaderWrapper = styled<"div", ListSubheaderWrapperProps>(
-  "div",
-  (props) => `
-  padding: ${(() => {
+const ListSubheaderWrapper = styled.div<ListSubheaderWrapperProps>`
+  padding: ${(props) => {
     if (props.inset) {
       return props.dense
         ? props.theme.spacing.getSpacing(0.5)
@@ -256,17 +227,15 @@ const ListSubheaderWrapper = styled<"div", ListSubheaderWrapperProps>(
       : props.dense
       ? props.theme.spacing.getSpacing(0.5)
       : props.theme.spacing.getSpacing(1);
-  })()}px;
-  color: ${
+  }}px;
+  color: ${(props) =>
     props.variant === "contained"
       ? props.theme.palette.common.white
-      : props.theme.palette.text.secondary
-  };
+      : props.theme.palette.text.secondary};
   font-size: 0.875rem;
   font-weight: 500;
   line-height: 1.57;
-`
-);
+`;
 
 export const ListComponent = ({
   color = "primary",

@@ -35,6 +35,8 @@ export const createTheme = (options: ThemeOptions = {}): Theme => {
     spacing = {},
     shape = {},
     components = {},
+    zIndex = {},
+    shadows = [],
   } = options;
 
   const theme: Theme = {
@@ -58,6 +60,11 @@ export const createTheme = (options: ThemeOptions = {}): Theme => {
       ...defaultTheme.components,
       ...components,
     },
+    zIndex: {
+      ...defaultTheme.zIndex,
+      ...zIndex,
+    },
+    shadows: shadows.length > 0 ? shadows : defaultTheme.shadows,
   };
 
   return theme;

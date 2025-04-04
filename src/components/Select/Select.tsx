@@ -1,337 +1,305 @@
-import React, { useState, useRef, useEffect } from "react";
+import React from "react";
 import { useTheme } from "../../theme";
-import { styled } from "../../utils/styled";
+import { Theme } from "../../theme/types";
+import styled from "../../utils/styled";
 
-export type SelectVariant = "outlined" | "filled" | "standard";
 export type SelectColor =
   | "primary"
   | "secondary"
   | "error"
   | "warning"
   | "info"
-  | "success";
+  | "success"
+  | "default";
+
 export type SelectSize = "small" | "medium" | "large";
+export type SelectVariant = "outlined" | "filled" | "standard";
 
 export interface SelectOption {
-  value: string;
+  value: string | number;
   label: string;
   disabled?: boolean;
 }
 
 export interface SelectProps {
-  variant?: SelectVariant;
+  options: SelectOption[];
+  value?: string | number;
+  defaultValue?: string | number;
+  onChange?: (value: string | number) => void;
+  onBlur?: () => void;
+  onFocus?: () => void;
+  placeholder?: string;
+  disabled?: boolean;
+  error?: boolean;
+  fullWidth?: boolean;
+  helperText?: string;
+  label?: string;
+  required?: boolean;
   color?: SelectColor;
   size?: SelectSize;
-  label?: string;
-  error?: boolean;
-  helperText?: string;
-  required?: boolean;
-  disabled?: boolean;
-  multiple?: boolean;
-  value?: string | string[];
-  onChange?: (value: string | string[]) => void;
-  options: SelectOption[];
-  startIcon?: React.ReactNode;
-  endIcon?: React.ReactNode;
-  placeholder?: string;
+  variant?: SelectVariant;
 }
 
 interface SelectWrapperProps {
   fullWidth?: boolean;
-}
-
-interface LabelProps {
-  variant?: SelectVariant;
-  size?: SelectSize;
-  error?: boolean;
-  color?: SelectColor;
-  disabled?: boolean;
   theme: Theme;
 }
+
+const StyledSelectWrapper = styled.div<SelectWrapperProps>`
+  display: inline-flex;
+  flex-direction: column;
+  width: ${(props) => (props.fullWidth ? "100%" : "auto")};
+`;
 
 interface SelectContainerProps {
   variant?: SelectVariant;
   color?: SelectColor;
-  size?: SelectSize;
+  size: SelectSize;
   error?: boolean;
   disabled?: boolean;
   theme: Theme;
 }
 
-interface Theme {
-  palette: {
-    text: {
-      primary: string;
-      secondary: string;
-      disabled: string;
-    };
-    background: {
-      default: string;
-      paper: string;
-    };
-    primary: {
-      main: string;
-      light: string;
-      dark: string;
-    };
-    secondary: {
-      main: string;
-      light: string;
-      dark: string;
-    };
-    error: {
-      main: string;
-      light: string;
-      dark: string;
-    };
-    divider: string;
-  };
-  typography: {
-    fontFamily: string;
-  };
-  shape: {
-    borderRadius: number;
-  };
-  spacing: (factor: number) => string;
-}
+const StyledSelectContainer = styled.div<SelectContainerProps>`
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-width: 120px;
+  height: ${(props) => {
+    const size = props.size || "medium";
+    return size === "small" ? "32px" : size === "large" ? "56px" : "40px";
+  }};
+  padding: ${(props) => props.theme.spacing.getSpacing(1)}px;
+  background-color: ${(props) =>
+    props.variant === "filled"
+      ? props.theme.palette.action.hover
+      : props.theme.palette.background.paper};
+  border: ${(props) =>
+    props.variant === "outlined"
+      ? `1px solid ${
+          props.error
+            ? props.theme.palette.error.main
+            : props.theme.palette.divider
+        }`
+      : "none"};
+  border-bottom: ${(props) =>
+    props.variant === "standard"
+      ? `1px solid ${
+          props.error
+            ? props.theme.palette.error.main
+            : props.theme.palette.divider
+        }`
+      : undefined};
+  border-radius: ${(props) =>
+    props.variant === "outlined" ? props.theme.shape.borderRadius : 0}px;
+  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
+  opacity: ${(props) => (props.disabled ? 0.5 : 1)};
 
-interface StyledSelectProps {
+  &:hover {
+    background-color: ${(props) =>
+      props.variant === "filled"
+        ? props.theme.palette.action.hover
+        : props.theme.palette.background.paper};
+    border-color: ${(props) =>
+      props.variant !== "filled" && !props.error
+        ? props.theme.palette[props.color || "primary"].main
+        : undefined};
+  }
+
+  &:focus-within {
+    border-color: ${(props) =>
+      props.variant !== "filled" && !props.error
+        ? props.theme.palette[props.color || "primary"].main
+        : undefined};
+    box-shadow: ${(props) =>
+      props.variant !== "filled" && !props.error
+        ? `0 0 0 2px ${props.theme.palette[props.color || "primary"].light}`
+        : undefined};
+  }
+`;
+
+interface SelectElementWrapperProps {
   variant?: SelectVariant;
-  size?: SelectSize;
-  startIcon?: React.ReactNode;
-  endIcon?: React.ReactNode;
-  disabled?: boolean;
-  multiple?: boolean;
-  value?: string | string[];
-  onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  color?: SelectColor;
+  size: SelectSize;
+  error?: boolean;
   theme: Theme;
 }
+
+const SelectElementWrapper = styled.div<SelectElementWrapperProps>`
+  position: relative;
+  width: 100%;
+
+  select {
+    width: 100%;
+    padding: ${({ size }) => {
+      switch (size) {
+        case "small":
+          return "4px 8px";
+        case "large":
+          return "12px 16px";
+        default:
+          return "8px 12px";
+      }
+    }};
+    font-size: ${({ size }) => {
+      switch (size) {
+        case "small":
+          return "0.875rem";
+        case "large":
+          return "1.25rem";
+        default:
+          return "1rem";
+      }
+    }};
+    border: 1px solid
+      ${({ error, theme }) =>
+        error ? theme.palette.error.main : theme.palette.divider};
+    border-radius: ${({ theme }) => theme.shape.borderRadius}px;
+    background-color: ${({ theme }) => theme.palette.background.paper};
+    color: ${({ theme }) => theme.palette.text.primary};
+    transition: all 0.2s ease-in-out;
+
+    &:focus {
+      outline: none;
+      border-color: ${({ error, color = "primary", theme }) =>
+        error ? theme.palette.error.main : theme.palette[color].main};
+      box-shadow: 0 0 0 2px
+        ${({ error, color = "primary", theme }) =>
+          error
+            ? theme.palette.error.main + "40"
+            : theme.palette[color].main + "40"};
+    }
+
+    &:disabled {
+      background-color: ${({ theme }) => theme.palette.background.default};
+      color: ${({ theme }) => theme.palette.text.disabled};
+      cursor: not-allowed;
+    }
+
+    &:hover:not(:disabled) {
+      border-color: ${({ error, color = "primary", theme }) =>
+        error ? theme.palette.error.main : theme.palette[color].main};
+    }
+  }
+`;
+
+interface LabelProps {
+  variant?: SelectVariant;
+  color?: SelectColor;
+  size: SelectSize;
+  error?: boolean;
+  disabled?: boolean;
+  required?: boolean;
+  theme: Theme;
+}
+
+const StyledLabel = styled.label<LabelProps>`
+  margin-bottom: ${(props) => props.theme.spacing.getSpacing(0.5)}px;
+  font-family: ${(props) => props.theme.typography.fontFamily};
+  font-size: ${(props) => {
+    const size = props.size || "medium";
+    return size === "small"
+      ? "0.75rem"
+      : size === "large"
+      ? "1rem"
+      : "0.875rem";
+  }};
+  color: ${(props) =>
+    props.error
+      ? props.theme.palette.error.main
+      : props.theme.palette.text.secondary};
+
+  &::after {
+    content: ${(props) => (props.required ? '"*"' : '""')};
+    margin-left: ${(props) => props.theme.spacing.getSpacing(0.5)}px;
+    color: ${(props) => props.theme.palette.error.main};
+  }
+`;
 
 interface HelperTextProps {
   error?: boolean;
-  color?: SelectColor;
   theme: Theme;
 }
+
+const StyledHelperText = styled.div<HelperTextProps>`
+  margin-top: ${(props) => props.theme.spacing.getSpacing(0.5)}px;
+  font-family: ${(props) => props.theme.typography.fontFamily};
+  font-size: 0.75rem;
+  color: ${(props) =>
+    props.error
+      ? props.theme.palette.error.main
+      : props.theme.palette.text.secondary};
+`;
 
 interface IconWrapperProps {
   position: "start" | "end";
   theme: Theme;
 }
 
-const SelectWrapper = styled<"div", SelectWrapperProps>(
-  "div",
-  ({ fullWidth }) => `
-    display: inline-flex;
-    flex-direction: column;
-    position: relative;
-    width: ${fullWidth ? "100%" : "auto"};
-    min-width: 200px;
-  `
-);
-
-const Label = styled<"label", LabelProps>(
-  "label",
-  ({ variant, size, error, color = "primary", theme }) => `
-    position: absolute;
-    left: ${variant === "outlined" ? "14px" : "0"};
-    top: ${
-      variant === "outlined"
-        ? "-9px"
-        : size === "small"
-        ? "4px"
-        : size === "large"
-        ? "8px"
-        : "6px"
-    };
-    background: ${
-      variant === "outlined" ? theme.palette.background.paper : "transparent"
-    };
-    padding: ${variant === "outlined" ? "0 4px" : "0"};
-    color: ${error ? theme.palette.error.main : theme.palette[color].main};
-    font-size: ${
-      size === "small" ? "0.75rem" : size === "large" ? "1rem" : "0.875rem"
-    };
-    font-weight: ${theme.typography.fontWeightMedium};
-    pointer-events: none;
-    transition: all 0.2s ease-in-out;
-  `
-);
-
-const SelectContainer = styled<"div", SelectContainerProps>(
-  "div",
-  ({ variant, error, color = "primary", theme }) => `
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    width: 100%;
-
-    ${
-      variant === "outlined"
-        ? `
-          border: 1px solid ${
-            error ? theme.palette.error.main : theme.palette[color].main
-          };
-          border-radius: ${theme.shape.borderRadius}px;
-          &:hover {
-            border-color: ${
-              error ? theme.palette.error.dark : theme.palette[color].dark
-            };
-          }
-          &:focus-within {
-            border-color: ${
-              error ? theme.palette.error.main : theme.palette[color].main
-            };
-            border-width: 2px;
-          }
-        `
-        : variant === "filled"
-        ? `
-          border-bottom: 1px solid ${
-            error ? theme.palette.error.main : theme.palette[color].main
-          };
-          border-radius: ${theme.shape.borderRadius}px ${
-            theme.shape.borderRadius
-          }px 0 0;
-          background: ${
-            error
-              ? theme.palette.error.light + "15"
-              : theme.palette[color].light + "15"
-          };
-          &:hover {
-            background: ${
-              error
-                ? theme.palette.error.light + "25"
-                : theme.palette[color].light + "25"
-            };
-          }
-          &:focus-within {
-            border-bottom-width: 2px;
-          }
-        `
-        : `
-          border-bottom: 1px solid ${
-            error ? theme.palette.error.main : theme.palette[color].main
-          };
-          &:hover {
-            border-bottom-color: ${
-              error ? theme.palette.error.dark : theme.palette[color].dark
-            };
-          }
-          &:focus-within {
-            border-bottom-width: 2px;
-          }
-        `
-    }
-  `
-);
-
-const StyledSelect = styled<"select", StyledSelectProps>(
-  "select",
-  ({ variant, size = "medium", startIcon, endIcon, theme }) => `
-    width: 100%;
-    padding: ${
-      variant === "outlined"
-        ? `${size === "small" ? "8px" : size === "large" ? "16px" : "12px"} ${
-            startIcon || endIcon ? "0" : ""
-          }`
-        : `${size === "small" ? "8px" : size === "large" ? "16px" : "12px"} ${
-            startIcon || endIcon ? "0" : ""
-          } ${size === "small" ? "8px" : size === "large" ? "16px" : "12px"}`
-    };
-    font-family: ${theme.typography.fontFamily};
-    font-size: ${
-      size === "small" ? "0.875rem" : size === "large" ? "1.25rem" : "1rem"
-    };
-    line-height: 1.4375em;
-    color: ${theme.palette.text.primary};
-    background: transparent;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-    background-repeat: no-repeat;
-    background-position: right 8px center;
-    background-size: 16px;
-    padding-right: 32px;
-
-    &:disabled {
-      color: ${theme.palette.text.disabled};
-      cursor: not-allowed;
-    }
-
-    &:focus {
-      outline: none;
-    }
-  `
-);
-
-const HelperText = styled<"div", HelperTextProps>(
-  "div",
-  ({ error, color = "primary", theme }) => `
-    margin-top: 3px;
-    font-size: 0.75rem;
-    color: ${error ? theme.palette.error.main : theme.palette[color].main};
-    min-height: 1em;
-  `
-);
-
-const IconWrapper = styled<"div", IconWrapperProps>(
-  "div",
-  ({ position, theme }) => `
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: ${position === "start" ? "0 8px 0 12px" : "0 12px 0 8px"};
-    color: ${theme.palette.text.secondary};
-  `
-);
+const StyledIconWrapper = styled.div<IconWrapperProps>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  margin-${(props) => props.position}: ${(props) =>
+  props.theme.spacing.getSpacing(1)}px;
+  color: ${(props) => props.theme.palette.text.secondary};
+`;
 
 export const Select: React.FC<SelectProps> = ({
-  variant = "outlined",
+  options,
+  value,
+  defaultValue,
+  onChange,
+  onBlur,
+  onFocus,
+  placeholder,
+  disabled = false,
+  error = false,
+  fullWidth = false,
+  helperText,
+  label,
+  required = false,
   color = "primary",
   size = "medium",
-  label,
-  error,
-  helperText,
-  required,
-  disabled,
-  multiple,
-  value,
-  onChange,
-  options,
-  startIcon,
-  endIcon,
-  placeholder,
+  variant = "outlined",
 }) => {
   const theme = useTheme();
-  const selectRef = useRef<HTMLSelectElement>(null);
+  const [isFocused, setIsFocused] = React.useState(false);
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const newValue = multiple
-      ? Array.from(event.target.selectedOptions, (option) => option.value)
-      : event.target.value;
-    onChange?.(newValue);
+    onChange?.(event.target.value);
+  };
+
+  const handleBlur = () => {
+    setIsFocused(false);
+    onBlur?.();
+  };
+
+  const handleFocus = () => {
+    setIsFocused(true);
+    onFocus?.();
   };
 
   return (
-    <SelectWrapper>
+    <StyledSelectWrapper fullWidth={fullWidth} theme={theme}>
       {label && (
-        <Label
+        <StyledLabel
           variant={variant}
+          color={color}
           size={size}
           error={error}
-          color={color}
           disabled={disabled}
+          required={required}
           theme={theme}
         >
           {label}
-          {required && " *"}
-        </Label>
+        </StyledLabel>
       )}
-      <SelectContainer
+      <StyledSelectContainer
         variant={variant}
         color={color}
         size={size}
@@ -339,49 +307,60 @@ export const Select: React.FC<SelectProps> = ({
         disabled={disabled}
         theme={theme}
       >
-        {startIcon && (
-          <IconWrapper position="start" theme={theme}>
-            {startIcon}
-          </IconWrapper>
-        )}
-        <StyledSelect
-          ref={selectRef}
+        <SelectElementWrapper
           variant={variant}
+          color={color}
           size={size}
-          startIcon={startIcon}
-          endIcon={endIcon}
-          disabled={disabled}
-          multiple={multiple}
-          value={value}
-          onChange={handleChange}
+          error={error}
           theme={theme}
         >
-          {placeholder && (
-            <option value="" disabled>
-              {placeholder}
-            </option>
-          )}
-          {options.map((option) => (
-            <option
-              key={option.value}
-              value={option.value}
-              disabled={option.disabled}
-            >
-              {option.label}
-            </option>
-          ))}
-        </StyledSelect>
-        {endIcon && (
-          <IconWrapper position="end" theme={theme}>
-            {endIcon}
-          </IconWrapper>
-        )}
-      </SelectContainer>
+          <select
+            value={value}
+            defaultValue={defaultValue}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            onFocus={handleFocus}
+            disabled={disabled}
+          >
+            {placeholder && (
+              <option value="" disabled>
+                {placeholder}
+              </option>
+            )}
+            {options.map((option) => (
+              <option
+                key={option.value}
+                value={option.value}
+                disabled={option.disabled}
+              >
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </SelectElementWrapper>
+        <StyledIconWrapper position="end" theme={theme}>
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M7 10l5 5 5-5"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </StyledIconWrapper>
+      </StyledSelectContainer>
       {helperText && (
-        <HelperText error={error} color={color} theme={theme}>
+        <StyledHelperText error={error} theme={theme}>
           {helperText}
-        </HelperText>
+        </StyledHelperText>
       )}
-    </SelectWrapper>
+    </StyledSelectWrapper>
   );
 };

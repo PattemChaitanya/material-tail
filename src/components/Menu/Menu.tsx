@@ -1,7 +1,7 @@
 import React from "react";
 import { useTheme } from "../../theme";
 import { Theme } from "../../theme/types";
-import { styled } from "../../utils/styled";
+import styled from "../../utils/styled";
 import { Paper } from "../Paper";
 
 export type MenuVariant = "standard" | "dense";
@@ -42,24 +42,22 @@ export interface MenuItemProps {
   children: React.ReactNode;
 }
 
-const StyledMenuWrapper = styled<
-  "div",
-  {
-    anchorPosition: { top: number; left: number };
-    transformOrigin: { vertical: string; horizontal: string };
-    theme: Theme;
-  }
->(
-  "div",
-  (props) => `
+interface StyledMenuWrapperProps {
+  anchorPosition: { top: number; left: number };
+  transformOrigin: { vertical: string; horizontal: string };
+  theme: Theme;
+}
+
+const StyledMenuWrapper = styled.div<StyledMenuWrapperProps>`
   position: fixed;
-  top: ${props.anchorPosition.top}px;
-  left: ${props.anchorPosition.left}px;
+  top: ${(props) => props.anchorPosition.top}px;
+  left: ${(props) => props.anchorPosition.left}px;
   z-index: 1300;
   min-width: 160px;
   max-height: calc(100vh - 96px);
   overflow-y: auto;
-  transform-origin: ${props.transformOrigin.horizontal} ${props.transformOrigin.vertical};
+  transform-origin: ${(props) => props.transformOrigin.horizontal}
+    ${(props) => props.transformOrigin.vertical};
   opacity: 0;
   transform: scale(0.75);
   visibility: hidden;
@@ -70,58 +68,51 @@ const StyledMenuWrapper = styled<
     transform: scale(1);
     visibility: visible;
   }
-`
-);
+`;
 
-const StyledMenuList = styled<"ul", { dense?: boolean; theme: Theme }>(
-  "ul",
-  (props) => `
+interface StyledMenuListProps {
+  dense?: boolean;
+  theme: Theme;
+}
+
+const StyledMenuList = styled.ul<StyledMenuListProps>`
   list-style: none;
   margin: 0;
-  padding: ${props.dense ? "4px 0" : "8px 0"};
-`
-);
+  padding: ${(props) => (props.dense ? "4px 0" : "8px 0")};
+`;
 
-const StyledMenuItem = styled<
-  "li",
-  {
-    disabled?: boolean;
-    selected?: boolean;
-    dense?: boolean;
-    divider?: boolean;
-    theme: Theme;
-  }
->(
-  "li",
-  (props) => `
+interface StyledMenuItemProps {
+  disabled?: boolean;
+  selected?: boolean;
+  dense?: boolean;
+  divider?: boolean;
+  theme: Theme;
+}
+
+const StyledMenuItem = styled.li<StyledMenuItemProps>`
   display: flex;
   align-items: center;
   justify-content: flex-start;
   position: relative;
   text-decoration: none;
-  min-height: ${props.dense ? "32px" : "48px"};
-  padding: ${props.dense ? "4px 16px" : "6px 16px"};
-  cursor: ${props.disabled ? "default" : "pointer"};
+  min-height: ${(props) => (props.dense ? "32px" : "48px")};
+  padding: ${(props) => (props.dense ? "4px 16px" : "6px 16px")};
+  cursor: ${(props) => (props.disabled ? "default" : "pointer")};
   user-select: none;
-  border-bottom: ${
-    props.divider ? `1px solid ${props.theme.palette.divider}` : "none"
-  };
-  color: ${
+  border-bottom: ${(props) =>
+    props.divider ? `1px solid ${props.theme.palette.divider}` : "none"};
+  color: ${(props) =>
     props.disabled
       ? props.theme.palette.action.disabled
-      : props.theme.palette.text.primary
-  };
-  background-color: ${
-    props.selected ? props.theme.palette.action.selected : "transparent"
-  };
+      : props.theme.palette.text.primary};
+  background-color: ${(props) =>
+    props.selected ? props.theme.palette.action.selected : "transparent"};
 
   &:hover {
-    background-color: ${
-      props.disabled ? "transparent" : props.theme.palette.action.hover
-    };
+    background-color: ${(props) =>
+      props.disabled ? "transparent" : props.theme.palette.action.hover};
   }
-`
-);
+`;
 
 export const MenuComponent: React.FC<MenuProps> = ({
   variant = "standard",

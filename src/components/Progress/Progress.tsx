@@ -1,7 +1,7 @@
 import React from "react";
 import { useTheme } from "../../theme";
 import { Theme as ThemeType } from "../../theme/types";
-import { styled } from "../../utils/styled";
+import styled from "../../utils/styled";
 import { keyframes } from "@emotion/react";
 
 export type LinearProgressVariant = "determinate" | "indeterminate" | "buffer";
@@ -31,27 +31,39 @@ type Theme = ThemeType & {
   palette: {
     primary: {
       main: string;
-      light: string;
+      light?: string;
+      dark?: string;
+      contrastText?: string;
     };
     secondary: {
       main: string;
-      light: string;
+      light?: string;
+      dark?: string;
+      contrastText?: string;
     };
     error: {
       main: string;
-      light: string;
+      light?: string;
+      dark?: string;
+      contrastText?: string;
     };
     warning: {
       main: string;
-      light: string;
+      light?: string;
+      dark?: string;
+      contrastText?: string;
     };
     info: {
       main: string;
-      light: string;
+      light?: string;
+      dark?: string;
+      contrastText?: string;
     };
     success: {
       main: string;
-      light: string;
+      light?: string;
+      dark?: string;
+      contrastText?: string;
     };
     action: {
       disabled: string;
@@ -75,6 +87,8 @@ interface LinearProgressProps {
   color?: ProgressColor;
   disabled?: boolean;
   thickness?: number;
+  size?: ProgressSize;
+  theme: Theme;
 }
 
 interface LinearBarProps {
@@ -83,6 +97,7 @@ interface LinearBarProps {
   disabled?: boolean;
   value?: number;
   bufferValue?: number;
+  theme: Theme;
 }
 
 interface CircularProgressProps {
@@ -90,12 +105,15 @@ interface CircularProgressProps {
   color?: ProgressColor;
   disabled?: boolean;
   size?: ProgressSize;
+  theme: Theme;
 }
 
 interface CircularTrackProps {
   color?: ProgressColor;
   disabled?: boolean;
   size?: ProgressSize;
+  thickness?: number;
+  theme: Theme;
 }
 
 interface CircularBarProps {
@@ -104,11 +122,15 @@ interface CircularBarProps {
   disabled?: boolean;
   value?: number;
   size?: ProgressSize;
+  thickness?: number;
+  theme: Theme;
 }
 
 interface ValueLabelProps {
   color?: ProgressColor;
   disabled?: boolean;
+  size?: ProgressSize;
+  theme: Theme;
 }
 
 const indeterminateKeyframes = keyframes`
@@ -135,63 +157,45 @@ const circularKeyframes = keyframes`
   }
 `;
 
-const ProgressWrapper = styled("div")<ProgressWrapperProps>`
+const ProgressWrapper = styled.div<ProgressWrapperProps>`
   display: inline-flex;
   align-items: center;
   width: 100%;
   position: relative;
   overflow: hidden;
-  border-radius: ${({ theme }: { theme: Theme }) => theme.shape.borderRadius}px;
-  background-color: ${({
-    theme,
-    disabled,
-  }: {
-    theme: Theme;
-    disabled?: boolean;
-  }) => (disabled ? theme.palette.action.disabledBackground : "transparent")};
-  pointer-events: ${({ disabled }: { disabled?: boolean }) =>
-    disabled ? "none" : "auto"};
+  border-radius: ${(props) => props.theme.shape.borderRadius}px;
+  background-color: ${(props) =>
+    props.disabled
+      ? props.theme.palette.action.disabledBackground
+      : "transparent"};
+  pointer-events: ${(props) => (props.disabled ? "none" : "auto")};
 `;
 
-const LinearProgress = styled("div")<LinearProgressProps>`
+const LinearProgress = styled.div<LinearProgressProps>`
   position: relative;
   width: 100%;
-  height: ${({
-    size,
-    thickness,
-  }: {
-    size?: ProgressSize;
-    thickness?: number;
-  }) =>
-    size === "small"
-      ? thickness || 4
-      : size === "large"
-      ? thickness || 8
-      : thickness || 6}px;
+  height: ${(props) =>
+    props.size === "small"
+      ? props.thickness || 4
+      : props.size === "large"
+      ? props.thickness || 8
+      : props.thickness || 6}px;
   overflow: hidden;
-  background-color: ${({
-    theme,
-    color = "primary",
-    disabled,
-  }: {
-    theme: Theme;
-    color?: ProgressColor;
-    disabled?: boolean;
-  }) =>
-    disabled
-      ? theme.palette.action.disabledBackground
-      : color === "primary"
-      ? theme.palette.primary.light
-      : color === "secondary"
-      ? theme.palette.secondary.light
-      : color === "error"
-      ? theme.palette.error.light
-      : color === "warning"
-      ? theme.palette.warning.light
-      : color === "info"
-      ? theme.palette.info.light
-      : theme.palette.success.light};
-  border-radius: ${({ theme }: { theme: Theme }) => theme.shape.borderRadius}px;
+  background-color: ${(props) =>
+    props.disabled
+      ? props.theme.palette.action.disabledBackground
+      : props.color === "primary"
+      ? props.theme.palette.primary.light
+      : props.color === "secondary"
+      ? props.theme.palette.secondary.light
+      : props.color === "error"
+      ? props.theme.palette.error.light
+      : props.color === "warning"
+      ? props.theme.palette.warning.light
+      : props.color === "info"
+      ? props.theme.palette.info.light
+      : props.theme.palette.success.light};
+  border-radius: ${(props) => props.theme.shape.borderRadius}px;
 `;
 
 const LinearBar = styled.div<LinearBarProps>`
@@ -199,30 +203,30 @@ const LinearBar = styled.div<LinearBarProps>`
   top: 0;
   left: 0;
   height: 100%;
-  background-color: ${({ theme, color = "primary", disabled }) =>
-    disabled
-      ? theme.palette.action.disabled
-      : color === "primary"
-      ? theme.palette.primary.main
-      : color === "secondary"
-      ? theme.palette.secondary.main
-      : color === "error"
-      ? theme.palette.error.main
-      : color === "warning"
-      ? theme.palette.warning.main
-      : color === "info"
-      ? theme.palette.info.main
-      : theme.palette.success.main};
+  background-color: ${(props) =>
+    props.disabled
+      ? props.theme.palette.action.disabled
+      : props.color === "primary"
+      ? props.theme.palette.primary.main
+      : props.color === "secondary"
+      ? props.theme.palette.secondary.main
+      : props.color === "error"
+      ? props.theme.palette.error.main
+      : props.color === "warning"
+      ? props.theme.palette.warning.main
+      : props.color === "info"
+      ? props.theme.palette.info.main
+      : props.theme.palette.success.main};
   transition: transform 0.2s ease-in-out;
   transform-origin: left;
-  transform: ${({ variant, value = 0 }) =>
-    variant === "determinate"
-      ? `translateX(${(value - 100) * 100}%)`
-      : variant === "buffer"
-      ? `translateX(${(value - 100) * 100}%)`
+  transform: ${(props) =>
+    props.variant === "determinate"
+      ? `translateX(${((props.value || 0) - 100) * 100}%)`
+      : props.variant === "buffer"
+      ? `translateX(${((props.value || 0) - 100) * 100}%)`
       : "none"};
-  animation: ${({ variant }) =>
-      variant === "indeterminate" ? indeterminateKeyframes : "none"}
+  animation: ${(props) =>
+      props.variant === "indeterminate" ? indeterminateKeyframes : "none"}
     1.5s infinite;
 `;
 
@@ -231,64 +235,64 @@ const CircularProgress = styled.div<CircularProgressProps>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: ${({ size }) =>
-    size === "small" ? "24px" : size === "large" ? "48px" : "36px"};
-  height: ${({ size }) =>
-    size === "small" ? "24px" : size === "large" ? "48px" : "36px"};
+  width: ${(props) =>
+    props.size === "small" ? "24px" : props.size === "large" ? "48px" : "36px"};
+  height: ${(props) =>
+    props.size === "small" ? "24px" : props.size === "large" ? "48px" : "36px"};
 `;
 
 const CircularTrack = styled.circle<CircularTrackProps>`
   fill: none;
-  stroke: ${({ theme, color = "primary", disabled }) =>
-    disabled
-      ? theme.palette.action.disabledBackground
-      : color === "primary"
-      ? theme.palette.primary.light
-      : color === "secondary"
-      ? theme.palette.secondary.light
-      : color === "error"
-      ? theme.palette.error.light
-      : color === "warning"
-      ? theme.palette.warning.light
-      : color === "info"
-      ? theme.palette.info.light
-      : theme.palette.success.light};
-  stroke-width: ${({ size, thickness }) =>
-    size === "small"
-      ? thickness || 2
-      : size === "large"
-      ? thickness || 4
-      : thickness || 3};
+  stroke: ${(props) =>
+    props.disabled
+      ? props.theme.palette.action.disabledBackground
+      : props.color === "primary"
+      ? props.theme.palette.primary.light
+      : props.color === "secondary"
+      ? props.theme.palette.secondary.light
+      : props.color === "error"
+      ? props.theme.palette.error.light
+      : props.color === "warning"
+      ? props.theme.palette.warning.light
+      : props.color === "info"
+      ? props.theme.palette.info.light
+      : props.theme.palette.success.light};
+  stroke-width: ${(props) =>
+    props.size === "small"
+      ? props.thickness || 2
+      : props.size === "large"
+      ? props.thickness || 4
+      : props.thickness || 3};
 `;
 
 const CircularBar = styled.circle<CircularBarProps>`
   fill: none;
-  stroke: ${({ theme, color = "primary", disabled }) =>
-    disabled
-      ? theme.palette.action.disabled
-      : color === "primary"
-      ? theme.palette.primary.main
-      : color === "secondary"
-      ? theme.palette.secondary.main
-      : color === "error"
-      ? theme.palette.error.main
-      : color === "warning"
-      ? theme.palette.warning.main
-      : color === "info"
-      ? theme.palette.info.main
-      : theme.palette.success.main};
-  stroke-width: ${({ size, thickness }) =>
-    size === "small"
-      ? thickness || 2
-      : size === "large"
-      ? thickness || 4
-      : thickness || 3};
+  stroke: ${(props) =>
+    props.disabled
+      ? props.theme.palette.action.disabled
+      : props.color === "primary"
+      ? props.theme.palette.primary.main
+      : props.color === "secondary"
+      ? props.theme.palette.secondary.main
+      : props.color === "error"
+      ? props.theme.palette.error.main
+      : props.color === "warning"
+      ? props.theme.palette.warning.main
+      : props.color === "info"
+      ? props.theme.palette.info.main
+      : props.theme.palette.success.main};
+  stroke-width: ${(props) =>
+    props.size === "small"
+      ? props.thickness || 2
+      : props.size === "large"
+      ? props.thickness || 4
+      : props.thickness || 3};
   stroke-linecap: round;
   transition: stroke-dashoffset 0.2s ease-in-out;
   transform: rotate(-90deg);
   transform-origin: center;
-  animation: ${({ variant }) =>
-      variant === "indeterminate" ? circularKeyframes : "none"}
+  animation: ${(props) =>
+      props.variant === "indeterminate" ? circularKeyframes : "none"}
     1.5s infinite;
 `;
 
@@ -297,22 +301,26 @@ const ValueLabel = styled.div<ValueLabelProps>`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: ${({ size }) =>
-    size === "small" ? "0.75rem" : size === "large" ? "1.25rem" : "1rem"};
-  color: ${({ theme, color = "primary", disabled }) =>
-    disabled
-      ? theme.palette.action.disabled
-      : color === "primary"
-      ? theme.palette.primary.main
-      : color === "secondary"
-      ? theme.palette.secondary.main
-      : color === "error"
-      ? theme.palette.error.main
-      : color === "warning"
-      ? theme.palette.warning.main
-      : color === "info"
-      ? theme.palette.info.main
-      : theme.palette.success.main};
+  font-size: ${(props) =>
+    props.size === "small"
+      ? "0.75rem"
+      : props.size === "large"
+      ? "1.25rem"
+      : "1rem"};
+  color: ${(props) =>
+    props.disabled
+      ? props.theme.palette.action.disabled
+      : props.color === "primary"
+      ? props.theme.palette.primary.main
+      : props.color === "secondary"
+      ? props.theme.palette.secondary.main
+      : props.color === "error"
+      ? props.theme.palette.error.main
+      : props.color === "warning"
+      ? props.theme.palette.warning.main
+      : props.color === "info"
+      ? props.theme.palette.info.main
+      : props.theme.palette.success.main};
 `;
 
 export const Progress: React.FC<ProgressProps> = ({
@@ -408,6 +416,7 @@ export const Progress: React.FC<ProgressProps> = ({
         color={color}
         disabled={disabled}
         thickness={thickness}
+        size={size}
         theme={theme}
       >
         <LinearBar

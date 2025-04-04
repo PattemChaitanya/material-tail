@@ -1,6 +1,6 @@
 import React from "react";
 import { useTheme } from "../../theme";
-import { styled } from "../../utils/styled";
+import styled from "../../utils/styled";
 import { StyledProps } from "../types";
 
 export type AvatarVariant = "circular" | "rounded" | "square";
@@ -25,82 +25,48 @@ export interface AvatarProps {
   fallback?: React.ReactNode;
 }
 
-interface AvatarWrapperProps extends StyledProps {
-  variant: AvatarVariant;
-  size: "small" | "medium" | "large";
+interface AvatarStyledProps extends StyledProps {
+  $variant: AvatarVariant;
+  $size: AvatarSize;
+  $color?: AvatarColor;
 }
 
-const AvatarWrapper = styled<"div", AvatarWrapperProps>(
-  "div",
-  (props) => `
+const AvatarWrapper = styled.div<AvatarStyledProps>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  width: ${
-    props.size === "small" ? "32px" : props.size === "large" ? "56px" : "40px"
-  };
-  height: ${
-    props.size === "small" ? "32px" : props.size === "large" ? "56px" : "40px"
-  };
-  border-radius: ${
-    props.variant === "circular"
-      ? "50%"
-      : props.variant === "rounded"
-      ? "4px"
-      : "0"
-  };
+  width: ${({ $size }) =>
+    $size === "small" ? "32px" : $size === "large" ? "56px" : "40px"};
+  height: ${({ $size }) =>
+    $size === "small" ? "32px" : $size === "large" ? "56px" : "40px"};
+  border-radius: ${({ $variant }) =>
+    $variant === "circular" ? "50%" : $variant === "rounded" ? "4px" : "0"};
   overflow: hidden;
-  background: ${props.theme.palette.primary.main};
-  color: ${props.theme.palette.primary.contrastText};
-  font-family: ${props.theme.typography.fontFamily};
-  font-size: ${
-    props.size === "small"
-      ? "0.75rem"
-      : props.size === "large"
-      ? "1.25rem"
-      : "1rem"
-  };
-  font-weight: ${props.theme.typography.fontWeightMedium};
-`
-);
+  background: ${({ $color, theme }) => theme.palette[$color || "primary"].main};
+  color: ${({ $color, theme }) =>
+    theme.palette[$color || "primary"].contrastText};
+  font-family: ${({ theme }) => theme.typography.fontFamily};
+  font-size: ${({ $size }) =>
+    $size === "small" ? "0.75rem" : $size === "large" ? "1.25rem" : "1rem"};
+  font-weight: ${({ theme }) => theme.typography.fontWeightMedium};
+`;
 
-interface AvatarImageProps {
-  size?: AvatarSize;
-}
-
-const AvatarImage = styled<"img", AvatarImageProps>(
-  "img",
-  (props) => `
+const AvatarImage = styled.img<{ $size?: AvatarSize }>`
   width: 100%;
   height: 100%;
   object-fit: cover;
-`
-);
+`;
 
-interface AvatarIconProps {
-  size?: AvatarSize;
-}
-
-const AvatarIcon = styled<"span", AvatarIconProps>(
-  "span",
-  (props) => `
+const AvatarIcon = styled.span<{ $size?: AvatarSize }>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: ${
-    props.size === "small" ? "16px" : props.size === "large" ? "28px" : "20px"
-  };
-`
-);
+  font-size: ${({ $size }) =>
+    $size === "small" ? "16px" : $size === "large" ? "28px" : "20px"};
+`;
 
-interface AvatarFallbackProps {
-  size?: AvatarSize;
-}
-
-const AvatarFallback = styled<"div", AvatarFallbackProps>(
-  "div",
-  (props) => `
+const AvatarFallback = styled.div<{ $size?: AvatarSize }>`
   position: absolute;
   top: 0;
   left: 0;
@@ -113,8 +79,7 @@ const AvatarFallback = styled<"div", AvatarFallbackProps>(
   color: inherit;
   font-size: inherit;
   font-weight: inherit;
-`
-);
+`;
 
 export const Avatar: React.FC<AvatarProps> = ({
   variant = "circular",
@@ -134,7 +99,7 @@ export const Avatar: React.FC<AvatarProps> = ({
   };
 
   const content = React.useMemo(() => {
-    if (icon) return <AvatarIcon size={size}>{icon}</AvatarIcon>;
+    if (icon) return <AvatarIcon $size={size}>{icon}</AvatarIcon>;
     if (typeof children === "string") {
       return children
         .split(" ")
@@ -146,19 +111,19 @@ export const Avatar: React.FC<AvatarProps> = ({
   }, [icon, children, size]);
 
   return (
-    <AvatarWrapper theme={theme} variant={variant} size={size}>
+    <AvatarWrapper theme={theme} $variant={variant} $color={color} $size={size}>
       {src && !imgError && (
         <AvatarImage
           src={src}
           alt={alt}
-          size={size}
+          $size={size}
           onError={handleImageError}
         />
       )}
       {((src && imgError) || !src) && (
         <>
           {content}
-          {fallback && <AvatarFallback size={size}>{fallback}</AvatarFallback>}
+          {fallback && <AvatarFallback $size={size}>{fallback}</AvatarFallback>}
         </>
       )}
     </AvatarWrapper>

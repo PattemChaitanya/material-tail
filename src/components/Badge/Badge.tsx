@@ -1,6 +1,6 @@
 import React from "react";
 import { useTheme } from "../../theme";
-import { styled } from "../../utils/styled";
+import styled from "../../utils/styled";
 import { StyledProps, ColorProps, Color } from "../types";
 
 export type BadgeVariant = "standard" | "dot";
@@ -22,128 +22,103 @@ export interface BadgeProps extends ColorProps {
   badgeContent?: React.ReactNode;
 }
 
-interface BadgeWrapperProps extends StyledProps {
-  variant: BadgeVariant;
-  size: BadgeSize;
-  color: BadgeColor;
+interface BadgeStyledProps extends StyledProps {
+  $variant: BadgeVariant;
+  $size: BadgeSize;
+  $color: BadgeColor;
 }
 
-const BadgeWrapper = styled<"div", BadgeWrapperProps>(
-  "div",
-  (props) => `
+const BadgeWrapper = styled.div<BadgeStyledProps>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  min-width: ${
-    props.size === "small" ? "16px" : props.size === "large" ? "24px" : "20px"
-  };
-  height: ${
-    props.size === "small" ? "16px" : props.size === "large" ? "24px" : "20px"
-  };
+  min-width: ${({ $size }) =>
+    $size === "small" ? "16px" : $size === "large" ? "24px" : "20px"};
+  height: ${({ $size }) =>
+    $size === "small" ? "16px" : $size === "large" ? "24px" : "20px"};
   padding: 0 6px;
   border-radius: 10px;
-  background: ${props.theme.palette[props.color].main};
-  color: ${props.theme.palette[props.color].contrastText};
-  font-family: ${props.theme.typography.fontFamily};
-  font-size: ${
-    props.size === "small"
-      ? "0.75rem"
-      : props.size === "large"
-      ? "0.875rem"
-      : "0.75rem"
-  };
-  font-weight: ${props.theme.typography.fontWeightMedium};
+  background: ${({ $color, theme }) => theme.palette[$color].main};
+  color: ${({ $color, theme }) => theme.palette[$color].contrastText};
+  font-family: ${({ theme }) => theme.typography.fontFamily};
+  font-size: ${({ $size }) =>
+    $size === "small" ? "0.75rem" : $size === "large" ? "0.875rem" : "0.75rem"};
+  font-weight: ${({ theme }) => theme.typography.fontWeightMedium};
   line-height: 1;
   white-space: nowrap;
   transition: transform 0.2s ease-in-out;
 
-  ${
-    props.variant === "dot"
+  ${({ $variant, $size }) =>
+    $variant === "dot"
       ? `
     padding: 0;
     min-width: ${
-      props.size === "small" ? "8px" : props.size === "large" ? "12px" : "10px"
+      $size === "small" ? "8px" : $size === "large" ? "12px" : "10px"
     };
-    height: ${
-      props.size === "small" ? "8px" : props.size === "large" ? "12px" : "10px"
-    };
+    height: ${$size === "small" ? "8px" : $size === "large" ? "12px" : "10px"};
     border-radius: 50%;
     `
-      : ""
-  }
-`
-);
+      : ""}
+`;
 
-interface BadgeContentProps {
-  variant?: BadgeVariant;
-  color?: BadgeColor;
-  size?: BadgeSize;
-  position?: BadgePosition;
-  theme: any;
+interface BadgeContentStyledProps extends StyledProps {
+  $variant: BadgeVariant;
+  $color: BadgeColor;
+  $size: BadgeSize;
+  $position: BadgePosition;
 }
 
-const BadgeContent = styled<"span", BadgeContentProps>(
-  "span",
-  (props) => `
+const BadgeContent = styled.span<BadgeContentStyledProps>`
   position: absolute;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: ${
-    props.variant === "dot"
-      ? props.size === "small"
+  min-width: ${({ $variant, $size }) =>
+    $variant === "dot"
+      ? $size === "small"
         ? "6px"
-        : props.size === "large"
+        : $size === "large"
         ? "10px"
         : "8px"
-      : "auto"
-  };
-  height: ${
-    props.variant === "dot"
-      ? props.size === "small"
+      : "auto"};
+  height: ${({ $variant, $size }) =>
+    $variant === "dot"
+      ? $size === "small"
         ? "6px"
-        : props.size === "large"
+        : $size === "large"
         ? "10px"
         : "8px"
-      : props.size === "small"
+      : $size === "small"
       ? "16px"
-      : props.size === "large"
+      : $size === "large"
       ? "24px"
-      : "20px"
-  };
-  padding: ${
-    props.variant === "dot"
+      : "20px"};
+  padding: ${({ $variant, $size }) =>
+    $variant === "dot"
       ? "0"
-      : props.size === "small"
+      : $size === "small"
       ? "0 4px"
-      : props.size === "large"
+      : $size === "large"
       ? "0 8px"
-      : "0 6px"
-  };
-  font-size: ${
-    props.size === "small"
-      ? "0.75rem"
-      : props.size === "large"
-      ? "1rem"
-      : "0.875rem"
-  };
-  font-weight: ${props.theme.typography.fontWeightMedium};
-  border-radius: ${
-    props.variant === "dot"
+      : "0 6px"};
+  font-size: ${({ $size }) =>
+    $size === "small" ? "0.75rem" : $size === "large" ? "1rem" : "0.875rem"};
+  font-weight: ${({ theme }) => theme.typography.fontWeightMedium};
+  border-radius: ${({ $variant, $size }) =>
+    $variant === "dot"
       ? "50%"
-      : props.size === "small"
+      : $size === "small"
       ? "8px"
-      : props.size === "large"
+      : $size === "large"
       ? "12px"
-      : "10px"
-  };
-  background: ${props.theme.palette[props.color || "primary"].main};
-  color: ${props.theme.palette[props.color || "primary"].contrastText};
-  box-shadow: ${props.theme.shadows[1]};
+      : "10px"};
+  background: ${({ $color, theme }) => theme.palette[$color].main};
+  color: ${({ $color, theme }) => theme.palette[$color].contrastText};
+  box-shadow: ${({ theme }) => theme.shadows[1]};
   z-index: 1;
-  transform: ${(() => {
-    switch (props.position) {
+  transform: ${({ $position }) => {
+    switch ($position) {
       case "top-right":
         return "translate(50%, -50%)";
       case "top-left":
@@ -155,23 +130,20 @@ const BadgeContent = styled<"span", BadgeContentProps>(
       default:
         return "translate(50%, -50%)";
     }
-  })()};
-  top: ${
-    props.position?.includes("top")
+  }};
+  top: ${({ $position }) =>
+    $position?.includes("top")
       ? "0"
-      : props.position?.includes("bottom")
+      : $position?.includes("bottom")
       ? "100%"
-      : "0"
-  };
-  right: ${
-    props.position?.includes("right")
+      : "0"};
+  right: ${({ $position }) =>
+    $position?.includes("right")
       ? "0"
-      : props.position?.includes("left")
+      : $position?.includes("left")
       ? "100%"
-      : "0"
-  };
-`
-);
+      : "0"};
+`;
 
 export const Badge: React.FC<BadgeProps> = ({
   variant = "standard",
@@ -199,18 +171,18 @@ export const Badge: React.FC<BadgeProps> = ({
   return (
     <BadgeWrapper
       theme={theme}
-      variant={variant}
-      color={badgeColor}
-      size={size}
+      $variant={variant}
+      $color={badgeColor}
+      $size={size}
     >
       {variant === "standard" && children}
       {content !== null && (
         <BadgeContent
-          variant={variant}
-          color={badgeColor}
-          size={size}
-          position={position}
           theme={theme}
+          $variant={variant}
+          $color={badgeColor}
+          $size={size}
+          $position={position}
           role="status"
           aria-label={
             typeof content === "number"

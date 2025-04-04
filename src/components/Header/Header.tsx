@@ -1,7 +1,7 @@
 import React from "react";
 import { useTheme } from "../../theme";
 import { Theme } from "../../theme/types";
-import { styled } from "../../utils/styled";
+import styled from "../../utils/styled";
 
 export type HeaderColor =
   | "primary"
@@ -43,10 +43,6 @@ export interface HeaderActionsProps {
   children?: React.ReactNode;
 }
 
-interface StyledProps {
-  theme: Theme;
-}
-
 interface HeaderWrapperProps {
   color?: HeaderColor;
   variant?: HeaderVariant;
@@ -56,32 +52,28 @@ interface HeaderWrapperProps {
   theme: Theme;
 }
 
-const HeaderWrapper = styled<"header", HeaderWrapperProps>(
-  "header",
-  (props) => `
+const HeaderWrapper = styled.header<HeaderWrapperProps>`
   display: flex;
   flex-direction: column;
   width: 100%;
-  position: ${props.position || "static"};
+  position: ${(props) => props.position || "static"};
   top: 0;
   left: 0;
   right: 0;
-  z-index: ${props.theme.zIndex.appBar};
-  background-color: ${props.theme.palette.background.paper};
-  color: ${props.theme.palette.text.primary};
-  border-radius: ${props.square ? 0 : props.theme.shape.borderRadius}px;
-  border: ${
+  z-index: ${(props) => props.theme.zIndex.appBar};
+  background-color: ${(props) => props.theme.palette.background.paper};
+  color: ${(props) => props.theme.palette.text.primary};
+  border-radius: ${(props) =>
+    props.square ? 0 : props.theme.shape.borderRadius}px;
+  border: ${(props) =>
     props.variant === "outlined"
       ? `1px solid ${props.theme.palette[props.color || "primary"].main}`
-      : "none"
-  };
-  box-shadow: ${
+      : "none"};
+  box-shadow: ${(props) =>
     props.variant === "elevation"
       ? props.theme.shadows[props.elevation || 1]
-      : "none"
-  };
-`
-);
+      : "none"};
+`;
 
 interface HeaderToolbarWrapperProps {
   disableGutters?: boolean;
@@ -89,91 +81,70 @@ interface HeaderToolbarWrapperProps {
   theme: Theme;
 }
 
-const HeaderToolbarWrapper = styled<"div", HeaderToolbarWrapperProps>(
-  "div",
-  (props) => `
+const HeaderToolbarWrapper = styled.div<HeaderToolbarWrapperProps>`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: ${
+  min-height: ${(props) =>
     props.variant === "dense"
       ? props.theme.spacing.getSpacing(6)
-      : props.theme.spacing.getSpacing(7)
-  }px;
-  padding-left: ${
-    props.disableGutters ? 0 : props.theme.spacing.getSpacing(2)
-  }px;
-  padding-right: ${
-    props.disableGutters ? 0 : props.theme.spacing.getSpacing(2)
-  }px;
-`
-);
+      : props.theme.spacing.getSpacing(7)}px;
+  padding-left: ${(props) =>
+    props.disableGutters ? 0 : props.theme.spacing.getSpacing(2)}px;
+  padding-right: ${(props) =>
+    props.disableGutters ? 0 : props.theme.spacing.getSpacing(2)}px;
+`;
 
 interface HeaderBrandWrapperProps {
   theme: Theme;
 }
 
-const HeaderBrandWrapper = styled<"div", HeaderBrandWrapperProps>(
-  "div",
-  (props) => `
+const HeaderBrandWrapper = styled.div<HeaderBrandWrapperProps>`
   display: flex;
   align-items: center;
-  gap: ${props.theme.spacing.getSpacing(1)}px;
-`
-);
+  gap: ${(props) => props.theme.spacing.getSpacing(1)}px;
+`;
 
 interface HeaderLogoProps {
   theme: Theme;
 }
 
-const HeaderLogo = styled<"div", HeaderLogoProps>(
-  "div",
-  (props) => `
+const HeaderLogo = styled.div<HeaderLogoProps>`
   display: flex;
   align-items: center;
-`
-);
+`;
 
 interface HeaderTitleProps {
   theme: Theme;
 }
 
-const HeaderTitle = styled<"div", HeaderTitleProps>(
-  "div",
-  (props) => `
-  color: ${props.theme.palette.text.primary};
-  font-size: ${props.theme.typography.body1.fontSize};
-  font-family: ${props.theme.typography.fontFamily};
-  font-weight: ${props.theme.typography.body1.fontWeight};
-  line-height: ${props.theme.typography.body1.lineHeight};
-`
-);
+const HeaderTitle = styled.div<HeaderTitleProps>`
+  color: ${(props) => props.theme.palette.text.primary};
+  font-size: ${(props) => props.theme.typography.body1.fontSize};
+  font-family: ${(props) => props.theme.typography.fontFamily};
+  font-weight: ${(props) => props.theme.typography.body1.fontWeight};
+  line-height: ${(props) => props.theme.typography.body1.lineHeight};
+`;
 
 interface HeaderNavWrapperProps {
   theme: Theme;
 }
 
-const HeaderNavWrapper = styled<"nav", HeaderNavWrapperProps>(
-  "nav",
-  (props) => `
+const HeaderNavWrapper = styled.nav<HeaderNavWrapperProps>`
   display: flex;
   align-items: center;
-  gap: ${props.theme.spacing.getSpacing(1)};
-`
-);
+  gap: ${(props) => props.theme.spacing.getSpacing(1)};
+`;
 
 interface HeaderActionsWrapperProps {
   theme: Theme;
 }
 
-const HeaderActionsWrapper = styled<"div", HeaderActionsWrapperProps>(
-  "div",
-  (props) => `
+const HeaderActionsWrapper = styled.div<HeaderActionsWrapperProps>`
   display: flex;
   align-items: center;
-  gap: ${props.theme.spacing.getSpacing(1)};
-`
-);
+  gap: ${(props) => props.theme.spacing.getSpacing(1)};
+`;
 
 export const HeaderComponent = ({
   color = "primary",

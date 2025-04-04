@@ -1,6 +1,6 @@
 import React from "react";
 import { useTheme } from "../../theme";
-import { styled } from "../../utils/styled";
+import styled from "../../utils/styled";
 import { Theme } from "../../theme/types";
 
 export type ButtonVariant = "text" | "outlined" | "contained" | "elevated";
@@ -22,13 +22,15 @@ export interface ButtonProps
   endIcon?: React.ReactNode;
 }
 
-interface StyledButtonProps extends ButtonProps {
+interface ButtonStyledProps extends ButtonProps {
   theme: Theme;
+  $variant: ButtonVariant;
+  $color: ButtonColor;
+  $size: "small" | "medium" | "large";
+  $fullWidth: boolean;
 }
 
-const StyledButton = styled<"button", StyledButtonProps>(
-  "button",
-  (props) => `
+const StyledButton = styled.button<ButtonStyledProps>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -36,20 +38,20 @@ const StyledButton = styled<"button", StyledButtonProps>(
   box-sizing: border-box;
   min-width: 64px;
   padding: 6px 16px;
-  border-radius: ${props.theme.shape.borderRadius}px;
-  font-family: ${props.theme.typography.fontFamily};
-  font-size: ${props.theme.typography.body1.fontSize};
-  font-weight: ${props.theme.typography.fontWeightMedium};
+  border-radius: ${({ theme }) => theme.shape.borderRadius}px;
+  font-family: ${({ theme }) => theme.typography.fontFamily};
+  font-size: ${({ theme }) => theme.typography.body1.fontSize};
+  font-weight: ${({ theme }) => theme.typography.fontWeightMedium};
   line-height: 1.75;
   letter-spacing: 0.02857em;
   text-transform: uppercase;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
-  width: ${props.fullWidth ? "100%" : "auto"};
-  gap: ${props.theme.spacing.getSpacing(1)};
+  width: ${({ $fullWidth }) => ($fullWidth ? "100%" : "auto")};
+  gap: ${({ theme }) => theme.spacing.getSpacing(1)};
 
-  ${(() => {
-    switch (props.size) {
+  ${({ $size }) => {
+    switch ($size) {
       case "small":
         return `
           padding: 4px 10px;
@@ -63,11 +65,11 @@ const StyledButton = styled<"button", StyledButtonProps>(
       default:
         return "";
     }
-  })()}
+  }}
 
-  ${(() => {
-    const colorObj = props.theme.palette[props.color || "primary"];
-    switch (props.variant) {
+  ${({ $variant, $color, theme }) => {
+    const colorObj = theme.palette[$color];
+    switch ($variant) {
       case "text":
         return `
           background: transparent;
@@ -107,23 +109,20 @@ const StyledButton = styled<"button", StyledButtonProps>(
           }
         `;
     }
-  })()}
+  }}
 
   &:disabled {
-    color: ${props.theme.palette.text.secondary};
-    background: ${props.theme.palette.background.paper};
+    color: ${({ theme }) => theme.palette.text.secondary};
+    background: ${({ theme }) => theme.palette.background.paper};
     cursor: not-allowed;
     pointer-events: none;
   }
 
   &:focus {
     outline: none;
-    box-shadow: 0 0 0 2px ${
-      props.theme.palette[props.color || "primary"].main
-    }40;
+    box-shadow: 0 0 0 2px ${({ $color, theme }) => theme.palette[$color].main}40;
   }
-`
-);
+`;
 
 export const Button: React.FC<ButtonProps> = ({
   children,
@@ -141,10 +140,10 @@ export const Button: React.FC<ButtonProps> = ({
   return (
     <StyledButton
       theme={theme}
-      variant={variant}
-      color={color}
-      size={size}
-      fullWidth={fullWidth}
+      $variant={variant}
+      $color={color}
+      $size={size}
+      $fullWidth={fullWidth}
       disabled={disabled}
       {...props}
     >

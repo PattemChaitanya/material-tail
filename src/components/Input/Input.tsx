@@ -1,7 +1,7 @@
 import React from "react";
 import { useTheme } from "../../theme";
 import { Theme } from "../../theme/types";
-import { styled } from "../../utils/styled";
+import styled from "../../utils/styled";
 
 export type InputVariant = "outlined" | "filled" | "standard";
 export type InputColor =
@@ -32,16 +32,13 @@ interface InputWrapperProps {
   fullWidth?: boolean;
 }
 
-const InputWrapper = styled<"div", InputWrapperProps>(
-  "div",
-  (props) => `
+const InputWrapper = styled.div<InputWrapperProps>`
   display: inline-flex;
   flex-direction: column;
   position: relative;
-  width: ${props.fullWidth ? "100%" : "auto"};
+  width: ${(props) => (props.fullWidth ? "100%" : "auto")};
   min-width: 200px;
-`
-);
+`;
 
 interface LabelProps {
   error?: boolean;
@@ -51,38 +48,33 @@ interface LabelProps {
   theme: Theme;
 }
 
-const Label = styled<"label", LabelProps>(
-  "label",
-  (props) => `
+const Label = styled.label<LabelProps>`
   position: absolute;
-  left: ${props.variant === "outlined" ? "14px" : "0"};
-  top: ${(() => {
+  left: ${(props) => (props.variant === "outlined" ? "14px" : "0")};
+  top: ${(props) => {
     if (props.variant === "outlined") return "-9px";
     if (props.size === "small") return "4px";
     if (props.size === "large") return "8px";
     return "6px";
-  })()};
-  background: ${
+  }};
+  background: ${(props) =>
     props.variant === "outlined"
       ? props.theme.palette.background.paper
-      : "transparent"
-  };
-  padding: ${props.variant === "outlined" ? "0 4px" : "0"};
-  color: ${
+      : "transparent"};
+  padding: ${(props) => (props.variant === "outlined" ? "0 4px" : "0")};
+  color: ${(props) =>
     props.error
       ? props.theme.palette.error.main
-      : props.theme.palette[props.color || "primary"].main
-  };
-  font-size: ${(() => {
+      : props.theme.palette[props.color || "primary"].main};
+  font-size: ${(props) => {
     if (props.size === "small") return "0.75rem";
     if (props.size === "large") return "1rem";
     return "0.875rem";
-  })()};
-  font-weight: ${props.theme.typography.fontWeightMedium};
+  }};
+  font-weight: ${(props) => props.theme.typography.fontWeightMedium};
   pointer-events: none;
   transition: all 0.2s ease-in-out;
-`
-);
+`;
 
 interface InputContainerProps {
   variant?: InputVariant;
@@ -92,15 +84,13 @@ interface InputContainerProps {
   theme: Theme;
 }
 
-const InputContainer = styled<"div", InputContainerProps>(
-  "div",
-  (props) => `
+const InputContainer = styled.div<InputContainerProps>`
   position: relative;
   display: inline-flex;
   align-items: center;
   width: 100%;
 
-  ${(() => {
+  ${(props) => {
     switch (props.variant) {
       case "outlined":
         return `
@@ -172,9 +162,8 @@ const InputContainer = styled<"div", InputContainerProps>(
           }
         `;
     }
-  })()}
-`
-);
+  }}
+`;
 
 interface StyledInputWrapperProps {
   variant?: InputVariant;
@@ -184,11 +173,9 @@ interface StyledInputWrapperProps {
   theme: Theme;
 }
 
-const StyledInputWrapper = styled<"div", StyledInputWrapperProps>(
-  "div",
-  (props) => `
+const StyledInputWrapper = styled.div<StyledInputWrapperProps>`
   width: 100%;
-  padding: ${(() => {
+  padding: ${(props) => {
     if (props.variant === "outlined") {
       if (props.size === "small") return "8px 12px";
       if (props.size === "large") return "16px 12px";
@@ -197,28 +184,41 @@ const StyledInputWrapper = styled<"div", StyledInputWrapperProps>(
     if (props.size === "small") return "4px 0";
     if (props.size === "large") return "8px 0";
     return "6px 0";
-  })()};
-  font-size: ${(() => {
+  }};
+  font-size: ${(props) => {
     if (props.size === "small") return "0.875rem";
     if (props.size === "large") return "1.25rem";
     return "1rem";
-  })()};
+  }};
   line-height: 1.4375em;
-  color: ${props.theme.palette.text.primary};
+  color: ${(props) => props.theme.palette.text.primary};
   background: transparent;
   border: none;
   outline: none;
 
   &:disabled {
-    color: ${props.theme.palette.text.secondary};
+    color: ${(props) => props.theme.palette.text.secondary};
     cursor: not-allowed;
   }
-`
-);
+`;
 
-const StyledInput: React.FC<
-  StyledInputWrapperProps & React.InputHTMLAttributes<HTMLInputElement>
-> = ({ variant, size, startIcon, endIcon, theme, ...props }) => {
+interface StyledInputProps
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size"> {
+  variant?: InputVariant;
+  size?: InputSize;
+  startIcon?: React.ReactNode;
+  endIcon?: React.ReactNode;
+  theme: Theme;
+}
+
+const StyledInput: React.FC<StyledInputProps> = ({
+  variant,
+  size,
+  startIcon,
+  endIcon,
+  theme,
+  ...props
+}) => {
   return (
     <StyledInputWrapper
       variant={variant}
@@ -238,35 +238,29 @@ interface HelperTextProps {
   theme: Theme;
 }
 
-const HelperText = styled<"div", HelperTextProps>(
-  "div",
-  (props) => `
+const HelperText = styled.div<HelperTextProps>`
   margin-top: 3px;
   font-size: 0.75rem;
-  color: ${
+  color: ${(props) =>
     props.error
       ? props.theme.palette.error.main
-      : props.theme.palette[props.color || "primary"].main
-  };
+      : props.theme.palette[props.color || "primary"].main};
   min-height: 1em;
-`
-);
+`;
 
 interface IconWrapperProps {
   position: "start" | "end";
   theme: Theme;
 }
 
-const IconWrapper = styled<"div", IconWrapperProps>(
-  "div",
-  (props) => `
+const IconWrapper = styled.div<IconWrapperProps>`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: ${props.position === "start" ? "0 8px 0 12px" : "0 12px 0 8px"};
-  color: ${props.theme.palette.text.secondary};
-`
-);
+  padding: ${(props) =>
+    props.position === "start" ? "0 8px 0 12px" : "0 12px 0 8px"};
+  color: ${(props) => props.theme.palette.text.secondary};
+`;
 
 export const Input: React.FC<InputProps> = ({
   variant = "outlined",
@@ -317,6 +311,7 @@ export const Input: React.FC<InputProps> = ({
           startIcon={startIcon}
           endIcon={endIcon}
           disabled={disabled}
+          theme={theme || themeFromProps}
           {...props}
         />
         {endIcon && (

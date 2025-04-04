@@ -6,6 +6,6 @@ export type {
   SidebarHeaderProps,
   SidebarContentProps,
   SidebarFooterProps,
-  SidebarSectionProps,
-  SidebarItemProps,
+  // SidebarSectionProps,
+  // SidebarItemProps,
 } from "./Sidebar";

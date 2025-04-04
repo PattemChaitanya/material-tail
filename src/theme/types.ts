@@ -24,6 +24,7 @@ export interface Palette {
   text: {
     primary: string;
     secondary: string;
+    disabled: string;
   };
   action: {
     active: string;
@@ -107,4 +108,8 @@ export interface ThemeOptions {
   components?: {
     [key: string]: any;
   };
+  zIndex?: Partial<{
+    appBar: number;
+  }>;
+  shadows?: string[];
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import { useTheme } from "../../theme";
-import { styled } from "../../utils/styled";
+import styled from "../../utils/styled";
 import { StyledProps, ColorProps } from "../types";
 
 export type AlertVariant = "filled" | "outlined" | "text";
@@ -24,56 +24,29 @@ export interface AlertProps extends ColorProps {
   children?: React.ReactNode;
 }
 
-interface AlertWrapperProps extends StyledProps, ColorProps {
-  variant: AlertVariant;
-  severity: "error" | "warning" | "info" | "success";
-  size: AlertSize;
+interface AlertStyledProps extends StyledProps {
+  $variant: AlertVariant;
+  $severity: "error" | "warning" | "info" | "success";
+  $size: AlertSize;
+  $color?: AlertColor;
 }
 
-interface AlertIconProps {
-  size?: AlertSize;
-  color?: AlertColor;
-  theme: any;
-}
-
-interface AlertMessageProps {
-  size?: AlertSize;
-}
-
-interface AlertActionProps {
-  size?: AlertSize;
-}
-
-interface CloseIconProps {
-  size?: AlertSize;
-  color?: AlertColor;
-  theme: any;
-}
-
-const AlertWrapper = styled<"div", AlertWrapperProps>(
-  "div",
-  (props) => `
+const AlertWrapper = styled.div<AlertStyledProps>`
   display: flex;
   align-items: center;
   padding: 6px 16px;
   border-radius: 4px;
-  font-family: ${props.theme.typography.fontFamily};
-  font-size: ${
-    props.size === "small"
-      ? "0.875rem"
-      : props.size === "large"
-      ? "1rem"
-      : "0.875rem"
-  };
-  font-weight: ${props.theme.typography.fontWeightMedium};
-  line-height: ${
-    props.size === "small" ? "1.25" : props.size === "large" ? "1.5" : "1.25"
-  };
   letter-spacing: 0.01071em;
+  font-family: ${({ theme }) => theme.typography.fontFamily};
+  font-size: ${({ $size }) =>
+    $size === "small" ? "0.875rem" : $size === "large" ? "1rem" : "0.875rem"};
+  font-weight: ${({ theme }) => theme.typography.fontWeightMedium};
+  line-height: ${({ $size }) =>
+    $size === "small" ? "1.25" : $size === "large" ? "1.5" : "1.25"};
 
-  ${(() => {
-    const color = props.theme.palette[props.severity];
-    switch (props.variant) {
+  ${({ $variant, $severity, theme }) => {
+    const color = theme.palette[$severity];
+    switch ($variant) {
       case "filled":
         return `
           background: ${color.main};
@@ -93,60 +66,44 @@ const AlertWrapper = styled<"div", AlertWrapperProps>(
       default:
         return "";
     }
-  })()}
-`
-);
+  }}
+`;
 
-const AlertIcon = styled<"span", AlertIconProps>(
-  "span",
-  (props) => `
+const AlertIcon = styled.span<AlertStyledProps>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  margin-right: ${
-    props.size === "small" ? "8px" : props.size === "large" ? "12px" : "10px"
-  };
-  font-size: ${
-    props.size === "small" ? "16px" : props.size === "large" ? "24px" : "20px"
-  };
-  color: ${props.theme.palette[props.color || "default"].main};
-`
-);
+  margin-right: ${({ $size }) =>
+    $size === "small" ? "8px" : $size === "large" ? "12px" : "10px"};
+  font-size: ${({ $size }) =>
+    $size === "small" ? "16px" : $size === "large" ? "24px" : "20px"};
+  color: ${({ $color, theme }) => theme.palette[$color || "default"].main};
+`;
 
-const AlertMessage = styled<"div", AlertMessageProps>(
-  "div",
-  (props) => `
+const AlertMessage = styled.div<{ $size?: AlertSize }>`
   flex: 1;
   display: flex;
   align-items: center;
-  margin: ${props.size === "small" ? "0" : props.size === "large" ? "0" : "0"};
-`
-);
+  margin: ${({ $size }) =>
+    $size === "small" ? "0" : $size === "large" ? "0" : "0"};
+`;
 
-const AlertAction = styled<"div", AlertActionProps>(
-  "div",
-  (props) => `
+const AlertAction = styled.div<{ $size?: AlertSize }>`
   display: inline-flex;
   align-items: center;
-  margin-left: ${
-    props.size === "small" ? "8px" : props.size === "large" ? "12px" : "10px"
-  };
-`
-);
+  margin-left: ${({ $size }) =>
+    $size === "small" ? "8px" : $size === "large" ? "12px" : "10px"};
+`;
 
-const CloseIcon = styled<"span", CloseIconProps>(
-  "span",
-  (props) => `
+const CloseIcon = styled.span<AlertStyledProps>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  margin-left: ${
-    props.size === "small" ? "8px" : props.size === "large" ? "12px" : "10px"
-  };
-  font-size: ${
-    props.size === "small" ? "16px" : props.size === "large" ? "24px" : "20px"
-  };
-  color: ${props.theme.palette[props.color || "default"].main};
+  margin-left: ${({ $size }) =>
+    $size === "small" ? "8px" : $size === "large" ? "12px" : "10px"};
+  font-size: ${({ $size }) =>
+    $size === "small" ? "16px" : $size === "large" ? "24px" : "20px"};
+  color: ${({ $color, theme }) => theme.palette[$color || "default"].main};
   cursor: pointer;
   opacity: 0.7;
   transition: opacity 0.2s ease-in-out;
@@ -154,8 +111,7 @@ const CloseIcon = styled<"span", CloseIconProps>(
   &:hover {
     opacity: 1;
   }
-`
-);
+`;
 
 export const Alert: React.FC<AlertProps> = ({
   variant = "filled",
@@ -177,28 +133,36 @@ export const Alert: React.FC<AlertProps> = ({
   return (
     <AlertWrapper
       theme={theme}
-      variant={variant}
-      severity={severity}
-      color={color}
-      size={size}
+      $variant={variant}
+      $severity={severity}
+      $color={color}
+      $size={size}
       role="alert"
     >
       {icon && (
-        <AlertIcon size={size} color={color} theme={theme}>
+        <AlertIcon
+          theme={theme}
+          $variant={variant}
+          $severity={severity}
+          $color={color}
+          $size={size}
+        >
           {icon}
         </AlertIcon>
       )}
-      <AlertMessage size={size}>{children}</AlertMessage>
-      {action && <AlertAction size={size}>{action}</AlertAction>}
+      <AlertMessage $size={size}>{children}</AlertMessage>
+      {action && <AlertAction $size={size}>{action}</AlertAction>}
       {onClose && (
         <CloseIcon
-          size={size}
-          color={color}
           theme={theme}
+          $variant={variant}
+          $severity={severity}
+          $color={color}
+          $size={size}
           onClick={handleClose}
           role="button"
           tabIndex={0}
-          onKeyDown={(event) => {
+          onKeyDown={(event: React.KeyboardEvent) => {
             if (event.key === "Enter" || event.key === " ") {
               event.preventDefault();
               onClose();

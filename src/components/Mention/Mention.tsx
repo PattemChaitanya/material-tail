@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { styled } from "../../utils/styled";
+import styled from "../../utils/styled";
 import { useTheme } from "../../theme";
+import { Theme } from "../../theme/types";
 
 export type MentionColor =
   | "primary"
@@ -33,49 +34,65 @@ export interface MentionProps {
   onBlur?: (event: React.FocusEvent<HTMLTextAreaElement>) => void;
 }
 
-const MentionWrapper = styled.div<{
+interface MentionWrapperProps {
   color?: MentionColor;
   disabled?: boolean;
-  theme: any;
-}>`
+  theme: Theme;
+}
+
+const MentionWrapper = styled.div<MentionWrapperProps>`
   position: relative;
   width: 100%;
   border: 1px solid
-    ${({ color = "primary", disabled, theme }) =>
-      disabled ? theme.palette.action.disabled : theme.palette[color].main};
-  border-radius: ${({ theme }) => theme.shape.borderRadius}px;
-  background-color: ${({ disabled, theme }) =>
-    disabled ? theme.palette.action.disabledBackground : "transparent"};
+    ${(props) =>
+      props.disabled
+        ? props.theme.palette.action.disabled
+        : props.theme.palette[props.color || "primary"].main};
+  border-radius: ${(props) => props.theme.shape.borderRadius}px;
+  background-color: ${(props) =>
+    props.disabled
+      ? props.theme.palette.action.disabledBackground
+      : "transparent"};
   transition: border-color 0.2s ease-in-out;
 
   &:hover {
-    border-color: ${({ color = "primary", disabled, theme }) =>
-      disabled ? theme.palette.action.disabled : theme.palette[color].dark};
+    border-color: ${(props) =>
+      props.disabled
+        ? props.theme.palette.action.disabled
+        : props.theme.palette[props.color || "primary"].dark};
   }
 
   &:focus-within {
-    border-color: ${({ color = "primary", disabled, theme }) =>
-      disabled ? theme.palette.action.disabled : theme.palette[color].main};
+    border-color: ${(props) =>
+      props.disabled
+        ? props.theme.palette.action.disabled
+        : props.theme.palette[props.color || "primary"].main};
     box-shadow: 0 0 0 2px
-      ${({ color = "primary", disabled, theme }) =>
-        disabled ? "transparent" : `${theme.palette[color].main}40`};
+      ${(props) =>
+        props.disabled
+          ? "transparent"
+          : `${props.theme.palette[props.color || "primary"].main}40`};
   }
 `;
 
-const MentionTextarea = styled.textarea<{
+interface MentionTextareaProps {
   color?: MentionColor;
   disabled?: boolean;
   readOnly?: boolean;
-  theme: any;
-}>`
+  theme: Theme;
+}
+
+const MentionTextarea = styled.textarea<MentionTextareaProps>`
   width: 100%;
   min-height: 100px;
   padding: 8px 12px;
   border: none;
-  border-radius: ${({ theme }) => theme.shape.borderRadius}px;
+  border-radius: ${(props) => props.theme.shape.borderRadius}px;
   background-color: transparent;
-  color: ${({ disabled, theme }) =>
-    disabled ? theme.palette.action.disabled : theme.palette.text.primary};
+  color: ${(props) =>
+    props.disabled
+      ? props.theme.palette.action.disabled
+      : props.theme.palette.text.primary};
   font-family: inherit;
   font-size: 1rem;
   line-height: 1.5;
@@ -83,8 +100,10 @@ const MentionTextarea = styled.textarea<{
   outline: none;
 
   &::placeholder {
-    color: ${({ disabled, theme }) =>
-      disabled ? theme.palette.action.disabled : theme.palette.text.secondary};
+    color: ${(props) =>
+      props.disabled
+        ? props.theme.palette.action.disabled
+        : props.theme.palette.text.secondary};
   }
 
   &:disabled {
@@ -96,73 +115,85 @@ const MentionTextarea = styled.textarea<{
   }
 `;
 
-const MentionSuggestions = styled.div<{
+interface MentionSuggestionsProps {
   visible: boolean;
   color?: MentionColor;
-  theme: any;
-}>`
+  theme: Theme;
+}
+
+const MentionSuggestions = styled.div<MentionSuggestionsProps>`
   position: absolute;
   top: 100%;
   left: 0;
   right: 0;
   margin-top: 4px;
-  background-color: ${({ theme }) => theme.palette.background.paper};
-  border: 1px solid ${({ theme }) => theme.palette.divider};
-  border-radius: ${({ theme }) => theme.shape.borderRadius}px;
-  box-shadow: ${({ theme }) => theme.shadows[4]};
+  background-color: ${(props) => props.theme.palette.background.paper};
+  border: 1px solid ${(props) => props.theme.palette.divider};
+  border-radius: ${(props) => props.theme.shape.borderRadius}px;
+  box-shadow: ${(props) => props.theme.shadows[4]};
   max-height: 200px;
   overflow-y: auto;
   z-index: 1000;
-  display: ${({ visible }) => (visible ? "block" : "none")};
+  display: ${(props) => (props.visible ? "block" : "none")};
 `;
 
-const MentionSuggestionItem = styled.div<{
+interface MentionSuggestionItemProps {
   selected: boolean;
   color?: MentionColor;
-  theme: any;
-}>`
+  theme: Theme;
+}
+
+const MentionSuggestionItem = styled.div<MentionSuggestionItemProps>`
   display: flex;
   align-items: center;
   padding: 8px 12px;
   cursor: pointer;
-  background-color: ${({ selected, color = "primary", theme }) =>
-    selected ? theme.palette[color].light : "transparent"};
+  background-color: ${(props) =>
+    props.selected
+      ? props.theme.palette[props.color || "primary"].light
+      : "transparent"};
 
   &:hover {
-    background-color: ${({ color = "primary", theme }) =>
-      theme.palette[color].light};
+    background-color: ${(props) =>
+      props.theme.palette[props.color || "primary"].light};
   }
 `;
 
-const MentionAvatar = styled.div<{
+interface MentionAvatarProps {
   src?: string;
   color?: MentionColor;
-  theme: any;
-}>`
+  theme: Theme;
+}
+
+const MentionAvatar = styled.div<MentionAvatarProps>`
   width: 24px;
   height: 24px;
   border-radius: 50%;
   margin-right: 8px;
-  background-color: ${({ color = "primary", theme }) =>
-    theme.palette[color].main};
-  background-image: ${({ src }) => (src ? `url(${src})` : "none")};
+  background-color: ${(props) =>
+    props.theme.palette[props.color || "primary"].main};
+  background-image: ${(props) => (props.src ? `url(${props.src})` : "none")};
   background-size: cover;
   background-position: center;
 `;
 
-const MentionName = styled.span<{
+interface MentionNameProps {
   color?: MentionColor;
-  theme: any;
-}>`
-  color: ${({ theme }) => theme.palette.text.primary};
+  theme: Theme;
+}
+
+const MentionName = styled.span<MentionNameProps>`
+  color: ${(props) => props.theme.palette.text.primary};
   font-size: 0.875rem;
 `;
 
-const MentionHighlight = styled.span<{
+interface MentionHighlightProps {
   color?: MentionColor;
-  theme: any;
-}>`
-  color: ${({ color = "primary", theme }) => theme.palette[color].main};
+  theme: Theme;
+}
+
+const MentionHighlight = styled.span<MentionHighlightProps>`
+  color: ${(props) => props.theme.palette[props.color || "primary"].main};
   font-weight: 500;
 `;
 

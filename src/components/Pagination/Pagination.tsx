@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo } from "react";
-import { styled } from "../../utils/styled";
+import styled from "../../utils/styled";
 import { useTheme } from "../../theme";
+import { Theme } from "../../theme/types";
 
 export type PaginationColor =
   | "primary"
@@ -27,35 +28,39 @@ export interface PaginationProps {
   onRowsPerPageChange?: (rowsPerPage: number) => void;
 }
 
-const PaginationWrapper = styled.div<{
+interface PaginationWrapperProps {
   color?: PaginationColor;
-  theme: any;
-}>`
+  theme: Theme;
+}
+
+const PaginationWrapper = styled.div<PaginationWrapperProps>`
   display: flex;
   align-items: center;
   justify-content: flex-end;
   padding: 16px;
-  border-top: 1px solid ${({ theme }) => theme.palette.divider};
-  background-color: ${({ theme }) => theme.palette.background.paper};
+  border-top: 1px solid ${(props) => props.theme.palette.divider};
+  background-color: ${(props) => props.theme.palette.background.paper};
 `;
 
-const PaginationSelect = styled.select<{
+interface PaginationSelectProps {
   color?: PaginationColor;
-  theme: any;
-}>`
+  theme: Theme;
+}
+
+const PaginationSelect = styled.select<PaginationSelectProps>`
   padding: 4px 8px;
   margin: 0 8px;
-  border: 1px solid ${({ theme }) => theme.palette.divider};
-  border-radius: ${({ theme }) => theme.shape.borderRadius}px;
-  background-color: ${({ theme }) => theme.palette.background.paper};
-  color: ${({ theme }) => theme.palette.text.primary};
+  border: 1px solid ${(props) => props.theme.palette.divider};
+  border-radius: ${(props) => props.theme.shape.borderRadius}px;
+  background-color: ${(props) => props.theme.palette.background.paper};
+  color: ${(props) => props.theme.palette.text.primary};
   font-size: 0.875rem;
   cursor: pointer;
 
   &:focus {
     outline: none;
-    border-color: ${({ color = "primary", theme }) =>
-      theme.palette[color].main};
+    border-color: ${(props) =>
+      props.theme.palette[props.color || "primary"].main};
   }
 
   &:disabled {
@@ -64,52 +69,56 @@ const PaginationSelect = styled.select<{
   }
 `;
 
-const PaginationButton = styled.button<{
+interface PaginationButtonProps {
   color?: PaginationColor;
   variant?: PaginationVariant;
   disabled?: boolean;
-  theme: any;
-}>`
+  theme: Theme;
+}
+
+const PaginationButton = styled.button<PaginationButtonProps>`
   padding: 4px 8px;
   margin: 0 4px;
-  border: 1px solid ${({ theme }) => theme.palette.divider};
-  border-radius: ${({ theme }) => theme.shape.borderRadius}px;
-  background-color: ${({ variant = "text", color = "primary", theme }) =>
-    variant === "contained"
-      ? theme.palette[color].main
-      : theme.palette.background.paper};
-  color: ${({ variant = "text", color = "primary", disabled, theme }) =>
-    disabled
-      ? theme.palette.action.disabled
-      : variant === "contained"
-      ? theme.palette.common.white
-      : theme.palette[color].main};
+  border: 1px solid ${(props) => props.theme.palette.divider};
+  border-radius: ${(props) => props.theme.shape.borderRadius}px;
+  background-color: ${(props) =>
+    props.variant === "contained"
+      ? props.theme.palette[props.color || "primary"].main
+      : props.theme.palette.background.paper};
+  color: ${(props) =>
+    props.disabled
+      ? props.theme.palette.action.disabled
+      : props.variant === "contained"
+      ? props.theme.palette.common.white
+      : props.theme.palette[props.color || "primary"].main};
   font-size: 0.875rem;
-  cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
-  opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
+  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
+  opacity: ${(props) => (props.disabled ? 0.5 : 1)};
 
   &:hover:not(:disabled) {
-    background-color: ${({ variant = "text", color = "primary", theme }) =>
-      variant === "contained"
-        ? theme.palette[color].dark
-        : theme.palette[color].light};
-    border-color: ${({ variant = "text", color = "primary", theme }) =>
-      variant === "contained"
-        ? theme.palette[color].dark
-        : theme.palette[color].main};
-    color: ${({ variant = "text", color = "primary", theme }) =>
-      variant === "contained"
-        ? theme.palette.common.white
-        : theme.palette[color].main};
+    background-color: ${(props) =>
+      props.variant === "contained"
+        ? props.theme.palette[props.color || "primary"].dark
+        : props.theme.palette[props.color || "primary"].light};
+    border-color: ${(props) =>
+      props.variant === "contained"
+        ? props.theme.palette[props.color || "primary"].dark
+        : props.theme.palette[props.color || "primary"].main};
+    color: ${(props) =>
+      props.variant === "contained"
+        ? props.theme.palette.common.white
+        : props.theme.palette[props.color || "primary"].main};
   }
 `;
 
-const PaginationInfo = styled.span<{
+interface PaginationInfoProps {
   color?: PaginationColor;
-  theme: any;
-}>`
+  theme: Theme;
+}
+
+const PaginationInfo = styled.span<PaginationInfoProps>`
   margin: 0 16px;
-  color: ${({ theme }) => theme.palette.text.secondary};
+  color: ${(props) => props.theme.palette.text.secondary};
   font-size: 0.875rem;
 `;
 

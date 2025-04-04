@@ -1,6 +1,7 @@
 import React from "react";
-import { styled } from "../../utils/styled";
+import styled from "../../utils/styled";
 import { useTheme } from "../../theme";
+import { Theme } from "../../theme/types";
 
 export type CardColor =
   | "primary"
@@ -45,213 +46,183 @@ export interface CardActionsProps {
   children?: React.ReactNode;
 }
 
-interface CardWrapperProps {
-  color?: CardColor;
-  variant?: CardVariant;
-  elevation?: number;
-  square?: boolean;
-  theme: any;
+interface CardStyledProps {
+  theme: Theme;
+  $color?: CardColor;
+  $variant?: CardVariant;
+  $elevation?: number;
+  $square?: boolean;
 }
 
-const CardWrapper = styled<"div", CardWrapperProps>(
-  "div",
-  (props) => `
+const CardWrapper = styled.div<CardStyledProps>`
   display: flex;
   flex-direction: column;
   position: relative;
-  background-color: ${props.theme.palette.background.paper};
-  border-radius: ${props.square ? 0 : props.theme.shape.borderRadius}px;
-  border: ${
-    props.variant === "outlined"
-      ? `1px solid ${props.theme.palette[props.color || "primary"].main}`
-      : "none"
-  };
-  box-shadow: ${
-    props.variant === "elevation"
-      ? props.theme.shadows[props.elevation || 1]
-      : "none"
-  };
+  background-color: ${({ theme }: CardStyledProps) =>
+    theme.palette.background.paper};
+  border-radius: ${({ $square, theme }: CardStyledProps) =>
+    $square ? 0 : theme.shape.borderRadius}px;
+  border: ${({ $variant, $color, theme }: CardStyledProps) =>
+    $variant === "outlined"
+      ? `1px solid ${theme.palette[$color || "primary"].main}`
+      : "none"};
+  box-shadow: ${({ $variant, $elevation, theme }: CardStyledProps) =>
+    $variant === "elevation" ? theme.shadows[$elevation || 1] : "none"};
   overflow: hidden;
-`
-);
+`;
 
-interface CardHeaderWrapperProps {
-  theme: any;
+interface CardHeaderStyledProps {
+  theme: Theme;
 }
 
-const CardHeaderWrapper = styled<"div", CardHeaderWrapperProps>(
-  "div",
-  (props) => `
+const CardHeaderWrapper = styled.div<CardHeaderStyledProps>`
   display: flex;
   align-items: center;
-  padding: ${props.theme.spacing(2)}px;
-`
-);
+  padding: ${({ theme }: CardHeaderStyledProps) => theme.spacing.getSpacing(2)};
+`;
 
-interface CardHeaderAvatarProps {
-  theme: any;
+interface CardHeaderAvatarStyledProps {
+  theme: Theme;
 }
 
-const CardHeaderAvatar = styled<"div", CardHeaderAvatarProps>(
-  "div",
-  (props) => `
+const CardHeaderAvatar = styled.div<CardHeaderAvatarStyledProps>`
   display: flex;
   flex: 0 0 auto;
-  margin-right: ${props.theme.spacing(2)}px;
-`
-);
+  margin-right: ${({ theme }: CardHeaderAvatarStyledProps) =>
+    theme.spacing.getSpacing(2)};
+`;
 
-interface CardHeaderContentProps {
-  theme: any;
+interface CardHeaderContentStyledProps {
+  theme: Theme;
 }
 
-const CardHeaderContent = styled<"div", CardHeaderContentProps>(
-  "div",
-  (props) => `
+const CardHeaderContent = styled.div<CardHeaderContentStyledProps>`
   flex: 1 1 auto;
-`
-);
+`;
 
-interface CardHeaderTitleProps {
-  disableTypography?: boolean;
-  theme: any;
+interface CardHeaderTitleStyledProps {
+  theme: Theme;
+  $disableTypography?: boolean;
 }
 
-const CardHeaderTitle = styled<"div", CardHeaderTitleProps>(
-  "div",
-  (props) => `
-  color: ${props.theme.palette.text.primary};
-  font-size: ${
-    props.disableTypography ? "inherit" : props.theme.typography.h6.fontSize
-  };
-  font-family: ${
-    props.disableTypography ? "inherit" : props.theme.typography.h6.fontFamily
-  };
-  font-weight: ${
-    props.disableTypography ? "inherit" : props.theme.typography.h6.fontWeight
-  };
-  line-height: ${
-    props.disableTypography ? "inherit" : props.theme.typography.h6.lineHeight
-  };
-  letter-spacing: ${
-    props.disableTypography
-      ? "inherit"
-      : props.theme.typography.h6.letterSpacing
-  };
-`
-);
+const CardHeaderTitle = styled.div<CardHeaderTitleStyledProps>`
+  color: ${({ theme }: CardHeaderTitleStyledProps) =>
+    theme.palette.text.primary};
+  font-size: ${({ $disableTypography, theme }: CardHeaderTitleStyledProps) =>
+    $disableTypography ? "inherit" : theme.typography.h3.fontSize};
+  font-family: ${({ $disableTypography, theme }: CardHeaderTitleStyledProps) =>
+    $disableTypography ? "inherit" : theme.typography.fontFamily};
+  font-weight: ${({ $disableTypography, theme }: CardHeaderTitleStyledProps) =>
+    $disableTypography ? "inherit" : theme.typography.h3.fontWeight};
+  line-height: ${({ $disableTypography, theme }: CardHeaderTitleStyledProps) =>
+    $disableTypography ? "inherit" : theme.typography.h3.lineHeight};
+  letter-spacing: ${({
+    $disableTypography,
+    theme,
+  }: CardHeaderTitleStyledProps) => ($disableTypography ? "inherit" : "0em")};
+`;
 
-interface CardHeaderSubheaderProps {
-  disableTypography?: boolean;
-  theme: any;
+interface CardHeaderSubheaderStyledProps {
+  theme: Theme;
+  $disableTypography?: boolean;
 }
 
-const CardHeaderSubheader = styled<"div", CardHeaderSubheaderProps>(
-  "div",
-  (props) => `
-  color: ${props.theme.palette.text.secondary};
-  font-size: ${
-    props.disableTypography ? "inherit" : props.theme.typography.body2.fontSize
-  };
-  font-family: ${
-    props.disableTypography
-      ? "inherit"
-      : props.theme.typography.body2.fontFamily
-  };
-  font-weight: ${
-    props.disableTypography
-      ? "inherit"
-      : props.theme.typography.body2.fontWeight
-  };
-  line-height: ${
-    props.disableTypography
-      ? "inherit"
-      : props.theme.typography.body2.lineHeight
-  };
-  letter-spacing: ${
-    props.disableTypography
-      ? "inherit"
-      : props.theme.typography.body2.letterSpacing
-  };
-  margin-top: ${props.theme.spacing(0.5)}px;
-`
-);
+const CardHeaderSubheader = styled.div<CardHeaderSubheaderStyledProps>`
+  color: ${({ theme }: CardHeaderSubheaderStyledProps) =>
+    theme.palette.text.secondary};
+  font-size: ${({
+    $disableTypography,
+    theme,
+  }: CardHeaderSubheaderStyledProps) =>
+    $disableTypography ? "inherit" : theme.typography.body2.fontSize};
+  font-family: ${({
+    $disableTypography,
+    theme,
+  }: CardHeaderSubheaderStyledProps) =>
+    $disableTypography ? "inherit" : theme.typography.fontFamily};
+  font-weight: ${({
+    $disableTypography,
+    theme,
+  }: CardHeaderSubheaderStyledProps) =>
+    $disableTypography ? "inherit" : theme.typography.body2.fontWeight};
+  line-height: ${({
+    $disableTypography,
+    theme,
+  }: CardHeaderSubheaderStyledProps) =>
+    $disableTypography ? "inherit" : theme.typography.body2.lineHeight};
+  letter-spacing: ${({
+    $disableTypography,
+    theme,
+  }: CardHeaderSubheaderStyledProps) =>
+    $disableTypography ? "inherit" : "0.01071em"};
+  margin-top: ${({ theme }: CardHeaderSubheaderStyledProps) =>
+    theme.spacing.getSpacing(0.5)};
+`;
 
-interface CardHeaderActionProps {
-  theme: any;
+interface CardHeaderActionStyledProps {
+  theme: Theme;
 }
 
-const CardHeaderAction = styled<"div", CardHeaderActionProps>(
-  "div",
-  (props) => `
+const CardHeaderAction = styled.div<CardHeaderActionStyledProps>`
   flex: 0 0 auto;
-  padding: ${props.theme.spacing(1)}px;
-  margin: ${-props.theme.spacing(1)}px;
-`
-);
+  padding: ${({ theme }: CardHeaderActionStyledProps) =>
+    theme.spacing.getSpacing(1)};
+  margin: ${({ theme }: CardHeaderActionStyledProps) =>
+    `-${theme.spacing.getSpacing(1)}`};
+`;
 
-interface CardMediaWrapperProps {
-  height?: number | string;
-  theme: any;
+interface CardMediaWrapperStyledProps {
+  theme: Theme;
+  $height?: number | string;
 }
 
-const CardMediaWrapper = styled<"div", CardMediaWrapperProps>(
-  "div",
-  (props) => `
+const CardMediaWrapper = styled.div<CardMediaWrapperStyledProps>`
   display: block;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  background-color: ${props.theme.palette.background.default};
-  height: ${
-    typeof props.height === "number"
-      ? `${props.height}px`
-      : props.height || "194px"
-  };
-`
-);
+  background-color: ${({ theme }: CardMediaWrapperStyledProps) =>
+    theme.palette.background.default};
+  height: ${({ $height }: CardMediaWrapperStyledProps) =>
+    typeof $height === "number" ? `${$height}px` : $height || "194px"};
+`;
 
-interface CardMediaImageProps {
-  theme: any;
+interface CardMediaImageStyledProps {
+  theme: Theme;
 }
 
-const CardMediaImage = styled<"img", CardMediaImageProps>(
-  "img",
-  (props) => `
+const CardMediaImage = styled.img<CardMediaImageStyledProps>`
   width: 100%;
   height: 100%;
   object-fit: cover;
-`
-);
+`;
 
-interface CardContentWrapperProps {
-  theme: any;
+interface CardContentWrapperStyledProps {
+  theme: Theme;
 }
 
-const CardContentWrapper = styled<"div", CardContentWrapperProps>(
-  "div",
-  (props) => `
-  padding: ${props.theme.spacing(2)}px;
+const CardContentWrapper = styled.div<CardContentWrapperStyledProps>`
+  padding: ${({ theme }: CardContentWrapperStyledProps) =>
+    theme.spacing.getSpacing(2)};
   &:last-child {
-    padding-bottom: ${props.theme.spacing(2)}px;
+    padding-bottom: ${({ theme }: CardContentWrapperStyledProps) =>
+      theme.spacing.getSpacing(2)};
   }
-`
-);
+`;
 
-interface CardActionsWrapperProps {
-  disableSpacing?: boolean;
-  theme: any;
+interface CardActionsWrapperStyledProps {
+  theme: Theme;
+  $disableSpacing?: boolean;
 }
 
-const CardActionsWrapper = styled<"div", CardActionsWrapperProps>(
-  "div",
-  (props) => `
+const CardActionsWrapper = styled.div<CardActionsWrapperStyledProps>`
   display: flex;
   align-items: center;
-  padding: ${props.theme.spacing(1)}px;
-  gap: ${props.disableSpacing ? 0 : props.theme.spacing(1)}px;
-`
-);
+  padding: ${({ theme }: CardActionsWrapperStyledProps) =>
+    theme.spacing.getSpacing(1)};
+  gap: ${({ $disableSpacing, theme }: CardActionsWrapperStyledProps) =>
+    $disableSpacing ? 0 : theme.spacing.getSpacing(1)};
+`;
 
 export const CardComponent = ({
   color = "primary",
@@ -264,11 +235,11 @@ export const CardComponent = ({
 
   return (
     <CardWrapper
-      color={color}
-      variant={variant}
-      elevation={elevation}
-      square={square}
       theme={theme}
+      $color={color}
+      $variant={variant}
+      $elevation={elevation}
+      $square={square}
     >
       {children}
     </CardWrapper>
@@ -289,14 +260,14 @@ export const CardHeaderComponent = ({
       {avatar && <CardHeaderAvatar theme={theme}>{avatar}</CardHeaderAvatar>}
       <CardHeaderContent theme={theme}>
         {title && (
-          <CardHeaderTitle disableTypography={disableTypography} theme={theme}>
+          <CardHeaderTitle theme={theme} $disableTypography={disableTypography}>
             {title}
           </CardHeaderTitle>
         )}
         {subheader && (
           <CardHeaderSubheader
-            disableTypography={disableTypography}
             theme={theme}
+            $disableTypography={disableTypography}
           >
             {subheader}
           </CardHeaderSubheader>
@@ -318,8 +289,8 @@ export const CardMediaComponent = ({
   if (Component === "div") {
     return (
       <CardMediaWrapper
-        height={height}
         theme={theme}
+        $height={height}
         style={
           image
             ? {
@@ -363,7 +334,7 @@ export const CardActionsComponent = ({
   const theme = useTheme();
 
   return (
-    <CardActionsWrapper disableSpacing={disableSpacing} theme={theme}>
+    <CardActionsWrapper theme={theme} $disableSpacing={disableSpacing}>
       {children}
     </CardActionsWrapper>
   );

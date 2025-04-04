@@ -1,9 +1,8 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React from "react";
 import { useTheme } from "../../theme";
-import { styled } from "../../utils/styled";
-import { Theme as ThemeType } from "../../theme/types";
+import { Theme } from "../../theme/types";
+import styled from "../../utils/styled";
 
-export type SliderVariant = "continuous" | "discrete" | "range";
 export type SliderColor =
   | "primary"
   | "secondary"
@@ -12,481 +11,292 @@ export type SliderColor =
   | "info"
   | "success"
   | "default";
-export type SliderSize = "small" | "medium";
-export type SliderOrientation = "horizontal" | "vertical";
-
-export interface SliderMark {
-  value: number;
-  label?: string;
-}
 
 export interface SliderProps {
-  variant?: SliderVariant;
-  color?: SliderColor;
-  size?: SliderSize;
-  disabled?: boolean;
-  marks?: boolean | SliderMark[];
-  step?: number;
+  value?: number;
+  defaultValue?: number;
   min?: number;
   max?: number;
-  value: number | number[];
-  onChange: (value: number | number[]) => void;
+  step?: number;
+  disabled?: boolean;
+  color?: SliderColor;
+  onChange?: (value: number) => void;
   onChangeCommitted?: (value: number) => void;
+  marks?: boolean | { value: number; label: string }[];
   valueLabelDisplay?: "auto" | "on" | "off";
-  orientation?: SliderOrientation;
+  valueLabelFormat?: (value: number) => string;
+  orientation?: "horizontal" | "vertical";
+  size?: "small" | "medium";
   track?: "normal" | "inverted" | false;
   thumb?: boolean;
-  valueLabelFormat?: (value: number) => string;
 }
-
-type Theme = ThemeType & {
-  palette: {
-    action: {
-      disabled: string;
-      disabledBackground: string;
-      hover: string;
-    };
-    default: {
-      main: string;
-      contrastText?: string;
-    };
-  };
-};
 
 interface SliderWrapperProps {
-  orientation?: SliderOrientation;
-  size?: SliderSize;
   disabled?: boolean;
+  orientation?: "horizontal" | "vertical";
+  size?: "small" | "medium";
   theme: Theme;
 }
+
+const StyledSliderWrapper = styled.div<SliderWrapperProps>`
+  position: relative;
+  width: ${(props) => (props.orientation === "vertical" ? "40px" : "100%")};
+  height: ${(props) => (props.orientation === "vertical" ? "100%" : "40px")};
+  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
+  opacity: ${(props) => (props.disabled ? 0.5 : 1)};
+`;
 
 interface SliderTrackProps {
-  orientation?: SliderOrientation;
   color?: SliderColor;
-  disabled?: boolean;
+  track?: "normal" | "inverted" | false;
   theme: Theme;
 }
+
+const StyledSliderTrack = styled.div<SliderTrackProps>`
+  position: absolute;
+  width: ${(props) => (props.track === false ? "0" : "100%")};
+  height: ${(props) => (props.track === false ? "0" : "4px")};
+  background-color: ${(props) =>
+    props.track === "inverted"
+      ? props.theme.palette.background.paper
+      : props.theme.palette[props.color || "primary"].main};
+  border-radius: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+`;
 
 interface SliderRailProps {
-  orientation?: SliderOrientation;
-  disabled?: boolean;
+  color?: SliderColor;
   theme: Theme;
 }
+
+const StyledSliderRail = styled.div<SliderRailProps>`
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  background-color: ${(props) =>
+    props.theme.palette[props.color || "primary"].light};
+  border-radius: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+`;
 
 interface SliderThumbProps {
-  orientation?: SliderOrientation;
   color?: SliderColor;
-  size?: SliderSize;
-  disabled?: boolean;
+  size?: "small" | "medium";
   theme: Theme;
 }
+
+const StyledSliderThumb = styled.div<SliderThumbProps>`
+  position: absolute;
+  width: ${(props) => (props.size === "small" ? "12px" : "16px")};
+  height: ${(props) => (props.size === "small" ? "12px" : "16px")};
+  background-color: ${(props) => props.theme.palette.background.paper};
+  border: 2px solid
+    ${(props) => props.theme.palette[props.color || "primary"].main};
+  border-radius: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  transition: box-shadow 0.2s ease-in-out;
+
+  &:hover {
+    box-shadow: 0 0 0 8px
+      ${(props) => props.theme.palette[props.color || "primary"].light};
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 8px
+      ${(props) => props.theme.palette[props.color || "primary"].light};
+    outline: none;
+  }
+`;
 
 interface SliderMarkProps {
-  orientation?: SliderOrientation;
-  disabled?: boolean;
-  theme: Theme;
-}
-
-interface SliderMarkLabelProps {
-  orientation?: SliderOrientation;
-  disabled?: boolean;
-  theme: Theme;
-}
-
-interface SliderValueLabelProps {
-  orientation?: SliderOrientation;
   color?: SliderColor;
   theme: Theme;
 }
 
-const SliderWrapper = styled<"div", SliderWrapperProps>(
-  "div",
-  ({ orientation, size, disabled, theme }) => `
-    display: flex;
-    align-items: center;
-    width: ${
-      orientation === "vertical" ? "auto" : size === "small" ? "100px" : "200px"
-    };
-    height: ${
-      orientation === "vertical"
-        ? size === "small"
-          ? "100px"
-          : "200px"
-        : "auto"
-    };
-    padding: ${
-      orientation === "vertical"
-        ? `${size === "small" ? "8px" : "12px"} 0`
-        : `0 ${size === "small" ? "8px" : "12px"}`
-    };
-    cursor: ${disabled ? "default" : "pointer"};
-    opacity: ${disabled ? 0.5 : 1};
-  `
-);
+const StyledSliderMark = styled.div<SliderMarkProps>`
+  position: absolute;
+  width: 2px;
+  height: 8px;
+  background-color: ${(props) =>
+    props.theme.palette[props.color || "primary"].main};
+  border-radius: 1px;
+  top: 50%;
+  transform: translate(-50%, -50%);
+`;
 
-const SliderTrack = styled<"div", SliderTrackProps>(
-  "div",
-  ({ orientation, color = "primary", disabled, theme }) => `
-    position: relative;
-    width: ${orientation === "vertical" ? "2px" : "100%"};
-    height: ${orientation === "vertical" ? "100%" : "2px"};
-    background-color: ${
-      disabled
-        ? theme.palette.action.disabled
-        : color === "default"
-        ? theme.palette.default.main
-        : theme.palette[color].main
-    };
-    border-radius: 1px;
-  `
-);
+interface SliderMarkLabelProps {
+  color?: SliderColor;
+  theme: Theme;
+}
 
-const SliderRail = styled<"div", SliderRailProps>(
-  "div",
-  ({ orientation, disabled, theme }) => `
-    position: absolute;
-    width: ${orientation === "vertical" ? "2px" : "100%"};
-    height: ${orientation === "vertical" ? "100%" : "2px"};
-    background-color: ${
-      disabled
-        ? theme.palette.action.disabledBackground
-        : theme.palette.action.hover
-    };
-    border-radius: 1px;
-  `
-);
+const StyledSliderMarkLabel = styled.div<SliderMarkLabelProps>`
+  position: absolute;
+  font-family: ${(props) => props.theme.typography.fontFamily};
+  font-size: 0.75rem;
+  color: ${(props) => props.theme.palette.text.secondary};
+  top: -20px;
+  transform: translateX(-50%);
+`;
 
-const SliderThumb = styled<"div", SliderThumbProps>(
-  "div",
-  ({ orientation, color = "primary", size, disabled, theme }) => `
-    position: absolute;
-    width: ${size === "small" ? "12px" : "16px"};
-    height: ${size === "small" ? "12px" : "16px"};
-    background-color: ${
-      disabled
-        ? theme.palette.action.disabled
-        : color === "default"
-        ? theme.palette.default.main
-        : theme.palette[color].main
-    };
-    border: 2px solid ${
-      disabled
-        ? theme.palette.action.disabled
-        : color === "default"
-        ? theme.palette.default.main
-        : theme.palette[color].main
-    };
-    border-radius: 50%;
-    transform: translate(
-      ${orientation === "vertical" ? "50%" : "-50%"},
-      ${orientation === "vertical" ? "-50%" : "50%"}
-    );
-    transition: box-shadow 0.2s ease-in-out;
+interface SliderValueLabelProps {
+  color?: SliderColor;
+  theme: Theme;
+}
 
-    &:hover {
-      box-shadow: 0 0 0 4px ${
-        disabled
-          ? "transparent"
-          : color === "default"
-          ? `${theme.palette.default.main}40`
-          : `${theme.palette[color].main}40`
-      };
-    }
+const StyledSliderValueLabel = styled.div<SliderValueLabelProps>`
+  position: absolute;
+  font-family: ${(props) => props.theme.typography.fontFamily};
+  font-size: 0.75rem;
+  color: ${(props) => props.theme.palette.background.paper};
+  background-color: ${(props) =>
+    props.theme.palette[props.color || "primary"].main};
+  padding: 2px 4px;
+  border-radius: 2px;
+  top: -30px;
+  transform: translateX(-50%);
+  white-space: nowrap;
+`;
 
-    &:focus {
-      outline: none;
-      box-shadow: 0 0 0 4px ${
-        disabled
-          ? "transparent"
-          : color === "default"
-          ? `${theme.palette.default.main}40`
-          : `${theme.palette[color].main}40`
-      };
-    }
-  `
-);
-
-const SliderMark = styled<"div", SliderMarkProps>(
-  "div",
-  ({ disabled, theme }) => `
-    position: absolute;
-    width: 2px;
-    height: 2px;
-    background-color: ${
-      disabled ? theme.palette.action.disabled : theme.palette.text.primary
-    };
-    border-radius: 50%;
-  `
-);
-
-const SliderMarkLabel = styled<"div", SliderMarkLabelProps>(
-  "div",
-  ({ orientation, disabled, theme }) => `
-    position: absolute;
-    font-size: 0.75rem;
-    color: ${
-      disabled ? theme.palette.action.disabled : theme.palette.text.secondary
-    };
-    transform: translate(
-      ${orientation === "vertical" ? "100%" : "-50%"},
-      ${orientation === "vertical" ? "-50%" : "100%"}
-    );
-    margin-top: ${orientation === "vertical" ? "0" : "8px"};
-    margin-left: ${orientation === "vertical" ? "8px" : "0"};
-  `
-);
-
-const SliderValueLabel = styled<"div", SliderValueLabelProps>(
-  "div",
-  ({ orientation, color = "primary", theme }) => `
-    position: absolute;
-    background-color: ${
-      color === "default"
-        ? theme.palette.default.main
-        : theme.palette[color].main
-    };
-    color: ${
-      color === "default"
-        ? theme.palette.default.contrastText || "#fff"
-        : theme.palette[color].contrastText || "#fff"
-    };
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 0.75rem;
-    transform: translate(
-      ${orientation === "vertical" ? "100%" : "-50%"},
-      ${orientation === "vertical" ? "-50%" : "-100%"}
-    );
-    margin-top: ${orientation === "vertical" ? "0" : "-8px"};
-    margin-left: ${orientation === "vertical" ? "8px" : "0"};
-    white-space: nowrap;
-    pointer-events: none;
-  `
-);
-
-export const SliderComponent: React.FC<SliderProps> = ({
-  variant = "continuous",
-  color = "primary",
-  size = "medium",
-  disabled = false,
-  marks = false,
-  step = 1,
+export const Slider: React.FC<SliderProps> = ({
+  value,
+  defaultValue = 0,
   min = 0,
   max = 100,
-  value,
+  step = 1,
+  disabled = false,
+  color = "primary",
   onChange,
   onChangeCommitted,
-  valueLabelDisplay = "auto",
+  marks = false,
+  valueLabelDisplay = "off",
+  valueLabelFormat,
   orientation = "horizontal",
+  size = "medium",
   track = "normal",
   thumb = true,
-  valueLabelFormat,
 }) => {
   const theme = useTheme();
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const [activeThumb, setActiveThumb] = useState<number | null>(null);
-  const [valueLabel, setValueLabel] = useState<number | null>(null);
+  const [currentValue, setCurrentValue] = React.useState(value ?? defaultValue);
+  const [isDragging, setIsDragging] = React.useState(false);
+  const [isHovered, setIsHovered] = React.useState(false);
+  const sliderRef = React.useRef<HTMLDivElement>(null);
 
-  const getValueFromPosition = useCallback(
-    (position: number): number => {
-      if (!wrapperRef.current) return 0;
-
-      const rect = wrapperRef.current.getBoundingClientRect();
-      const size = orientation === "vertical" ? rect.height : rect.width;
-      const positionInPixels =
-        orientation === "vertical"
-          ? rect.bottom - position
-          : position - rect.left;
-
-      const percentage = positionInPixels / size;
-      const range = max - min;
-      const value = min + percentage * range;
-
-      if (variant === "discrete") {
-        const steps = Math.round((value - min) / step);
-        return Math.min(max, Math.max(min, min + steps * step));
-      }
-
-      return Math.min(max, Math.max(min, value));
-    },
-    [max, min, orientation, step, variant]
-  );
-
-  const handleMouseDown = useCallback(
-    (event: React.MouseEvent<HTMLDivElement>, thumbIndex: number) => {
-      if (disabled) return;
-      setIsDragging(true);
-      setActiveThumb(thumbIndex);
-      const currentValue = Array.isArray(value) ? value[thumbIndex] : value;
-      setValueLabel(currentValue);
-    },
-    [disabled, value]
-  );
-
-  const handleMouseMove = useCallback(
-    (event: MouseEvent) => {
-      if (!isDragging || !wrapperRef.current) return;
-
-      const position =
-        orientation === "vertical" ? event.clientY : event.clientX;
-      const newValue = getValueFromPosition(position);
-
-      if (Array.isArray(value)) {
-        const newValues = [...value];
-        if (activeThumb !== null) {
-          newValues[activeThumb] = newValue;
-          onChange(newValues);
-        }
-      } else {
-        onChange(newValue);
-      }
-    },
-    [
-      isDragging,
-      orientation,
-      getValueFromPosition,
-      value,
-      onChange,
-      activeThumb,
-    ]
-  );
-
-  const handleMouseUp = useCallback(() => {
-    if (!isDragging) return;
-    setIsDragging(false);
-    setActiveThumb(null);
-    setValueLabel(null);
-
-    if (onChangeCommitted && !Array.isArray(value)) {
-      onChangeCommitted(value);
-    }
-  }, [isDragging, onChangeCommitted, value]);
-
-  useEffect(() => {
-    if (isDragging) {
-      window.addEventListener("mousemove", handleMouseMove);
-      window.addEventListener("mouseup", handleMouseUp);
-    }
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("mouseup", handleMouseUp);
-    };
-  }, [isDragging, handleMouseMove, handleMouseUp]);
-
-  const renderMarks = () => {
-    if (!marks) return null;
-
-    const markPoints = Array.isArray(marks)
-      ? marks
-      : [
-          { value: min, label: min.toString() },
-          { value: max, label: max.toString() },
-        ];
-
-    return markPoints.map((mark) => (
-      <React.Fragment key={mark.value}>
-        <SliderMark
-          orientation={orientation}
-          disabled={disabled}
-          theme={theme}
-          style={{
-            [orientation === "vertical" ? "bottom" : "left"]: `${
-              ((mark.value - min) / (max - min)) * 100
-            }%`,
-          }}
-        />
-        {mark.label && (
-          <SliderMarkLabel
-            orientation={orientation}
-            disabled={disabled}
-            theme={theme}
-            style={{
-              [orientation === "vertical" ? "bottom" : "left"]: `${
-                ((mark.value - min) / (max - min)) * 100
-              }%`,
-            }}
-          >
-            {mark.label}
-          </SliderMarkLabel>
-        )}
-      </React.Fragment>
-    ));
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (disabled) return;
+    setIsDragging(true);
+    updateValue(e);
   };
 
-  const renderThumb = (thumbValue: number, index: number) => {
-    if (!thumb) return null;
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging) return;
+    updateValue(e);
+  };
 
-    const percentage = ((thumbValue - min) / (max - min)) * 100;
-    const showValueLabel =
-      valueLabelDisplay === "on" ||
-      (valueLabelDisplay === "auto" && isDragging && activeThumb === index);
+  const handleMouseUp = () => {
+    if (!isDragging) return;
+    setIsDragging(false);
+    onChangeCommitted?.(currentValue);
+  };
 
-    return (
-      <React.Fragment key={index}>
-        <SliderThumb
-          orientation={orientation}
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
+
+  const updateValue = (e: React.MouseEvent) => {
+    if (!sliderRef.current) return;
+
+    const rect = sliderRef.current.getBoundingClientRect();
+    const position = orientation === "horizontal" ? e.clientX : e.clientY;
+    const start = orientation === "horizontal" ? rect.left : rect.top;
+    const size = orientation === "horizontal" ? rect.width : rect.height;
+
+    let newValue = ((position - start) / size) * (max - min) + min;
+    newValue = Math.round(newValue / step) * step;
+    newValue = Math.min(Math.max(newValue, min), max);
+
+    setCurrentValue(newValue);
+    onChange?.(newValue);
+  };
+
+  const getMarkPositions = () => {
+    if (marks === false) return [];
+    if (marks === true) {
+      return Array.from({ length: (max - min) / step + 1 }, (_, i) => ({
+        value: min + i * step,
+        label: String(min + i * step),
+      }));
+    }
+    return marks;
+  };
+
+  const showValueLabel =
+    valueLabelDisplay === "on" ||
+    (valueLabelDisplay === "auto" && (isDragging || isHovered));
+
+  return (
+    <StyledSliderWrapper
+      ref={sliderRef}
+      disabled={disabled}
+      orientation={orientation}
+      size={size}
+      theme={theme}
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <StyledSliderRail color={color} theme={theme} />
+      <StyledSliderTrack color={color} track={track} theme={theme} />
+      {thumb && (
+        <StyledSliderThumb
           color={color}
           size={size}
-          disabled={disabled}
           theme={theme}
           style={{
-            [orientation === "vertical" ? "bottom" : "left"]: `${percentage}%`,
+            left: `${((currentValue - min) / (max - min)) * 100}%`,
           }}
-          onMouseDown={(e) => handleMouseDown(e, index)}
-          role="slider"
-          aria-valuemin={min}
-          aria-valuemax={max}
-          aria-valuenow={thumbValue}
-          tabIndex={disabled ? -1 : 0}
         />
-        {showValueLabel && (
-          <SliderValueLabel
-            orientation={orientation}
+      )}
+      {getMarkPositions().map((mark) => (
+        <React.Fragment key={mark.value}>
+          <StyledSliderMark
             color={color}
             theme={theme}
             style={{
-              [orientation === "vertical"
-                ? "bottom"
-                : "left"]: `${percentage}%`,
+              left: `${((mark.value - min) / (max - min)) * 100}%`,
+            }}
+          />
+          <StyledSliderMarkLabel
+            color={color}
+            theme={theme}
+            style={{
+              left: `${((mark.value - min) / (max - min)) * 100}%`,
             }}
           >
-            {valueLabelFormat ? valueLabelFormat(thumbValue) : thumbValue}
-          </SliderValueLabel>
-        )}
-      </React.Fragment>
-    );
-  };
-
-  return (
-    <SliderWrapper
-      ref={wrapperRef}
-      orientation={orientation}
-      size={size}
-      disabled={disabled}
-      theme={theme}
-    >
-      <SliderTrack
-        orientation={orientation}
-        color={color}
-        disabled={disabled}
-        theme={theme}
-      >
-        <SliderRail
-          orientation={orientation}
-          disabled={disabled}
+            {mark.label}
+          </StyledSliderMarkLabel>
+        </React.Fragment>
+      ))}
+      {showValueLabel && (
+        <StyledSliderValueLabel
+          color={color}
           theme={theme}
-        />
-        {renderMarks()}
-        {Array.isArray(value)
-          ? value.map((v, i) => renderThumb(v, i))
-          : renderThumb(value, 0)}
-      </SliderTrack>
-    </SliderWrapper>
+          style={{
+            left: `${((currentValue - min) / (max - min)) * 100}%`,
+          }}
+        >
+          {valueLabelFormat ? valueLabelFormat(currentValue) : currentValue}
+        </StyledSliderValueLabel>
+      )}
+    </StyledSliderWrapper>
   );
-};
-
-export const Slider = {
-  Root: SliderComponent,
 };

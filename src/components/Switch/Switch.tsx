@@ -1,6 +1,7 @@
 import React from "react";
 import { useTheme } from "../../theme";
-import { styled } from "../../utils/styled";
+import { Theme } from "../../theme/types";
+import styled from "../../utils/styled";
 
 export type SwitchVariant = "default" | "outlined";
 export type SwitchColor =
@@ -26,45 +27,30 @@ interface SwitchWrapperProps {
   disabled?: boolean;
 }
 
-interface SwitchInputProps {
+const SwitchWrapper = styled.div<SwitchWrapperProps>`
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+`;
+
+interface SwitchInputWrapperProps {
   variant?: SwitchVariant;
   color?: SwitchColor;
-  size?: SwitchSize | undefined;
+  size: SwitchSize;
   error?: boolean;
-  theme: any;
+  theme: Theme;
 }
 
-interface SwitchSpanProps {
-  variant?: SwitchVariant;
-  color?: SwitchColor;
-  size?: SwitchSize;
-  error?: boolean;
-  theme: any;
-}
+const SwitchInputWrapper = styled.div<SwitchInputWrapperProps>`
+  position: relative;
+  display: inline-block;
+  width: 0;
+  height: 0;
 
-interface LabelProps {
-  size?: SwitchSize;
-  disabled?: boolean;
-  error?: boolean;
-  color?: SwitchColor;
-  theme: any;
-}
-
-const SwitchWrapper = styled<"div", SwitchWrapperProps>(
-  "div",
-  ({ disabled }) => `
-    display: inline-flex;
-    align-items: center;
-    position: relative;
-    cursor: ${disabled ? "not-allowed" : "pointer"};
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
-  `
-);
-
-const SwitchInput = styled<"input", SwitchInputProps>(
-  "input",
-  ({ color = "primary", size = "medium", theme }) => `
+  input {
     position: absolute;
     opacity: 0;
     cursor: pointer;
@@ -72,13 +58,15 @@ const SwitchInput = styled<"input", SwitchInputProps>(
     width: 0;
 
     &:checked + span {
-      background-color: ${theme.palette[color].main};
-      border-color: ${theme.palette[color].main};
+      background-color: ${({ color = "primary", theme }) =>
+        theme.palette[color].main};
+      border-color: ${({ color = "primary", theme }) =>
+        theme.palette[color].main};
     }
 
     &:checked + span:before {
       transform: translateX(
-        ${(() => {
+        ${({ size }) => {
           switch (size) {
             case "small":
               return "16px";
@@ -87,112 +75,126 @@ const SwitchInput = styled<"input", SwitchInputProps>(
             default:
               return "20px";
           }
-        })()}
+        }}
       );
-      background-color: ${theme.palette.background.paper};
+      background-color: ${({ theme }) => theme.palette.background.paper};
     }
 
     &:focus + span {
-      box-shadow: 0 0 0 2px ${theme.palette[color].main}40;
+      box-shadow: 0 0 0 2px
+        ${({ color = "primary", theme }) => theme.palette[color].main}40;
     }
 
     &:disabled + span {
-      background-color: ${theme.palette.background.paper};
-      border-color: ${theme.palette.text.disabled};
+      background-color: ${({ theme }) => theme.palette.background.paper};
+      border-color: ${({ theme }) => theme.palette.text.disabled};
       cursor: not-allowed;
     }
 
     &:disabled:checked + span {
-      background-color: ${theme.palette.text.disabled};
+      background-color: ${({ theme }) => theme.palette.text.disabled};
     }
-  `
-);
+  }
+`;
 
-const SwitchSpan = styled<"span", SwitchSpanProps>(
-  "span",
-  ({ variant, color = "primary", size, error, theme }) => `
-    position: relative;
-    display: inline-block;
-    box-sizing: border-box;
-    border: 2px solid ${
-      error ? theme.palette.error.main : theme.palette[color].main
-    };
-    border-radius: ${variant === "outlined" ? "4px" : "34px"};
-    background-color: ${theme.palette.background.paper};
-    transition: all 0.2s ease-in-out;
+interface SwitchSpanProps {
+  variant?: SwitchVariant;
+  color?: SwitchColor;
+  size: SwitchSize;
+  error?: boolean;
+  theme: Theme;
+}
 
-    ${(() => {
-      switch (size) {
+const SwitchSpan = styled.span<SwitchSpanProps>`
+  position: relative;
+  display: inline-block;
+  box-sizing: border-box;
+  border: 2px solid
+    ${(props) =>
+      props.error
+        ? props.theme.palette.error.main
+        : props.theme.palette[props.color || "primary"].main};
+  border-radius: ${(props) => (props.variant === "outlined" ? "4px" : "34px")};
+  background-color: ${(props) => props.theme.palette.background.paper};
+  transition: all 0.2s ease-in-out;
+
+  ${(props) => {
+    switch (props.size) {
+      case "small":
+        return `
+          width: 36px;
+          height: 20px;
+        `;
+      case "large":
+        return `
+          width: 52px;
+          height: 28px;
+        `;
+      default:
+        return `
+          width: 44px;
+          height: 24px;
+        `;
+    }
+  }}
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: ${(props) => {
+      switch (props.size) {
         case "small":
-          return `
-            width: 36px;
-            height: 20px;
-          `;
+          return "12px";
         case "large":
-          return `
-            width: 52px;
-            height: 28px;
-          `;
+          return "20px";
         default:
-          return `
-            width: 44px;
-            height: 24px;
-          `;
+          return "16px";
       }
-    })()}
+    }};
+    height: ${(props) => {
+      switch (props.size) {
+        case "small":
+          return "12px";
+        case "large":
+          return "20px";
+        default:
+          return "16px";
+      }
+    }};
+    background-color: ${(props) =>
+      props.theme.palette[props.color || "primary"].main};
+    border-radius: 50%;
+    transition: all 0.2s ease-in-out;
+  }
+`;
 
-    &:before {
-      content: "";
-      position: absolute;
-      top: 2px;
-      left: 2px;
-      width: ${(() => {
-        switch (size) {
-          case "small":
-            return "12px";
-          case "large":
-            return "20px";
-          default:
-            return "16px";
-        }
-      })()};
-      height: ${(() => {
-        switch (size) {
-          case "small":
-            return "12px";
-          case "large":
-            return "20px";
-          default:
-            return "16px";
-        }
-      })()};
-      background-color: ${theme.palette[color].main};
-      border-radius: 50%;
-      transition: all 0.2s ease-in-out;
-    }
-  `
-);
+interface LabelProps {
+  size: SwitchSize;
+  disabled?: boolean;
+  error?: boolean;
+  color?: SwitchColor;
+  theme: Theme;
+}
 
-const Label = styled<"label", LabelProps>(
-  "label",
-  ({ size, disabled, error, color = "primary", theme }) => `
-    margin-left: ${size === "small" ? "8px" : "12px"};
-    font-family: ${theme.typography.fontFamily};
-    font-size: ${(() => {
-      if (size === "small") return "0.875rem";
-      if (size === "large") return "1.25rem";
-      return "1rem";
-    })()};
-    color: ${
-      disabled
-        ? theme.palette.text.disabled
-        : error
-        ? theme.palette.error.main
-        : theme.palette.text.primary
-    };
-    cursor: ${disabled ? "not-allowed" : "pointer"};
-  `
-);
+const Label = styled.label<LabelProps>`
+  margin-left: ${(props) => (props.size === "small" ? "8px" : "12px")};
+  font-family: ${(props) => props.theme.typography.fontFamily};
+  font-size: ${(props) =>
+    props.size === "small"
+      ? "0.875rem"
+      : props.size === "large"
+      ? "1.25rem"
+      : "1rem"};
+  color: ${(props) =>
+    props.disabled
+      ? props.theme.palette.text.disabled
+      : props.error
+      ? props.theme.palette.error.main
+      : props.theme.palette.text.primary};
+  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
+`;
 
 export const Switch: React.FC<SwitchProps> = ({
   variant = "default",
@@ -208,24 +210,22 @@ export const Switch: React.FC<SwitchProps> = ({
 
   return (
     <SwitchWrapper disabled={disabled}>
-      <SwitchInput
-        type="checkbox"
-        role="switch"
-        theme={theme}
+      <SwitchInputWrapper
         variant={variant}
         color={color}
         size={size}
         error={error}
-        disabled={disabled}
-        {...props}
-      />
-      <SwitchSpan
         theme={theme}
-        variant={variant}
-        color={color}
-        size={size}
-        error={error}
-      />
+      >
+        <input type="checkbox" role="switch" disabled={disabled} {...props} />
+        <SwitchSpan
+          theme={theme}
+          variant={variant}
+          color={color}
+          size={size}
+          error={error}
+        />
+      </SwitchInputWrapper>
       {label && (
         <Label
           theme={theme}

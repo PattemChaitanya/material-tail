@@ -1,7 +1,7 @@
 import React from "react";
 import { useTheme } from "../../theme";
 import { Theme } from "../../theme/types";
-import { styled } from "../../utils/styled";
+import styled from "../../utils/styled";
 
 export type TooltipVariant = "standard" | "light" | "dark";
 export type TooltipColor =
@@ -33,19 +33,14 @@ interface TooltipWrapperProps {
   theme: Theme;
 }
 
-const TooltipWrapper = styled<"div", TooltipWrapperProps>(
-  "div",
-  (props) => `
+const TooltipWrapper = styled.div<TooltipWrapperProps>`
   position: relative;
   display: inline-block;
-  width: ${
-    props.size === "small" ? "16px" : props.size === "large" ? "24px" : "20px"
-  };
-  height: ${
-    props.size === "small" ? "16px" : props.size === "large" ? "24px" : "20px"
-  };
-`
-);
+  width: ${(props) =>
+    props.size === "small" ? "16px" : props.size === "large" ? "24px" : "20px"};
+  height: ${(props) =>
+    props.size === "small" ? "16px" : props.size === "large" ? "24px" : "20px"};
+`;
 
 interface TooltipContentProps {
   variant?: TooltipVariant;
@@ -56,50 +51,45 @@ interface TooltipContentProps {
   theme: Theme;
 }
 
-const TooltipContent = styled<"div", TooltipContentProps>(
-  "div",
-  (props) => `
+const TooltipContent = styled.div<TooltipContentProps>`
   position: absolute;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: ${
+  padding: ${(props) =>
     props.size === "small"
       ? "4px 8px"
       : props.size === "large"
       ? "8px 16px"
-      : "6px 12px"
-  };
-  font-size: ${
+      : "6px 12px"};
+  font-size: ${(props) =>
     props.size === "small"
       ? "0.75rem"
       : props.size === "large"
       ? "1rem"
-      : "0.875rem"
-  };
-  font-weight: ${props.theme.typography.fontWeightRegular};
-  line-height: ${
-    props.size === "small" ? "1.25" : props.size === "large" ? "1.5" : "1.25"
-  };
-  border-radius: ${props.theme.shape.borderRadius}px;
-  background: ${(() => {
+      : "0.875rem"};
+  font-weight: ${(props) => props.theme.typography.fontWeightRegular};
+  line-height: ${(props) =>
+    props.size === "small" ? "1.25" : props.size === "large" ? "1.5" : "1.25"};
+  border-radius: ${(props) => props.theme.shape.borderRadius}px;
+  background: ${(props) => {
     if (props.variant === "light") return props.theme.palette.background.paper;
     if (props.variant === "dark") return props.theme.palette.grey[800];
     return props.theme.palette[props.color || "default"].main;
-  })()};
-  color: ${(() => {
+  }};
+  color: ${(props) => {
     if (props.variant === "light") return props.theme.palette.text.primary;
     if (props.variant === "dark") return props.theme.palette.common.white;
     return props.theme.palette[props.color || "default"].contrastText;
-  })()};
-  box-shadow: ${props.theme.shadows[4]};
+  }};
+  box-shadow: ${(props) => props.theme.shadows[4]};
   z-index: 1500;
   opacity: 0;
   visibility: hidden;
   transition: all 0.2s ease-in-out;
   white-space: nowrap;
   pointer-events: none;
-  transform: ${(() => {
+  transform: ${(props) => {
     switch (props.position) {
       case "top":
         return "translateY(-8px)";
@@ -112,24 +102,22 @@ const TooltipContent = styled<"div", TooltipContentProps>(
       default:
         return "translateY(-8px)";
     }
-  })()};
-  top: ${
+  }};
+  top: ${(props) =>
     props.position === "bottom"
       ? "100%"
       : props.position === "top"
       ? "auto"
-      : "50%"
-  };
-  bottom: ${props.position === "top" ? "100%" : "auto"};
-  left: ${
+      : "50%"};
+  bottom: ${(props) => (props.position === "top" ? "100%" : "auto")};
+  left: ${(props) =>
     props.position === "right"
       ? "100%"
       : props.position === "left"
       ? "auto"
-      : "50%"
-  };
-  right: ${props.position === "left" ? "100%" : "auto"};
-  margin: ${(() => {
+      : "50%"};
+  right: ${(props) => (props.position === "left" ? "100%" : "auto")};
+  margin: ${(props) => {
     switch (props.position) {
       case "top":
         return "0 0 8px 0";
@@ -142,8 +130,8 @@ const TooltipContent = styled<"div", TooltipContentProps>(
       default:
         return "0 0 8px 0";
     }
-  })()};
-  transform-origin: ${(() => {
+  }};
+  transform-origin: ${(props) => {
     switch (props.position) {
       case "top":
         return "bottom center";
@@ -156,12 +144,12 @@ const TooltipContent = styled<"div", TooltipContentProps>(
       default:
         return "bottom center";
     }
-  })()};
+  }};
 
   ${TooltipWrapper}:hover & {
     opacity: 1;
     visibility: visible;
-    transform: ${(() => {
+    transform: ${(props) => {
       switch (props.position) {
         case "top":
           return "translateY(-4px)";
@@ -174,10 +162,9 @@ const TooltipContent = styled<"div", TooltipContentProps>(
         default:
           return "translateY(-4px)";
       }
-    })()};
+    }};
   }
-`
-);
+`;
 
 interface TooltipArrowProps {
   variant?: TooltipVariant;
@@ -186,37 +173,33 @@ interface TooltipArrowProps {
   theme: Theme;
 }
 
-const TooltipArrow = styled<"div", TooltipArrowProps>(
-  "div",
-  (props) => `
+const TooltipArrow = styled.div<TooltipArrowProps>`
   position: absolute;
   width: 8px;
   height: 8px;
-  background: ${(() => {
+  background: ${(props) => {
     if (props.variant === "light") return props.theme.palette.background.paper;
     if (props.variant === "dark") return props.theme.palette.grey[800];
     return props.theme.palette[props.color || "default"].main;
-  })()};
+  }};
   transform: rotate(45deg);
   z-index: -1;
-  box-shadow: ${props.theme.shadows[4]};
-  top: ${
+  box-shadow: ${(props) => props.theme.shadows[4]};
+  top: ${(props) =>
     props.position === "bottom"
       ? "-4px"
       : props.position === "top"
       ? "auto"
-      : "50%"
-  };
-  bottom: ${props.position === "top" ? "-4px" : "auto"};
-  left: ${
+      : "50%"};
+  bottom: ${(props) => (props.position === "top" ? "-4px" : "auto")};
+  left: ${(props) =>
     props.position === "right"
       ? "-4px"
       : props.position === "left"
       ? "auto"
-      : "50%"
-  };
-  right: ${props.position === "left" ? "-4px" : "auto"};
-  margin: ${(() => {
+      : "50%"};
+  right: ${(props) => (props.position === "left" ? "-4px" : "auto")};
+  margin: ${(props) => {
     switch (props.position) {
       case "top":
         return "0 0 0 0";
@@ -229,9 +212,8 @@ const TooltipArrow = styled<"div", TooltipArrowProps>(
       default:
         return "0 0 0 0";
     }
-  })()};
-`
-);
+  }};
+`;
 
 export const Tooltip: React.FC<TooltipProps> = ({
   variant = "standard",
@@ -246,8 +228,8 @@ export const Tooltip: React.FC<TooltipProps> = ({
 }) => {
   const theme = useTheme();
   const [show, setShow] = React.useState(false);
-  const enterTimeout = React.useRef<NodeJS.Timeout>();
-  const leaveTimeout = React.useRef<NodeJS.Timeout>();
+  const enterTimeout = React.useRef<NodeJS.Timeout | undefined>(undefined);
+  const leaveTimeout = React.useRef<NodeJS.Timeout | undefined>(undefined);
 
   const handleEnter = () => {
     if (enterTimeout.current) {

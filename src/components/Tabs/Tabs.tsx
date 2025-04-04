@@ -1,6 +1,7 @@
 import React from "react";
 import { useTheme } from "../../theme";
-import { styled } from "../../utils/styled";
+import { Theme } from "../../theme/types";
+import styled from "../../utils/styled";
 
 export type TabsVariant = "standard" | "contained" | "fullWidth";
 export type TabsColor =
@@ -39,19 +40,19 @@ interface TabsWrapperProps {
   orientation?: TabsOrientation;
   alignment?: TabsAlignment;
   scrollable?: boolean;
-  theme: any;
+  theme: Theme;
 }
 
 interface TabListProps {
   orientation?: TabsOrientation;
   variant?: TabsVariant;
-  theme: any;
+  theme: Theme;
 }
 
 interface TabIndicatorProps {
   orientation?: TabsOrientation;
   color?: TabsColor;
-  theme: any;
+  theme: Theme;
 }
 
 interface StyledTabProps {
@@ -60,123 +61,105 @@ interface StyledTabProps {
   variant?: TabsVariant;
   color?: TabsColor;
   orientation?: TabsOrientation;
-  theme: any;
+  theme: Theme;
 }
 
 interface TabContentProps {
   selected?: boolean;
 }
 
-const TabsWrapper = styled<"div", TabsWrapperProps>(
-  "div",
-  ({ orientation, alignment, scrollable }) => `
-    display: flex;
-    flex-direction: ${orientation === "vertical" ? "column" : "row"};
-    justify-content: ${
-      alignment === "start"
-        ? "flex-start"
-        : alignment === "center"
-        ? "center"
-        : "flex-end"
-    };
-    position: relative;
-    min-height: 48px;
-    overflow-x: ${
-      orientation === "horizontal" && scrollable ? "auto" : "hidden"
-    };
-    overflow-y: ${orientation === "vertical" && scrollable ? "auto" : "hidden"};
+const TabsWrapper = styled.div<TabsWrapperProps>`
+  display: flex;
+  flex-direction: ${(props) =>
+    props.orientation === "vertical" ? "column" : "row"};
+  justify-content: ${(props) =>
+    props.alignment === "start"
+      ? "flex-start"
+      : props.alignment === "center"
+      ? "center"
+      : "flex-end"};
+  position: relative;
+  min-height: 48px;
+  overflow-x: ${(props) =>
+    props.orientation === "horizontal" && props.scrollable ? "auto" : "hidden"};
+  overflow-y: ${(props) =>
+    props.orientation === "vertical" && props.scrollable ? "auto" : "hidden"};
 
-    &::-webkit-scrollbar {
-      display: none;
-    }
-  `
-);
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
 
-const TabList = styled<"div", TabListProps>(
-  "div",
-  ({ orientation, variant }) => `
-    display: flex;
-    flex-direction: ${orientation === "vertical" ? "column" : "row"};
-    position: relative;
-    width: ${
-      orientation === "vertical"
-        ? variant === "fullWidth"
-          ? "100%"
-          : "auto"
+const TabList = styled.div<TabListProps>`
+  display: flex;
+  flex-direction: ${(props) =>
+    props.orientation === "vertical" ? "column" : "row"};
+  position: relative;
+  width: ${(props) =>
+    props.orientation === "vertical"
+      ? props.variant === "fullWidth"
+        ? "100%"
         : "auto"
-    };
-  `
-);
+      : "auto"};
+`;
 
-const TabIndicator = styled<"div", TabIndicatorProps>(
-  "div",
-  ({ orientation, color = "primary", theme }) => `
-    position: absolute;
-    ${
-      orientation === "vertical"
-        ? "left: 0; width: 2px; height: 0;"
-        : "bottom: 0; height: 2px; width: 0;"
-    }
-    background-color: ${theme.palette[color].main};
-    transition: all 0.3s ease-in-out;
-  `
-);
+const TabIndicator = styled.div<TabIndicatorProps>`
+  position: absolute;
+  ${(props) =>
+    props.orientation === "vertical"
+      ? "left: 0; width: 2px; height: 0;"
+      : "bottom: 0; height: 2px; width: 0;"}
+  background-color: ${(props) =>
+    props.theme.palette[props.color || "primary"].main};
+  transition: all 0.3s ease-in-out;
+`;
 
-const Tab = styled<"button", StyledTabProps>(
-  "button",
-  ({ variant, selected, disabled, color = "primary", theme }) => `
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    min-height: 48px;
-    padding: 12px 16px;
-    border: none;
-    background: ${
-      variant === "contained"
-        ? selected
-          ? theme.palette[color].main
-          : "transparent"
+const Tab = styled.button<StyledTabProps>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 12px 16px;
+  border: none;
+  background: ${(props) =>
+    props.variant === "contained"
+      ? props.selected
+        ? props.theme.palette[props.color || "primary"].main
         : "transparent"
-    };
-    color: ${
-      disabled
-        ? theme.palette.text.disabled
-        : variant === "contained"
-        ? selected
-          ? theme.palette[color].contrastText
-          : theme.palette.text.primary
-        : selected
-        ? theme.palette[color].main
-        : theme.palette.text.primary
-    };
-    cursor: ${disabled ? "default" : "pointer"};
-    opacity: ${disabled ? 0.5 : 1};
-    font-size: 0.875rem;
-    font-weight: ${selected ? 600 : 400};
-    text-transform: uppercase;
-    letter-spacing: 0.02857em;
-    transition: all 0.2s ease-in-out;
-    flex: ${variant === "fullWidth" ? 1 : "none"};
+      : "transparent"};
+  color: ${(props) =>
+    props.disabled
+      ? props.theme.palette.text.disabled
+      : props.variant === "contained"
+      ? props.selected
+        ? props.theme.palette[props.color || "primary"].contrastText
+        : props.theme.palette.text.primary
+      : props.selected
+      ? props.theme.palette[props.color || "primary"].main
+      : props.theme.palette.text.primary};
+  cursor: ${(props) => (props.disabled ? "default" : "pointer")};
+  opacity: ${(props) => (props.disabled ? 0.5 : 1)};
+  font-size: 0.875rem;
+  font-weight: ${(props) => (props.selected ? 600 : 400)};
+  text-transform: uppercase;
+  letter-spacing: 0.02857em;
+  transition: all 0.2s ease-in-out;
+  flex: ${(props) => (props.variant === "fullWidth" ? 1 : "none")};
 
-    &:hover {
-      background: ${
-        disabled
-          ? "transparent"
-          : variant === "contained"
-          ? theme.palette[color].dark
-          : theme.palette.action.hover
-      };
-    }
-  `
-);
+  &:hover {
+    background: ${(props) =>
+      props.disabled
+        ? "transparent"
+        : props.variant === "contained"
+        ? props.theme.palette[props.color || "primary"].dark
+        : props.theme.palette.action.hover};
+  }
+`;
 
-const TabContent = styled<"div", TabContentProps>(
-  "div",
-  ({ selected }) => `
-    display: ${selected ? "block" : "none"};
-  `
-);
+const TabContent = styled.div<TabContentProps>`
+  display: ${(props) => (props.selected ? "block" : "none")};
+`;
 
 export const TabsComponent: React.FC<TabsProps> = ({
   variant = "standard",
