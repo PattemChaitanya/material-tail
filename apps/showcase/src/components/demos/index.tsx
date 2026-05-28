@@ -27,7 +27,7 @@ export interface DemoConfig {
 export const DemoRegistry: Record<string, DemoConfig> = {
   button: {
     controls: [
-      { name: 'variant', type: 'select', options: ['default', 'secondary', 'ghost', 'link', 'text', 'outlined'], defaultValue: 'default' },
+      { name: 'variant', type: 'select', options: ['contained', 'secondary', 'ghost', 'link', 'text', 'outlined'], defaultValue: 'contained' },
       { name: 'size', type: 'select', options: ['small', 'medium', 'large'], defaultValue: 'medium' },
       { name: 'color', type: 'select', options: ['primary', 'secondary', 'success', 'error', 'info', 'warning'], defaultValue: 'primary' },
       { name: 'disabled', type: 'select', options: ['false', 'true'], defaultValue: 'false' },

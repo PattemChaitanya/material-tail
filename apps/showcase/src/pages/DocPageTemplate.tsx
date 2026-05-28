@@ -87,7 +87,7 @@ const LazyPlayground = ({ config, title = "Playground" }: { config: any, title?:
         {/* Playground Body */}
         <div style={{ display: "flex", flexGrow: 1 }}>
           {/* Left: Preview */}
-          <div style={{ flexGrow: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "48px", background: "var(--background)" }}>
+          <div style={{ flexGrow: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "48px", background: "rgba(255,255,255,0.02)" }}>
             {isVisible && config.component ? <config.component {...propsState} /> : <div style={{ color: "var(--text-secondary)", animation: "pulse 2s infinite" }}>Loading playground...</div>}
           </div>
           

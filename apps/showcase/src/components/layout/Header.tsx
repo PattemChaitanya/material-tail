@@ -29,7 +29,7 @@ export const Header = ({ onMenuClick }: HeaderProps) => {
 
   return (
     <>
-      <AppBar position="relative" style={{ backgroundColor: "var(--background)", color: "var(--text-primary)", borderBottom: "1px solid var(--border-color)", boxShadow: "none", zIndex: 1200 }}>
+      <AppBar position="relative" style={{ backgroundColor: "transparent", color: "var(--text-primary)", borderBottom: "1px solid var(--border-color)", boxShadow: "none", zIndex: 1200 }}>
         <Toolbar style={{ padding: "0 24px", minHeight: "64px" }}>
           <Button variant="text" onClick={onMenuClick} style={{ minWidth: "48px", padding: "8px", marginRight: "16px", display: "var(--mobile-menu-display, none)" }} className="mobile-menu-btn">
             <Menu size={24} />

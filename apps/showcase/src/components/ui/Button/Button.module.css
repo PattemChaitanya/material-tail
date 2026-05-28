@@ -80,10 +80,12 @@
   background-color: var(--primary, #1976d2);
   color: var(--primary-foreground, #ffffff);
   border-color: var(--primary, #1976d2);
+  box-shadow: 0 8px 32px -4px rgba(20, 184, 166, 0.5); /* Glow effect from mockup */
 }
 .button[data-variant="contained"][data-color="primary"]:hover:not(:disabled) {
   background-color: var(--primary-hover, color-mix(in srgb, var(--primary, #1976d2) 88%, black));
   border-color: var(--primary-hover, color-mix(in srgb, var(--primary, #1976d2) 88%, black));
+  box-shadow: 0 12px 40px -4px rgba(20, 184, 166, 0.7); /* Stronger glow on hover */
 }
 
 .button[data-variant="contained"][data-color="secondary"] {
