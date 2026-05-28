@@ -6,7 +6,7 @@ import { Input } from "../ui/Input";
 // @ts-ignore
 import { Alert } from "../ui/Alert";
 // @ts-ignore
-import { Select, SelectItem } from "../ui/Select";
+import { Select } from "../ui/Select";
 // @ts-ignore
 import { Switch } from "../ui/Switch";
 // @ts-ignore
@@ -79,10 +79,10 @@ export const DemoRegistry: Record<string, DemoConfig> = {
       { name: 'error', type: 'select', options: ['false', 'true'], defaultValue: 'false' }
     ],
     component: (props: any) => (
-      <Select placeholder="Choose an option" disabled={props.disabled === 'true'} error={props.error === 'true'}>
-        <SelectItem value="1">Option 1</SelectItem>
-        <SelectItem value="2">Option 2</SelectItem>
-        <SelectItem value="3">Option 3</SelectItem>
+      <Select placeholder="Choose an option" disabled={props.disabled === 'true'} error={props.error === 'true'} style={{ width: "200px" }}>
+        <option value="1">Option 1</option>
+        <option value="2">Option 2</option>
+        <option value="3">Option 3</option>
       </Select>
     )
   },
