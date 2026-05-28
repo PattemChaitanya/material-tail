@@ -1,0 +1,109 @@
+/* ============================================================
+   Snackbar.module.css
+   ============================================================ */
+
+.root {
+  z-index: 1400;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none; /* Let clicks pass through empty space */
+  /* Invisible by default, transitions in */
+  visibility: hidden;
+}
+
+.root[data-open] {
+  visibility: visible;
+}
+
+/* ============================================================
+   ANCHOR ORIGINS
+   ============================================================ */
+.root[data-vertical="top"] {
+  top: 8px;
+}
+.root[data-vertical="bottom"] {
+  bottom: 8px;
+}
+
+.root[data-horizontal="left"] {
+  left: 8px;
+  right: auto;
+}
+.root[data-horizontal="right"] {
+  right: 8px;
+  left: auto;
+}
+.root[data-horizontal="center"] {
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+}
+
+@media (min-width: 600px) {
+  .root[data-vertical="top"] { top: 24px; }
+  .root[data-vertical="bottom"] { bottom: 24px; }
+  .root[data-horizontal="left"] { left: 24px; }
+  .root[data-horizontal="right"] { right: 24px; }
+}
+
+/* ============================================================
+   CONTAINER & ANIMATIONS
+   ============================================================ */
+.container {
+  pointer-events: auto;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity var(--transition-normal, 200ms ease), transform var(--transition-normal, 200ms ease);
+}
+
+.root[data-open] .container {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Slide animations based on origin */
+.root[data-vertical="bottom"][data-horizontal="center"] .container {
+  transform: translateY(100%);
+}
+.root[data-open][data-vertical="bottom"][data-horizontal="center"] .container {
+  transform: translateY(0);
+}
+
+.root[data-vertical="top"][data-horizontal="center"] .container {
+  transform: translateY(-100%);
+}
+.root[data-open][data-vertical="top"][data-horizontal="center"] .container {
+  transform: translateY(0);
+}
+
+/* ============================================================
+   CONTENT
+   ============================================================ */
+.content {
+  font-family: var(--font-family, system-ui, -apple-system, sans-serif);
+  font-size: var(--font-size-sm, 0.875rem);
+  color: var(--background-paper, #ffffff);
+  background-color: var(--text-primary, rgba(50, 50, 50, 0.95));
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 6px 16px;
+  border-radius: var(--radius-sm, 4px);
+  box-shadow: var(--shadow-md, 0px 3px 5px -1px rgba(0,0,0,0.2), 0px 6px 10px 0px rgba(0,0,0,0.14), 0px 1px 18px 0px rgba(0,0,0,0.12));
+  min-width: 288px;
+}
+
+.message {
+  padding: 8px 0;
+  flex-grow: 1;
+}
+
+.action {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  padding-left: 16px;
+  margin-right: -8px;
+}

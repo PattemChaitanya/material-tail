@@ -1,0 +1,71 @@
+/* ============================================================
+   Table.module.css
+   ============================================================ */
+
+.tableContainer {
+  width: 100%;
+  overflow-x: auto;
+  font-family: var(--font-family, system-ui, -apple-system, sans-serif);
+}
+
+.table {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* ============================================================
+   TABLE ROW
+   ============================================================ */
+.tableRow {
+  color: inherit;
+  display: table-row;
+  vertical-align: middle;
+  outline: 0;
+}
+
+.tableRow[data-hover="true"] {
+  transition: background-color var(--transition-fast, 150ms ease);
+}
+.tableRow[data-hover="true"]:hover {
+  background-color: var(--action-hover, rgba(0, 0, 0, 0.04));
+}
+
+/* ============================================================
+   TABLE CELL
+   ============================================================ */
+.tableCell {
+  display: table-cell;
+  vertical-align: inherit;
+  border-bottom: 1px solid rgba(224, 224, 224, 1);
+  text-align: left;
+  padding: var(--spacing-4, 16px);
+  color: var(--text-primary, rgba(0, 0, 0, 0.87));
+}
+
+/* Alignments */
+.tableCell[data-align="center"] { text-align: center; }
+.tableCell[data-align="right"] { text-align: right; }
+.tableCell[data-align="justify"] { text-align: justify; }
+
+/* Variants */
+.tableCell[data-variant="head"],
+.tableHead .tableCell {
+  color: var(--text-primary, rgba(0, 0, 0, 0.87));
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 1.5rem;
+  font-size: var(--font-size-sm, 0.875rem);
+}
+
+.tableCell[data-variant="body"],
+.tableBody .tableCell {
+  font-weight: var(--font-weight-regular, 400);
+  line-height: 1.43;
+  font-size: var(--font-size-sm, 0.875rem);
+}
+
+/* Size */
+.table[data-size="small"] .tableCell {
+  padding: 6px 16px;
+}

@@ -1,0 +1,88 @@
+/* ============================================================
+   Avatar.module.css
+   ============================================================ */
+
+.avatar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  font-family: var(--font-family, system-ui, -apple-system, sans-serif);
+  font-size: 1.25rem;
+  line-height: 1;
+  overflow: hidden;
+  user-select: none;
+}
+
+/* ============================================================
+   VARIANTS (Shapes)
+   ============================================================ */
+.avatar[data-variant="circular"] {
+  border-radius: 50%;
+}
+
+.avatar[data-variant="rounded"] {
+  border-radius: var(--radius-md, 4px);
+}
+
+.avatar[data-variant="square"] {
+  border-radius: 0;
+}
+
+/* ============================================================
+   COLORS
+   ============================================================ */
+.avatar[data-color="default"] {
+  background-color: var(--action-disabled-bg, rgba(0, 0, 0, 0.26));
+  color: var(--background-paper, #ffffff);
+}
+
+.avatar[data-color="primary"] {
+  background-color: var(--primary, #1976d2);
+  color: var(--primary-foreground, #ffffff);
+}
+
+.avatar[data-color="secondary"] {
+  background-color: var(--secondary, #9c27b0);
+  color: var(--secondary-foreground, #ffffff);
+}
+
+.avatar[data-color="error"] {
+  background-color: var(--error, #d32f2f);
+  color: var(--error-foreground, #ffffff);
+}
+
+.avatar[data-color="warning"] {
+  background-color: var(--warning, #ed6c02);
+  color: var(--warning-foreground, #ffffff);
+}
+
+.avatar[data-color="info"] {
+  background-color: var(--info, #0288d1);
+  color: var(--info-foreground, #ffffff);
+}
+
+.avatar[data-color="success"] {
+  background-color: var(--success, #2e7d32);
+  color: var(--success-foreground, #ffffff);
+}
+
+/* ============================================================
+   ELEMENTS
+   ============================================================ */
+.image {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  object-fit: cover;
+  color: transparent;
+  text-indent: 10000px;
+}
+
+.defaultIcon {
+  width: 75%;
+  height: 75%;
+}

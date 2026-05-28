@@ -1,0 +1,22 @@
+{
+  "name": "@material-tail/cli",
+  "version": "1.0.0",
+  "description": "CLI to initialize and add custom components styled with CSS Modules.",
+  "main": "dist/index.js",
+  "bin": {
+    "material-tail": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w"
+  },
+  "dependencies": {
+    "commander": "^11.1.0",
+    "prompts": "^2.4.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.17",
+    "@types/prompts": "^2.4.9",
+    "typescript": "^5.8.2"
+  }
+}

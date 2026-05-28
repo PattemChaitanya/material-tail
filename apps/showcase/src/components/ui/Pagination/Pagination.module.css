@@ -1,0 +1,128 @@
+/* ============================================================
+   Pagination.module.css
+   ============================================================ */
+
+.root {
+  font-family: var(--font-family, system-ui, -apple-system, sans-serif);
+}
+
+.ul {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  gap: var(--spacing-1, 4px);
+}
+
+/* ============================================================
+   PAGINATION ITEM
+   ============================================================ */
+.item {
+  font-family: inherit;
+  font-size: var(--font-size-sm, 0.875rem);
+  box-sizing: border-box;
+  text-align: center;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 6px;
+  margin: 0;
+  border: 1px solid transparent;
+  color: var(--text-primary, rgba(0, 0, 0, 0.87));
+  background-color: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: color var(--transition-fast, 150ms ease), background-color var(--transition-fast, 150ms ease), border var(--transition-fast, 150ms ease);
+  cursor: pointer;
+}
+
+.item:disabled {
+  opacity: 0.38;
+  cursor: default;
+  pointer-events: none;
+}
+
+.item:hover {
+  background-color: var(--action-hover, rgba(0, 0, 0, 0.04));
+}
+
+.previousNext svg {
+  width: 20px;
+  height: 20px;
+}
+
+.ellipsis {
+  font-size: var(--font-size-md, 1rem);
+  min-width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-primary, rgba(0, 0, 0, 0.87));
+  letter-spacing: 0.01071em;
+}
+
+/* ============================================================
+   SHAPES
+   ============================================================ */
+.item[data-shape="circular"] {
+  border-radius: 50%;
+}
+
+.item[data-shape="rounded"] {
+  border-radius: var(--radius-sm, 4px);
+}
+
+/* ============================================================
+   VARIANTS & COLORS
+   ============================================================ */
+
+/* Text (Default) */
+.item[data-variant="text"][aria-current="true"] {
+  background-color: var(--action-selected, rgba(0, 0, 0, 0.08));
+}
+.item[data-variant="text"][aria-current="true"]:hover {
+  background-color: var(--action-hover, rgba(0, 0, 0, 0.12));
+}
+
+.item[data-variant="text"][data-color="primary"][aria-current="true"] {
+  background-color: var(--primary-subtle, rgba(25, 118, 210, 0.12));
+  color: var(--primary, #1976d2);
+}
+.item[data-variant="text"][data-color="primary"][aria-current="true"]:hover {
+  background-color: var(--primary-subtle-hover, rgba(25, 118, 210, 0.16));
+}
+
+.item[data-variant="text"][data-color="secondary"][aria-current="true"] {
+  background-color: var(--secondary-subtle, rgba(156, 39, 176, 0.12));
+  color: var(--secondary, #9c27b0);
+}
+.item[data-variant="text"][data-color="secondary"][aria-current="true"]:hover {
+  background-color: var(--secondary-subtle-hover, rgba(156, 39, 176, 0.16));
+}
+
+/* Outlined */
+.item[data-variant="outlined"] {
+  border: 1px solid rgba(0, 0, 0, 0.23);
+}
+
+.item[data-variant="outlined"][aria-current="true"] {
+  background-color: var(--action-selected, rgba(0, 0, 0, 0.08));
+}
+.item[data-variant="outlined"][aria-current="true"]:hover {
+  background-color: var(--action-hover, rgba(0, 0, 0, 0.12));
+}
+
+.item[data-variant="outlined"][data-color="primary"][aria-current="true"] {
+  border-color: var(--primary-subtle, rgba(25, 118, 210, 0.5));
+  background-color: var(--primary-subtle, rgba(25, 118, 210, 0.12));
+  color: var(--primary, #1976d2);
+}
+
+.item[data-variant="outlined"][data-color="secondary"][aria-current="true"] {
+  border-color: var(--secondary-subtle, rgba(156, 39, 176, 0.5));
+  background-color: var(--secondary-subtle, rgba(156, 39, 176, 0.12));
+  color: var(--secondary, #9c27b0);
+}

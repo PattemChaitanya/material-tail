@@ -1,0 +1,95 @@
+/* ============================================================
+   Badge.module.css
+   ============================================================ */
+
+.root {
+  position: relative;
+  display: inline-flex;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+.badge {
+  display: flex;
+  flex-wrap: wrap;
+  place-content: center;
+  align-items: center;
+  position: absolute;
+  box-sizing: border-box;
+  font-family: var(--font-family, system-ui, -apple-system, sans-serif);
+  font-weight: var(--font-weight-medium, 500);
+  font-size: var(--font-size-xs, 0.75rem);
+  line-height: 1;
+  border-radius: var(--radius-full, 9999px);
+  z-index: 1;
+  transition: transform var(--transition-normal, 200ms ease);
+}
+
+/* ============================================================
+   VARIANTS
+   ============================================================ */
+
+/* Standard Badge */
+.badge[data-variant="standard"] {
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  top: 0;
+  right: 0;
+  transform: scale(1) translate(50%, -50%);
+  transform-origin: 100% 0%;
+}
+
+/* Dot Badge */
+.badge[data-variant="dot"] {
+  min-width: 8px;
+  height: 8px;
+  padding: 0;
+  top: 0;
+  right: 0;
+  transform: scale(1) translate(50%, -50%);
+  transform-origin: 100% 0%;
+}
+
+/* Invisible state */
+.badge[data-invisible] {
+  transform: scale(0) translate(50%, -50%);
+}
+
+/* ============================================================
+   COLORS
+   ============================================================ */
+.badge[data-color="default"] {
+  background-color: var(--action-disabled-bg, rgba(0, 0, 0, 0.26));
+  color: var(--background-paper, #ffffff);
+}
+
+.badge[data-color="primary"] {
+  background-color: var(--primary, #1976d2);
+  color: var(--primary-foreground, #ffffff);
+}
+
+.badge[data-color="secondary"] {
+  background-color: var(--secondary, #9c27b0);
+  color: var(--secondary-foreground, #ffffff);
+}
+
+.badge[data-color="error"] {
+  background-color: var(--error, #d32f2f);
+  color: var(--error-foreground, #ffffff);
+}
+
+.badge[data-color="warning"] {
+  background-color: var(--warning, #ed6c02);
+  color: var(--warning-foreground, #ffffff);
+}
+
+.badge[data-color="info"] {
+  background-color: var(--info, #0288d1);
+  color: var(--info-foreground, #ffffff);
+}
+
+.badge[data-color="success"] {
+  background-color: var(--success, #2e7d32);
+  color: var(--success-foreground, #ffffff);
+}

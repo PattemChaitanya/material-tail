@@ -1,0 +1,9 @@
+/* ============================================================
+   Box.module.css
+   ============================================================ */
+
+.box {
+  /* Box is a generic container, it doesn't have inherent styles by default,
+     but it provides a hook for theming if needed. */
+  box-sizing: border-box;
+}

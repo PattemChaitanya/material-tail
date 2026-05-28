@@ -1,0 +1,41 @@
+/* ============================================================
+   Card.module.css
+   ============================================================ */
+
+.card {
+  overflow: hidden; /* Important so media doesn't break border-radius */
+}
+
+/* ============================================================
+   CARD CONTENT
+   ============================================================ */
+.cardContent {
+  padding: var(--spacing-4, 16px);
+}
+
+.cardContent:last-child {
+  padding-bottom: var(--spacing-6, 24px);
+}
+
+/* ============================================================
+   CARD ACTIONS
+   ============================================================ */
+.cardActions {
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-2, 8px);
+}
+
+/* ============================================================
+   CARD MEDIA
+   ============================================================ */
+.cardMedia {
+  display: block;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.cardMediaMedia {
+  width: 100%;
+}

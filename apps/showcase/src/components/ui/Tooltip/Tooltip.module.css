@@ -1,0 +1,121 @@
+/* ============================================================
+   Tooltip.module.css
+   ============================================================ */
+
+.wrapper {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+}
+
+.tooltip {
+  position: absolute;
+  z-index: 1500;
+  background-color: var(--text-primary, rgba(97, 97, 97, 0.9));
+  color: var(--background-paper, #ffffff);
+  border-radius: var(--radius-sm, 4px);
+  padding: var(--spacing-1, 4px) var(--spacing-2, 8px);
+  font-family: var(--font-family, system-ui, -apple-system, sans-serif);
+  font-size: var(--font-size-xs, 0.6875rem);
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 1.4;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: scale(0.9);
+  transition: opacity var(--transition-fast, 150ms ease), transform var(--transition-fast, 150ms ease);
+}
+
+.wrapper:hover .tooltip,
+.wrapper:focus-within .tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+  /* Slight delay for hover out */
+  transition-delay: 50ms;
+}
+
+/* ============================================================
+   PLACEMENTS
+   ============================================================ */
+
+/* Top */
+.wrapper[data-placement="top"] .tooltip {
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) scale(0.9);
+  margin-bottom: var(--spacing-2, 8px);
+}
+.wrapper[data-placement="top"]:hover .tooltip,
+.wrapper[data-placement="top"]:focus-within .tooltip {
+  transform: translateX(-50%) scale(1);
+}
+
+/* Bottom */
+.wrapper[data-placement="bottom"] .tooltip {
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) scale(0.9);
+  margin-top: var(--spacing-2, 8px);
+}
+.wrapper[data-placement="bottom"]:hover .tooltip,
+.wrapper[data-placement="bottom"]:focus-within .tooltip {
+  transform: translateX(-50%) scale(1);
+}
+
+/* Left */
+.wrapper[data-placement="left"] .tooltip {
+  right: 100%;
+  top: 50%;
+  transform: translateY(-50%) scale(0.9);
+  margin-right: var(--spacing-2, 8px);
+}
+.wrapper[data-placement="left"]:hover .tooltip,
+.wrapper[data-placement="left"]:focus-within .tooltip {
+  transform: translateY(-50%) scale(1);
+}
+
+/* Right */
+.wrapper[data-placement="right"] .tooltip {
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%) scale(0.9);
+  margin-left: var(--spacing-2, 8px);
+}
+.wrapper[data-placement="right"]:hover .tooltip,
+.wrapper[data-placement="right"]:focus-within .tooltip {
+  transform: translateY(-50%) scale(1);
+}
+
+/* ============================================================
+   ARROW
+   ============================================================ */
+.arrow {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background-color: var(--text-primary, rgba(97, 97, 97, 0.9));
+  transform: rotate(45deg);
+  z-index: -1;
+}
+
+.wrapper[data-placement="top"] .arrow {
+  bottom: -4px;
+  left: calc(50% - 4px);
+}
+
+.wrapper[data-placement="bottom"] .arrow {
+  top: -4px;
+  left: calc(50% - 4px);
+}
+
+.wrapper[data-placement="left"] .arrow {
+  right: -4px;
+  top: calc(50% - 4px);
+}
+
+.wrapper[data-placement="right"] .arrow {
+  left: -4px;
+  top: calc(50% - 4px);
+}

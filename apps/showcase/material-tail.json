@@ -1,0 +1,6 @@
+{
+  "componentsPath": "src/components/ui",
+  "libPath": "src/lib",
+  "stylesPath": "src/index.css",
+  "registryUrl": "../../packages/registry/dist/registry.json"
+}

@@ -1,0 +1,98 @@
+/* ============================================================
+   List.module.css
+   ============================================================ */
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: var(--spacing-2, 8px) 0;
+  position: relative;
+  font-family: var(--font-family, system-ui, -apple-system, sans-serif);
+}
+
+.list[data-disable-padding="true"] {
+  padding: 0;
+}
+
+/* ============================================================
+   LIST ITEM
+   ============================================================ */
+.listItem {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+  text-decoration: none;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: left;
+  padding-top: var(--spacing-2, 8px);
+  padding-bottom: var(--spacing-2, 8px);
+  padding-left: var(--spacing-4, 16px);
+  padding-right: var(--spacing-4, 16px);
+}
+
+.listItem[data-disable-padding="true"] {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+/* Button variants */
+.listItem[data-button="true"] {
+  cursor: pointer;
+  transition: background-color var(--transition-fast, 150ms ease);
+}
+
+.listItem[data-button="true"]:hover {
+  background-color: var(--action-hover, rgba(0, 0, 0, 0.04));
+}
+
+.listItem[aria-selected="true"] {
+  background-color: var(--primary-subtle, rgba(25, 118, 210, 0.08));
+}
+
+.listItem[aria-selected="true"][data-button="true"]:hover {
+  background-color: var(--primary-subtle-hover, rgba(25, 118, 210, 0.12));
+}
+
+/* ============================================================
+   LIST ITEM TEXT
+   ============================================================ */
+.listItemText {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+.primary {
+  display: block;
+  font-size: var(--font-size-md, 1rem);
+  font-weight: var(--font-weight-regular, 400);
+  line-height: 1.5;
+  color: var(--text-primary, rgba(0, 0, 0, 0.87));
+}
+
+.secondary {
+  display: block;
+  font-size: var(--font-size-sm, 0.875rem);
+  font-weight: var(--font-weight-regular, 400);
+  line-height: 1.43;
+  color: var(--text-secondary, rgba(0, 0, 0, 0.6));
+}
+
+/* ============================================================
+   LIST ITEM ICON
+   ============================================================ */
+.listItemIcon {
+  min-width: 56px;
+  flex-shrink: 0;
+  display: inline-flex;
+  color: var(--text-secondary, rgba(0, 0, 0, 0.6));
+}
+
+.listItemIcon svg {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+}
