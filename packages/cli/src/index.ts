@@ -7,7 +7,7 @@ import prompts from "prompts";
 const program = new Command();
 const CONFIG_FILE = "material-tail.json";
 const DEFAULT_REGISTRY_URL =
-  "https://raw.githubusercontent.com/PattemChaitanya/material-tail/main/packages/registry/dist/registry.json";
+  "https://raw.githubusercontent.com/PattemChaitanya/material-tail/master/packages/registry/dist/registry.json";
 
 interface Config {
   componentsPath: string;
@@ -40,36 +40,42 @@ const DEFAULT_THEME_CSS = `
   --primary-foreground: #ffffff;
   --primary-hover:      color-mix(in srgb, var(--primary) 88%, black);
   --primary-subtle:     color-mix(in srgb, var(--primary) 12%, transparent);
+  --primary-foreground-subtle: #0d47a1;
 
   /* Secondary */
   --secondary:            #9c27b0;
   --secondary-foreground: #ffffff;
   --secondary-hover:      color-mix(in srgb, var(--secondary) 88%, black);
   --secondary-subtle:     color-mix(in srgb, var(--secondary) 12%, transparent);
+  --secondary-foreground-subtle: #4a148c;
 
   /* Error */
   --error:            #d32f2f;
   --error-foreground: #ffffff;
   --error-hover:      color-mix(in srgb, var(--error) 88%, black);
   --error-subtle:     color-mix(in srgb, var(--error) 12%, transparent);
+  --error-foreground-subtle: #5f2120;
 
   /* Warning */
   --warning:            #ed6c02;
   --warning-foreground: #ffffff;
   --warning-hover:      color-mix(in srgb, var(--warning) 88%, black);
   --warning-subtle:     color-mix(in srgb, var(--warning) 12%, transparent);
+  --warning-foreground-subtle: #4d2700;
 
   /* Info */
   --info:            #0288d1;
   --info-foreground: #ffffff;
   --info-hover:      color-mix(in srgb, var(--info) 88%, black);
   --info-subtle:     color-mix(in srgb, var(--info) 12%, transparent);
+  --info-foreground-subtle: #014361;
 
   /* Success */
   --success:            #2e7d32;
   --success-foreground: #ffffff;
   --success-hover:      color-mix(in srgb, var(--success) 88%, black);
   --success-subtle:     color-mix(in srgb, var(--success) 12%, transparent);
+  --success-foreground-subtle: #1e4620;
 
   /* ----------------------------------------------------------
      NEUTRALS
@@ -205,8 +211,15 @@ const DEFAULT_THEME_CSS = `
     --action-selected:      rgba(255, 255, 255, 0.12);
     --action-disabled-bg:   rgba(255, 255, 255, 0.12);
 
-    --input-filled-bg:      rgba(255, 255, 255, 0.09);
+    --input-filled-bg:       rgba(255, 255, 255, 0.09);
     --input-filled-bg-hover: rgba(255, 255, 255, 0.13);
+
+    --primary-foreground-subtle: #90caf9;
+    --secondary-foreground-subtle: #ce93d8;
+    --error-foreground-subtle: #f48fb1;
+    --warning-foreground-subtle: #ffcc80;
+    --info-foreground-subtle: #81d4fa;
+    --success-foreground-subtle: #a5d6a7;
   }
 }
 /* --- material-tail-theme-end --- */

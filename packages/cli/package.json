@@ -6,6 +6,9 @@
   "bin": {
     "material-tail": "./dist/index.js"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w"

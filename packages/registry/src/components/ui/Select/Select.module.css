@@ -184,6 +184,12 @@
   padding-right: var(--spacing-8, 32px) !important;
 }
 
+/* Fix dropdown options readability in dark mode */
+.select option {
+  background-color: var(--background-paper, #ffffff);
+  color: var(--text-primary, rgba(0, 0, 0, 0.87));
+}
+
 /* ---- Paddings per variant and size ---- */
 .select-root[data-variant="outlined"][data-size="small"] .select {
   padding: var(--spacing-2, 8px) var(--spacing-3, 12px);
