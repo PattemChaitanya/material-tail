@@ -29,16 +29,40 @@ export const Sidebar = ({ onNavClick }: SidebarProps) => {
           Getting Started
         </h3>
         <List>
-          <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-            <ListItem 
-              button 
-              selected={location.pathname === "/"}
-              onClick={onNavClick}
-              style={{ borderRadius: "var(--radius-md)", marginBottom: "4px" }}
-            >
-              <ListItemText primary="Introduction" />
-            </ListItem>
-          </Link>
+          {(() => {
+            const isActive = location.pathname === "/";
+            return (
+              <Link to="/" style={{ textDecoration: 'none', color: isActive ? '#fff' : 'var(--text-secondary)' }}>
+                <ListItem 
+                  button 
+                  selected={isActive}
+                  onClick={onNavClick}
+                  style={{ 
+                    position: "relative",
+                    borderRadius: "6px", 
+                    marginBottom: "4px",
+                    padding: "8px 16px",
+                    fontWeight: isActive ? "600" : "400",
+                    background: isActive ? "linear-gradient(90deg, rgba(20, 184, 166, 0.15) 0%, rgba(139, 92, 246, 0.15) 50%, transparent 100%)" : "transparent"
+                  }}
+                >
+                  {isActive && (
+                    <div style={{
+                      position: "absolute",
+                      left: 0,
+                      top: "10%",
+                      height: "80%",
+                      width: "3px",
+                      borderRadius: "0 4px 4px 0",
+                      background: "linear-gradient(to bottom, #14b8a6, #8b5cf6)",
+                      boxShadow: "0 0 10px rgba(20,184,166,0.5)"
+                    }}></div>
+                  )}
+                  <ListItemText primary="Introduction" />
+                </ListItem>
+              </Link>
+            );
+          })()}
         </List>
       </div>
 
@@ -48,18 +72,40 @@ export const Sidebar = ({ onNavClick }: SidebarProps) => {
             {category}
           </h3>
           <List>
-            {items.map((item) => (
-              <Link key={item.id} to={`/docs/${item.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                <ListItem 
-                  button 
-                  selected={location.pathname === `/docs/${item.id}`}
-                  onClick={onNavClick}
-                  style={{ borderRadius: "var(--radius-md)", marginBottom: "4px" }}
-                >
-                  <ListItemText primary={item.title} />
-                </ListItem>
-              </Link>
-            ))}
+            {items.map((item) => {
+              const isActive = location.pathname === `/docs/${item.id}`;
+              return (
+                <Link key={item.id} to={`/docs/${item.id}`} style={{ textDecoration: 'none', color: isActive ? '#fff' : 'var(--text-secondary)' }}>
+                  <ListItem 
+                    button 
+                    selected={isActive}
+                    onClick={onNavClick}
+                    style={{ 
+                      position: "relative",
+                      borderRadius: "6px", 
+                      marginBottom: "4px",
+                      padding: "8px 16px",
+                      fontWeight: isActive ? "600" : "400",
+                      background: isActive ? "linear-gradient(90deg, rgba(20, 184, 166, 0.15) 0%, rgba(139, 92, 246, 0.15) 50%, transparent 100%)" : "transparent",
+                    }}
+                  >
+                    {isActive && (
+                      <div style={{
+                        position: "absolute",
+                        left: 0,
+                        top: "10%",
+                        height: "80%",
+                        width: "3px",
+                        borderRadius: "0 4px 4px 0",
+                        background: "linear-gradient(to bottom, #14b8a6, #8b5cf6)",
+                        boxShadow: "0 0 10px rgba(20,184,166,0.5)"
+                      }}></div>
+                    )}
+                    <ListItemText primary={item.title} />
+                  </ListItem>
+                </Link>
+              );
+            })}
           </List>
         </div>
       ))}
