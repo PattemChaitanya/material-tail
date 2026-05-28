@@ -143,7 +143,7 @@ body {
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not(.light) {
     --background:           #121212;
     --background-paper:     #1e1e1e;
     --background-subtle:    #2a2a2a;
@@ -167,5 +167,30 @@ body {
     --success-foreground-subtle: #a5d6a7;
   }
 }
+
+:root.dark {
+  --background:           #121212;
+  --background-paper:     #1e1e1e;
+  --background-subtle:    #2a2a2a;
+  --text-primary:         rgba(255, 255, 255, 0.87);
+  --text-secondary:       rgba(255, 255, 255, 0.6);
+  --text-disabled:        rgba(255, 255, 255, 0.38);
+  --text-placeholder:     rgba(255, 255, 255, 0.38);
+  --border-color:         rgba(255, 255, 255, 0.23);
+  --divider:              rgba(255, 255, 255, 0.12);
+  --action-hover:         rgba(255, 255, 255, 0.08);
+  --action-selected:      rgba(255, 255, 255, 0.12);
+  --action-disabled-bg:   rgba(255, 255, 255, 0.12);
+  --input-filled-bg:       rgba(255, 255, 255, 0.09);
+  --input-filled-bg-hover: rgba(255, 255, 255, 0.13);
+
+  --primary-foreground-subtle: #90caf9;
+  --secondary-foreground-subtle: #ce93d8;
+  --error-foreground-subtle: #f48fb1;
+  --warning-foreground-subtle: #ffcc80;
+  --info-foreground-subtle: #81d4fa;
+  --success-foreground-subtle: #a5d6a7;
+}
+
 /* --- material-tail-theme-end --- */
 
