@@ -1,0 +1,155 @@
+/* ============================================================
+   Alert.module.css
+   ============================================================ */
+
+.alert {
+  font-family: var(--font-family, system-ui, -apple-system, sans-serif);
+  border-radius: var(--radius-md, 4px);
+  padding: var(--spacing-2, 8px) var(--spacing-4, 16px);
+  display: flex;
+  align-items: flex-start;
+  font-size: var(--font-size-sm, 0.875rem);
+  line-height: 1.5;
+  box-sizing: border-box;
+}
+
+/* ============================================================
+   ELEMENTS
+   ============================================================ */
+
+.icon {
+  display: inherit;
+  margin-right: var(--spacing-3, 12px);
+  padding: var(--spacing-1, 4px) 0;
+}
+
+.icon svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+}
+
+.message {
+  padding: var(--spacing-1, 4px) 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.title {
+  font-weight: var(--font-weight-medium, 500);
+  font-size: var(--font-size-md, 1rem);
+  margin-bottom: var(--spacing-1, 4px);
+}
+
+.closeButton {
+  margin-left: auto;
+  margin-right: calc(var(--spacing-2, 8px) * -1);
+  padding: var(--spacing-1, 4px);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full, 9999px);
+  color: inherit;
+  opacity: 0.7;
+  transition: background-color var(--transition-fast, 150ms ease), opacity var(--transition-fast, 150ms ease);
+}
+
+.closeButton:hover {
+  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+.closeButton svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ============================================================
+   VARIANTS & SEVERITIES
+   ============================================================ */
+
+/* --- Standard Variant (Subtle background) --- */
+.alert[data-variant="standard"][data-severity="success"] {
+  background-color: var(--success-subtle, rgba(46, 125, 50, 0.12));
+  color: var(--success-foreground-subtle, #1e4620);
+}
+.alert[data-variant="standard"][data-severity="success"] .icon { color: var(--success, #2e7d32); }
+
+.alert[data-variant="standard"][data-severity="info"] {
+  background-color: var(--info-subtle, rgba(2, 136, 209, 0.12));
+  color: var(--info-foreground-subtle, #014361);
+}
+.alert[data-variant="standard"][data-severity="info"] .icon { color: var(--info, #0288d1); }
+
+.alert[data-variant="standard"][data-severity="warning"] {
+  background-color: var(--warning-subtle, rgba(237, 108, 2, 0.12));
+  color: var(--warning-foreground-subtle, #4d2700);
+}
+.alert[data-variant="standard"][data-severity="warning"] .icon { color: var(--warning, #ed6c02); }
+
+.alert[data-variant="standard"][data-severity="error"] {
+  background-color: var(--error-subtle, rgba(211, 47, 47, 0.12));
+  color: var(--error-foreground-subtle, #5f2120);
+}
+.alert[data-variant="standard"][data-severity="error"] .icon { color: var(--error, #d32f2f); }
+
+/* --- Filled Variant (Solid background) --- */
+.alert[data-variant="filled"][data-severity="success"] {
+  background-color: var(--success, #2e7d32);
+  color: var(--success-foreground, #ffffff);
+}
+.alert[data-variant="filled"][data-severity="success"] .closeButton:hover { background-color: rgba(255, 255, 255, 0.2); }
+
+.alert[data-variant="filled"][data-severity="info"] {
+  background-color: var(--info, #0288d1);
+  color: var(--info-foreground, #ffffff);
+}
+.alert[data-variant="filled"][data-severity="info"] .closeButton:hover { background-color: rgba(255, 255, 255, 0.2); }
+
+.alert[data-variant="filled"][data-severity="warning"] {
+  background-color: var(--warning, #ed6c02);
+  color: var(--warning-foreground, #ffffff);
+}
+.alert[data-variant="filled"][data-severity="warning"] .closeButton:hover { background-color: rgba(255, 255, 255, 0.2); }
+
+.alert[data-variant="filled"][data-severity="error"] {
+  background-color: var(--error, #d32f2f);
+  color: var(--error-foreground, #ffffff);
+}
+.alert[data-variant="filled"][data-severity="error"] .closeButton:hover { background-color: rgba(255, 255, 255, 0.2); }
+
+/* --- Outlined Variant (Transparent bg with border) --- */
+.alert[data-variant="outlined"] {
+  border: 1px solid;
+  background-color: transparent;
+}
+
+.alert[data-variant="outlined"][data-severity="success"] {
+  border-color: var(--success, #2e7d32);
+  color: var(--success-foreground-subtle, #1e4620);
+}
+.alert[data-variant="outlined"][data-severity="success"] .icon { color: var(--success, #2e7d32); }
+
+.alert[data-variant="outlined"][data-severity="info"] {
+  border-color: var(--info, #0288d1);
+  color: var(--info-foreground-subtle, #014361);
+}
+.alert[data-variant="outlined"][data-severity="info"] .icon { color: var(--info, #0288d1); }
+
+.alert[data-variant="outlined"][data-severity="warning"] {
+  border-color: var(--warning, #ed6c02);
+  color: var(--warning-foreground-subtle, #4d2700);
+}
+.alert[data-variant="outlined"][data-severity="warning"] .icon { color: var(--warning, #ed6c02); }
+
+.alert[data-variant="outlined"][data-severity="error"] {
+  border-color: var(--error, #d32f2f);
+  color: var(--error-foreground-subtle, #5f2120);
+}
+.alert[data-variant="outlined"][data-severity="error"] .icon { color: var(--error, #d32f2f); }

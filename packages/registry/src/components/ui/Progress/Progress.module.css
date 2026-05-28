@@ -1,0 +1,128 @@
+/* ============================================================
+   Progress.module.css
+   ============================================================ */
+
+.root {
+  display: inline-block;
+}
+
+/* ============================================================
+   LINEAR
+   ============================================================ */
+.linear {
+  position: relative;
+  overflow: hidden;
+  display: block;
+  height: 4px;
+  z-index: 0; /* Fix Safari overflow */
+  width: 100%;
+}
+
+.linearBar {
+  width: 100%;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  top: 0;
+  transition: transform 0.4s linear;
+  transform-origin: left;
+}
+
+.linear[data-variant="indeterminate"] .linearBar {
+  width: auto;
+  animation: linear-indeterminate 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
+}
+
+@keyframes linear-indeterminate {
+  0% {
+    left: -35%;
+    right: 100%;
+  }
+  60% {
+    left: 100%;
+    right: -90%;
+  }
+  100% {
+    left: 100%;
+    right: -90%;
+  }
+}
+
+/* Linear Colors */
+.linear[data-color="primary"] { background-color: var(--primary-subtle, rgba(25, 118, 210, 0.3)); }
+.linear[data-color="primary"] .linearBar { background-color: var(--primary, #1976d2); }
+
+.linear[data-color="secondary"] { background-color: var(--secondary-subtle, rgba(156, 39, 176, 0.3)); }
+.linear[data-color="secondary"] .linearBar { background-color: var(--secondary, #9c27b0); }
+
+.linear[data-color="error"] { background-color: var(--error-subtle, rgba(211, 47, 47, 0.3)); }
+.linear[data-color="error"] .linearBar { background-color: var(--error, #d32f2f); }
+
+.linear[data-color="warning"] { background-color: var(--warning-subtle, rgba(237, 108, 2, 0.3)); }
+.linear[data-color="warning"] .linearBar { background-color: var(--warning, #ed6c02); }
+
+.linear[data-color="info"] { background-color: var(--info-subtle, rgba(2, 136, 209, 0.3)); }
+.linear[data-color="info"] .linearBar { background-color: var(--info, #0288d1); }
+
+.linear[data-color="success"] { background-color: var(--success-subtle, rgba(46, 125, 50, 0.3)); }
+.linear[data-color="success"] .linearBar { background-color: var(--success, #2e7d32); }
+
+.linear[data-color="inherit"] { background-color: rgba(0, 0, 0, 0.1); }
+.linear[data-color="inherit"] .linearBar { background-color: currentColor; }
+
+/* ============================================================
+   CIRCULAR
+   ============================================================ */
+.circular {
+  display: inline-block;
+  line-height: 1; /* Fix vertical alignment */
+}
+
+.circular[data-variant="indeterminate"] {
+  animation: circular-rotate 1.4s linear infinite;
+}
+
+.circularSvg {
+  display: block;
+}
+
+.circularCircle {
+  stroke: currentColor;
+  stroke-dasharray: 80px, 200px;
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+}
+
+.circular[data-variant="indeterminate"] .circularCircle {
+  animation: circular-dash 1.4s ease-in-out infinite;
+}
+
+@keyframes circular-rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes circular-dash {
+  0% {
+    stroke-dasharray: 1px, 200px;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 100px, 200px;
+    stroke-dashoffset: -15px;
+  }
+  100% {
+    stroke-dasharray: 100px, 200px;
+    stroke-dashoffset: -125px;
+  }
+}
+
+/* Circular Colors */
+.circular[data-color="primary"] { color: var(--primary, #1976d2); }
+.circular[data-color="secondary"] { color: var(--secondary, #9c27b0); }
+.circular[data-color="error"] { color: var(--error, #d32f2f); }
+.circular[data-color="warning"] { color: var(--warning, #ed6c02); }
+.circular[data-color="info"] { color: var(--info, #0288d1); }
+.circular[data-color="success"] { color: var(--success, #2e7d32); }
+.circular[data-color="inherit"] { color: inherit; }

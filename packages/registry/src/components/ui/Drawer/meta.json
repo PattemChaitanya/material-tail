@@ -1,0 +1,5 @@
+{
+  "description": "Navigation drawers provide access to destinations in your app.",
+  "registryDependencies": ["paper"],
+  "dependencies": []
+}

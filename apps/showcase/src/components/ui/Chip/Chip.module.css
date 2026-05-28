@@ -1,0 +1,293 @@
+/* ============================================================
+   Chip.module.css
+   ============================================================ */
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  font-family: var(--font-family, system-ui, -apple-system, sans-serif);
+  border-radius: var(--radius-full, 9999px);
+  white-space: nowrap;
+  transition: background-color var(--transition-fast, 150ms ease),
+              box-shadow var(--transition-fast, 150ms ease),
+              border-color var(--transition-fast, 150ms ease);
+  border: 1px solid transparent;
+  outline: none;
+}
+
+/* ============================================================
+   SIZES
+   ============================================================ */
+.chip[data-size="small"] {
+  height: 24px;
+  font-size: var(--font-size-xs, 0.75rem);
+  padding: 0 var(--spacing-2, 8px);
+}
+
+.chip[data-size="medium"] {
+  height: 32px;
+  font-size: var(--font-size-sm, 0.875rem);
+  padding: 0 var(--spacing-3, 12px);
+}
+
+.chip[data-size="large"] {
+  height: 40px;
+  font-size: var(--font-size-md, 1rem);
+  padding: 0 var(--spacing-4, 16px);
+}
+
+/* ============================================================
+   VARIANTS AND COLORS
+   ============================================================ */
+
+/* --- Default Color --- */
+.chip[data-variant="contained"][data-color="default"] {
+  background-color: var(--action-disabled-bg, rgba(0, 0, 0, 0.08));
+  color: var(--text-primary, rgba(0, 0, 0, 0.87));
+}
+.chip[data-clickable="true"][data-variant="contained"][data-color="default"]:hover {
+  background-color: var(--action-hover, rgba(0, 0, 0, 0.12));
+}
+
+.chip[data-variant="outlined"][data-color="default"] {
+  border-color: var(--border-color, rgba(0, 0, 0, 0.23));
+  color: var(--text-primary, rgba(0, 0, 0, 0.87));
+}
+.chip[data-clickable="true"][data-variant="outlined"][data-color="default"]:hover {
+  background-color: var(--action-hover, rgba(0, 0, 0, 0.04));
+}
+
+.chip[data-variant="ghost"][data-color="default"] {
+  color: var(--text-primary, rgba(0, 0, 0, 0.87));
+  background-color: transparent;
+}
+.chip[data-clickable="true"][data-variant="ghost"][data-color="default"]:hover {
+  background-color: var(--action-hover, rgba(0, 0, 0, 0.04));
+}
+
+/* --- Theme Colors (Contained) --- */
+.chip[data-variant="contained"][data-color="primary"] {
+  background-color: var(--primary, #1976d2);
+  color: var(--primary-foreground, #fff);
+}
+.chip[data-clickable="true"][data-variant="contained"][data-color="primary"]:hover {
+  background-color: var(--primary-hover, color-mix(in srgb, var(--primary) 88%, black));
+}
+
+.chip[data-variant="contained"][data-color="secondary"] {
+  background-color: var(--secondary, #9c27b0);
+  color: var(--secondary-foreground, #fff);
+}
+.chip[data-clickable="true"][data-variant="contained"][data-color="secondary"]:hover {
+  background-color: var(--secondary-hover, color-mix(in srgb, var(--secondary) 88%, black));
+}
+
+.chip[data-variant="contained"][data-color="error"] {
+  background-color: var(--error, #d32f2f);
+  color: var(--error-foreground, #fff);
+}
+.chip[data-clickable="true"][data-variant="contained"][data-color="error"]:hover {
+  background-color: var(--error-hover, color-mix(in srgb, var(--error) 88%, black));
+}
+
+.chip[data-variant="contained"][data-color="warning"] {
+  background-color: var(--warning, #ed6c02);
+  color: var(--warning-foreground, #fff);
+}
+.chip[data-clickable="true"][data-variant="contained"][data-color="warning"]:hover {
+  background-color: var(--warning-hover, color-mix(in srgb, var(--warning) 88%, black));
+}
+
+.chip[data-variant="contained"][data-color="info"] {
+  background-color: var(--info, #0288d1);
+  color: var(--info-foreground, #fff);
+}
+.chip[data-clickable="true"][data-variant="contained"][data-color="info"]:hover {
+  background-color: var(--info-hover, color-mix(in srgb, var(--info) 88%, black));
+}
+
+.chip[data-variant="contained"][data-color="success"] {
+  background-color: var(--success, #2e7d32);
+  color: var(--success-foreground, #fff);
+}
+.chip[data-clickable="true"][data-variant="contained"][data-color="success"]:hover {
+  background-color: var(--success-hover, color-mix(in srgb, var(--success) 88%, black));
+}
+
+/* --- Theme Colors (Outlined) --- */
+.chip[data-variant="outlined"][data-color="primary"] {
+  border-color: var(--primary, #1976d2);
+  color: var(--primary, #1976d2);
+}
+.chip[data-clickable="true"][data-variant="outlined"][data-color="primary"]:hover {
+  background-color: var(--primary-subtle, color-mix(in srgb, var(--primary) 12%, transparent));
+}
+
+.chip[data-variant="outlined"][data-color="secondary"] {
+  border-color: var(--secondary, #9c27b0);
+  color: var(--secondary, #9c27b0);
+}
+.chip[data-clickable="true"][data-variant="outlined"][data-color="secondary"]:hover {
+  background-color: var(--secondary-subtle, color-mix(in srgb, var(--secondary) 12%, transparent));
+}
+
+.chip[data-variant="outlined"][data-color="error"] {
+  border-color: var(--error, #d32f2f);
+  color: var(--error, #d32f2f);
+}
+.chip[data-clickable="true"][data-variant="outlined"][data-color="error"]:hover {
+  background-color: var(--error-subtle, color-mix(in srgb, var(--error) 12%, transparent));
+}
+
+.chip[data-variant="outlined"][data-color="warning"] {
+  border-color: var(--warning, #ed6c02);
+  color: var(--warning, #ed6c02);
+}
+.chip[data-clickable="true"][data-variant="outlined"][data-color="warning"]:hover {
+  background-color: var(--warning-subtle, color-mix(in srgb, var(--warning) 12%, transparent));
+}
+
+.chip[data-variant="outlined"][data-color="info"] {
+  border-color: var(--info, #0288d1);
+  color: var(--info, #0288d1);
+}
+.chip[data-clickable="true"][data-variant="outlined"][data-color="info"]:hover {
+  background-color: var(--info-subtle, color-mix(in srgb, var(--info) 12%, transparent));
+}
+
+.chip[data-variant="outlined"][data-color="success"] {
+  border-color: var(--success, #2e7d32);
+  color: var(--success, #2e7d32);
+}
+.chip[data-clickable="true"][data-variant="outlined"][data-color="success"]:hover {
+  background-color: var(--success-subtle, color-mix(in srgb, var(--success) 12%, transparent));
+}
+
+/* --- Theme Colors (Ghost) --- */
+.chip[data-variant="ghost"][data-color="primary"] {
+  color: var(--primary, #1976d2);
+  background-color: var(--primary-subtle, color-mix(in srgb, var(--primary) 12%, transparent));
+}
+.chip[data-clickable="true"][data-variant="ghost"][data-color="primary"]:hover {
+  background-color: color-mix(in srgb, var(--primary) 20%, transparent);
+}
+
+.chip[data-variant="ghost"][data-color="secondary"] {
+  color: var(--secondary, #9c27b0);
+  background-color: var(--secondary-subtle, color-mix(in srgb, var(--secondary) 12%, transparent));
+}
+.chip[data-clickable="true"][data-variant="ghost"][data-color="secondary"]:hover {
+  background-color: color-mix(in srgb, var(--secondary) 20%, transparent);
+}
+
+.chip[data-variant="ghost"][data-color="error"] {
+  color: var(--error, #d32f2f);
+  background-color: var(--error-subtle, color-mix(in srgb, var(--error) 12%, transparent));
+}
+.chip[data-clickable="true"][data-variant="ghost"][data-color="error"]:hover {
+  background-color: color-mix(in srgb, var(--error) 20%, transparent);
+}
+
+.chip[data-variant="ghost"][data-color="warning"] {
+  color: var(--warning, #ed6c02);
+  background-color: var(--warning-subtle, color-mix(in srgb, var(--warning) 12%, transparent));
+}
+.chip[data-clickable="true"][data-variant="ghost"][data-color="warning"]:hover {
+  background-color: color-mix(in srgb, var(--warning) 20%, transparent);
+}
+
+.chip[data-variant="ghost"][data-color="info"] {
+  color: var(--info, #0288d1);
+  background-color: var(--info-subtle, color-mix(in srgb, var(--info) 12%, transparent));
+}
+.chip[data-clickable="true"][data-variant="ghost"][data-color="info"]:hover {
+  background-color: color-mix(in srgb, var(--info) 20%, transparent);
+}
+
+.chip[data-variant="ghost"][data-color="success"] {
+  color: var(--success, #2e7d32);
+  background-color: var(--success-subtle, color-mix(in srgb, var(--success) 12%, transparent));
+}
+.chip[data-clickable="true"][data-variant="ghost"][data-color="success"]:hover {
+  background-color: color-mix(in srgb, var(--success) 20%, transparent);
+}
+
+/* ============================================================
+   CLICKABLE / FOCUS
+   ============================================================ */
+.chip[data-clickable="true"] {
+  cursor: pointer;
+}
+
+.chip[data-clickable="true"]:focus-visible {
+  box-shadow: 0 0 0 2px var(--background), 0 0 0 4px var(--color-focus-ring, var(--primary, #1976d2));
+}
+
+/* ============================================================
+   DISABLED
+   ============================================================ */
+.chip[data-disabled] {
+  opacity: 0.5;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* ============================================================
+   ELEMENTS (Label, Icon, Avatar, Delete Icon)
+   ============================================================ */
+.label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.2em;
+  height: 1.2em;
+}
+.chip[data-size="small"] .icon { margin-left: -2px; margin-right: 4px; }
+.chip[data-size="medium"] .icon { margin-left: -4px; margin-right: 6px; }
+.chip[data-size="large"] .icon { margin-left: -6px; margin-right: 8px; }
+
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.chip[data-size="small"] .avatar { width: 16px; height: 16px; margin-left: -4px; margin-right: 4px; }
+.chip[data-size="medium"] .avatar { width: 24px; height: 24px; margin-left: -8px; margin-right: 8px; }
+.chip[data-size="large"] .avatar { width: 32px; height: 32px; margin-left: -12px; margin-right: 8px; }
+
+.deleteIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity var(--transition-fast, 150ms ease), background-color var(--transition-fast, 150ms ease);
+}
+
+.chip[data-size="small"] .deleteIcon { width: 14px; height: 14px; margin-right: -4px; margin-left: 4px; }
+.chip[data-size="medium"] .deleteIcon { width: 18px; height: 18px; margin-right: -6px; margin-left: 6px; }
+.chip[data-size="large"] .deleteIcon { width: 22px; height: 22px; margin-right: -8px; margin-left: 8px; }
+
+.deleteIcon:hover {
+  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.chip[data-variant="contained"][data-color="primary"] .deleteIcon:hover,
+.chip[data-variant="contained"][data-color="secondary"] .deleteIcon:hover,
+.chip[data-variant="contained"][data-color="error"] .deleteIcon:hover,
+.chip[data-variant="contained"][data-color="warning"] .deleteIcon:hover,
+.chip[data-variant="contained"][data-color="info"] .deleteIcon:hover,
+.chip[data-variant="contained"][data-color="success"] .deleteIcon:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}

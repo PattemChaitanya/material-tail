@@ -1,0 +1,95 @@
+/* ============================================================
+   Dialog.module.css
+   ============================================================ */
+
+.dialog {
+  padding: 0;
+  border: none;
+  background: transparent;
+  max-height: calc(100% - 64px);
+  max-width: calc(100% - 64px);
+  margin: auto;
+  border-radius: var(--radius-lg, 8px);
+  box-shadow: var(--shadow-xl, 0px 11px 15px -7px rgba(0,0,0,0.2), 0px 24px 38px 3px rgba(0,0,0,0.14), 0px 9px 46px 8px rgba(0,0,0,0.12));
+  font-family: var(--font-family, system-ui, -apple-system, sans-serif);
+}
+
+.dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+  opacity: 0;
+  transition: opacity var(--transition-normal, 200ms ease);
+}
+
+.dialog[open]::backdrop {
+  opacity: 1;
+}
+
+/* Animations */
+.dialog[open] {
+  animation: dialog-enter var(--transition-normal, 200ms ease) forwards;
+}
+
+@keyframes dialog-enter {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Container */
+.container {
+  background-color: var(--background-paper, #ffffff);
+  color: var(--text-primary, rgba(0, 0, 0, 0.87));
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  max-height: calc(100vh - 64px);
+  width: 100%;
+}
+
+/* Width Settings */
+.dialog[data-full-width="true"] {
+  width: calc(100% - 64px);
+}
+
+.dialog[data-max-width="xs"] { max-width: 444px; }
+.dialog[data-max-width="sm"] { max-width: 600px; }
+.dialog[data-max-width="md"] { max-width: 900px; }
+.dialog[data-max-width="lg"] { max-width: 1200px; }
+.dialog[data-max-width="xl"] { max-width: 1536px; }
+
+/* Subcomponents */
+.title {
+  margin: 0;
+  padding: var(--spacing-4, 16px) var(--spacing-6, 24px);
+  font-size: var(--font-size-xl, 1.25rem);
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 1.6;
+}
+
+.content {
+  flex: 1 1 auto;
+  padding: 0 var(--spacing-6, 24px) var(--spacing-6, 24px) var(--spacing-6, 24px);
+  overflow-y: auto;
+  color: var(--text-secondary, rgba(0, 0, 0, 0.6));
+  font-size: var(--font-size-md, 1rem);
+  line-height: 1.5;
+}
+
+/* If content follows title, adjust padding */
+.title + .content {
+  padding-top: 0;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: var(--spacing-2, 8px);
+  gap: var(--spacing-2, 8px);
+}

@@ -1,0 +1,176 @@
+/* ============================================================
+   Checkbox.module.css
+   ============================================================ */
+
+.checkbox-root {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  font-family: var(--font-family, system-ui, -apple-system, sans-serif);
+  vertical-align: middle;
+  gap: var(--spacing-2, 8px);
+}
+
+.checkbox-container {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border-radius: var(--radius-sm, 2px);
+  /* The size of the click target */
+  padding: var(--spacing-1, 4px);
+  margin: calc(var(--spacing-1, 4px) * -1);
+}
+
+/* ============================================================
+   NATIVE INPUT (Visually Hidden)
+   ============================================================ */
+.input {
+  cursor: pointer;
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  z-index: 1;
+}
+
+/* ============================================================
+   CUSTOM CONTROL (The visual box)
+   ============================================================ */
+.control {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--border-color, rgba(0, 0, 0, 0.54));
+  border-radius: var(--radius-sm, 2px);
+  background-color: transparent;
+  transition:
+    background-color var(--transition-fast, 150ms ease),
+    border-color var(--transition-fast, 150ms ease),
+    box-shadow var(--transition-fast, 150ms ease);
+  color: var(--background-paper, #ffffff);
+}
+
+.icon {
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transform: scale(0.5);
+  transition:
+    opacity var(--transition-fast, 150ms ease),
+    transform var(--transition-spring, 300ms cubic-bezier(0.34, 1.56, 0.64, 1));
+}
+
+/* ============================================================
+   STATES (Checked, Focus, Disabled, Error)
+   ============================================================ */
+
+/* Hover state */
+.checkbox-root:not([data-disabled]) .input:hover ~ .control {
+  box-shadow: 0 0 0 4px var(--action-hover, rgba(0, 0, 0, 0.04));
+}
+
+/* Focus-visible ring */
+.input:focus-visible ~ .control {
+  box-shadow: 0 0 0 3px var(--color-focus-ring, var(--primary, #1976d2));
+  outline: 2px solid transparent;
+}
+
+/* Checked state */
+.input:checked ~ .control {
+  border-color: transparent;
+}
+
+.input:checked ~ .control .icon {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Colors for Checked State */
+.checkbox-root[data-color="primary"] .input:checked ~ .control {
+  background-color: var(--primary, #1976d2);
+}
+.checkbox-root[data-color="secondary"] .input:checked ~ .control {
+  background-color: var(--secondary, #9c27b0);
+}
+.checkbox-root[data-color="error"] .control {
+  border-color: var(--error, #d32f2f);
+}
+.checkbox-root[data-color="error"] .input:checked ~ .control {
+  background-color: var(--error, #d32f2f);
+}
+.checkbox-root[data-color="warning"] .input:checked ~ .control {
+  background-color: var(--warning, #ed6c02);
+}
+.checkbox-root[data-color="info"] .input:checked ~ .control {
+  background-color: var(--info, #0288d1);
+}
+.checkbox-root[data-color="success"] .input:checked ~ .control {
+  background-color: var(--success, #2e7d32);
+}
+
+/* Disabled state */
+.checkbox-root[data-disabled] {
+  cursor: not-allowed;
+}
+
+.checkbox-root[data-disabled] .input {
+  cursor: not-allowed;
+}
+
+.checkbox-root[data-disabled] .control {
+  border-color: var(--action-disabled-bg, rgba(0, 0, 0, 0.26));
+}
+
+.checkbox-root[data-disabled] .input:checked ~ .control {
+  background-color: var(--action-disabled-bg, rgba(0, 0, 0, 0.26));
+  border-color: transparent;
+}
+
+.checkbox-root[data-disabled] .label {
+  color: var(--text-disabled, rgba(0, 0, 0, 0.38));
+}
+
+/* ============================================================
+   SIZES
+   ============================================================ */
+.checkbox-root[data-size="small"] .control {
+  width: 16px;
+  height: 16px;
+}
+.checkbox-root[data-size="small"] .icon {
+  width: 12px;
+  height: 12px;
+}
+
+.checkbox-root[data-size="medium"] .control {
+  width: 20px;
+  height: 20px;
+}
+.checkbox-root[data-size="medium"] .icon {
+  width: 14px;
+  height: 14px;
+}
+
+.checkbox-root[data-size="large"] .control {
+  width: 24px;
+  height: 24px;
+}
+.checkbox-root[data-size="large"] .icon {
+  width: 18px;
+  height: 18px;
+}
+
+/* ============================================================
+   LABEL
+   ============================================================ */
+.label {
+  cursor: pointer;
+  font-size: var(--font-size-md, 1rem);
+  color: var(--text-primary, rgba(0, 0, 0, 0.87));
+  user-select: none;
+}

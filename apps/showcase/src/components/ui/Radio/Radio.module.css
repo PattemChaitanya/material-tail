@@ -1,0 +1,187 @@
+/* ============================================================
+   Radio.module.css
+   ============================================================ */
+
+.radio-root {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  font-family: var(--font-family, system-ui, -apple-system, sans-serif);
+  vertical-align: middle;
+  gap: var(--spacing-2, 8px);
+}
+
+.radio-container {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border-radius: 50%;
+  /* The size of the click target padding */
+  padding: var(--spacing-1, 4px);
+  margin: calc(var(--spacing-1, 4px) * -1);
+}
+
+/* ============================================================
+   NATIVE INPUT (Visually Hidden)
+   ============================================================ */
+.input {
+  cursor: pointer;
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  z-index: 1;
+}
+
+/* ============================================================
+   CUSTOM CONTROL (The outer ring and inner dot)
+   ============================================================ */
+.control {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--border-color, rgba(0, 0, 0, 0.54));
+  border-radius: 50%;
+  background-color: transparent;
+  transition:
+    background-color var(--transition-fast, 150ms ease),
+    border-color var(--transition-fast, 150ms ease),
+    box-shadow var(--transition-fast, 150ms ease);
+}
+
+.dot {
+  border-radius: 50%;
+  background-color: transparent;
+  transform: scale(0);
+  transition:
+    background-color var(--transition-fast, 150ms ease),
+    transform var(--transition-spring, 300ms cubic-bezier(0.34, 1.56, 0.64, 1));
+}
+
+/* ============================================================
+   STATES (Checked, Focus, Disabled, Error)
+   ============================================================ */
+
+/* Hover state */
+.radio-root:not([data-disabled]) .input:hover ~ .control {
+  box-shadow: 0 0 0 4px var(--action-hover, rgba(0, 0, 0, 0.04));
+}
+
+/* Focus-visible ring */
+.input:focus-visible ~ .control {
+  box-shadow: 0 0 0 3px var(--color-focus-ring, var(--primary, #1976d2));
+  outline: 2px solid transparent;
+}
+
+/* Checked state */
+.input:checked ~ .control .dot {
+  transform: scale(1);
+}
+
+/* Colors for Checked State */
+.radio-root[data-color="primary"] .input:checked ~ .control {
+  border-color: var(--primary, #1976d2);
+}
+.radio-root[data-color="primary"] .input:checked ~ .control .dot {
+  background-color: var(--primary, #1976d2);
+}
+
+.radio-root[data-color="secondary"] .input:checked ~ .control {
+  border-color: var(--secondary, #9c27b0);
+}
+.radio-root[data-color="secondary"] .input:checked ~ .control .dot {
+  background-color: var(--secondary, #9c27b0);
+}
+
+.radio-root[data-color="error"] .control {
+  border-color: var(--error, #d32f2f);
+}
+.radio-root[data-color="error"] .input:checked ~ .control .dot {
+  background-color: var(--error, #d32f2f);
+}
+
+.radio-root[data-color="warning"] .input:checked ~ .control {
+  border-color: var(--warning, #ed6c02);
+}
+.radio-root[data-color="warning"] .input:checked ~ .control .dot {
+  background-color: var(--warning, #ed6c02);
+}
+
+.radio-root[data-color="info"] .input:checked ~ .control {
+  border-color: var(--info, #0288d1);
+}
+.radio-root[data-color="info"] .input:checked ~ .control .dot {
+  background-color: var(--info, #0288d1);
+}
+
+.radio-root[data-color="success"] .input:checked ~ .control {
+  border-color: var(--success, #2e7d32);
+}
+.radio-root[data-color="success"] .input:checked ~ .control .dot {
+  background-color: var(--success, #2e7d32);
+}
+
+/* Disabled state */
+.radio-root[data-disabled] {
+  cursor: not-allowed;
+}
+.radio-root[data-disabled] .input {
+  cursor: not-allowed;
+}
+.radio-root[data-disabled] .control {
+  border-color: var(--action-disabled-bg, rgba(0, 0, 0, 0.26));
+}
+.radio-root[data-disabled] .input:checked ~ .control .dot {
+  background-color: var(--action-disabled-bg, rgba(0, 0, 0, 0.26));
+}
+.radio-root[data-disabled] .label {
+  color: var(--text-disabled, rgba(0, 0, 0, 0.38));
+}
+
+/* ============================================================
+   SIZES
+   ============================================================ */
+/* Small */
+.radio-root[data-size="small"] .control {
+  width: 16px;
+  height: 16px;
+}
+.radio-root[data-size="small"] .dot {
+  width: 8px;
+  height: 8px;
+}
+
+/* Medium */
+.radio-root[data-size="medium"] .control {
+  width: 20px;
+  height: 20px;
+}
+.radio-root[data-size="medium"] .dot {
+  width: 10px;
+  height: 10px;
+}
+
+/* Large */
+.radio-root[data-size="large"] .control {
+  width: 24px;
+  height: 24px;
+}
+.radio-root[data-size="large"] .dot {
+  width: 12px;
+  height: 12px;
+}
+
+/* ============================================================
+   LABEL
+   ============================================================ */
+.label {
+  cursor: pointer;
+  font-size: var(--font-size-md, 1rem);
+  color: var(--text-primary, rgba(0, 0, 0, 0.87));
+  user-select: none;
+}

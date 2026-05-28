@@ -1,0 +1,93 @@
+/* ============================================================
+   Grid.module.css
+   ============================================================ */
+
+.grid {
+  box-sizing: border-box;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.item {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+/* ============================================================
+   SPACING
+   ============================================================ */
+/* Spacing uses negative margins on container and positive padding on items */
+.container[data-spacing="1"] { width: calc(100% + var(--spacing-1)); margin-left: calc(-1 * var(--spacing-1)); margin-top: calc(-1 * var(--spacing-1)); }
+.container[data-spacing="1"] > .item { padding-left: var(--spacing-1); padding-top: var(--spacing-1); }
+
+.container[data-spacing="2"] { width: calc(100% + var(--spacing-2)); margin-left: calc(-1 * var(--spacing-2)); margin-top: calc(-1 * var(--spacing-2)); }
+.container[data-spacing="2"] > .item { padding-left: var(--spacing-2); padding-top: var(--spacing-2); }
+
+.container[data-spacing="3"] { width: calc(100% + var(--spacing-3)); margin-left: calc(-1 * var(--spacing-3)); margin-top: calc(-1 * var(--spacing-3)); }
+.container[data-spacing="3"] > .item { padding-left: var(--spacing-3); padding-top: var(--spacing-3); }
+
+.container[data-spacing="4"] { width: calc(100% + var(--spacing-4)); margin-left: calc(-1 * var(--spacing-4)); margin-top: calc(-1 * var(--spacing-4)); }
+.container[data-spacing="4"] > .item { padding-left: var(--spacing-4); padding-top: var(--spacing-4); }
+
+.container[data-spacing="6"] { width: calc(100% + var(--spacing-6)); margin-left: calc(-1 * var(--spacing-6)); margin-top: calc(-1 * var(--spacing-6)); }
+.container[data-spacing="6"] > .item { padding-left: var(--spacing-6); padding-top: var(--spacing-6); }
+
+/* ============================================================
+   RESPONSIVE COLUMNS (12-column grid)
+   ============================================================ */
+
+/* XS Breakpoint (default) */
+.item[data-xs="auto"] { flex-grow: 1; max-width: none; flex-basis: 0; }
+.item[data-xs="true"] { flex-grow: 1; max-width: 100%; flex-basis: 0; }
+.item[data-xs="1"]  { flex-basis: 8.333333%;  max-width: 8.333333%; }
+.item[data-xs="2"]  { flex-basis: 16.666667%; max-width: 16.666667%; }
+.item[data-xs="3"]  { flex-basis: 25%;        max-width: 25%; }
+.item[data-xs="4"]  { flex-basis: 33.333333%; max-width: 33.333333%; }
+.item[data-xs="5"]  { flex-basis: 41.666667%; max-width: 41.666667%; }
+.item[data-xs="6"]  { flex-basis: 50%;        max-width: 50%; }
+.item[data-xs="7"]  { flex-basis: 58.333333%; max-width: 58.333333%; }
+.item[data-xs="8"]  { flex-basis: 66.666667%; max-width: 66.666667%; }
+.item[data-xs="9"]  { flex-basis: 75%;        max-width: 75%; }
+.item[data-xs="10"] { flex-basis: 83.333333%; max-width: 83.333333%; }
+.item[data-xs="11"] { flex-basis: 91.666667%; max-width: 91.666667%; }
+.item[data-xs="12"] { flex-basis: 100%;       max-width: 100%; }
+
+/* SM Breakpoint */
+@media (min-width: 600px) {
+  .item[data-sm="auto"] { flex-grow: 1; max-width: none; flex-basis: 0; }
+  .item[data-sm="true"] { flex-grow: 1; max-width: 100%; flex-basis: 0; }
+  .item[data-sm="1"]  { flex-basis: 8.333333%;  max-width: 8.333333%; }
+  .item[data-sm="2"]  { flex-basis: 16.666667%; max-width: 16.666667%; }
+  .item[data-sm="3"]  { flex-basis: 25%;        max-width: 25%; }
+  .item[data-sm="4"]  { flex-basis: 33.333333%; max-width: 33.333333%; }
+  .item[data-sm="5"]  { flex-basis: 41.666667%; max-width: 41.666667%; }
+  .item[data-sm="6"]  { flex-basis: 50%;        max-width: 50%; }
+  .item[data-sm="7"]  { flex-basis: 58.333333%; max-width: 58.333333%; }
+  .item[data-sm="8"]  { flex-basis: 66.666667%; max-width: 66.666667%; }
+  .item[data-sm="9"]  { flex-basis: 75%;        max-width: 75%; }
+  .item[data-sm="10"] { flex-basis: 83.333333%; max-width: 83.333333%; }
+  .item[data-sm="11"] { flex-basis: 91.666667%; max-width: 91.666667%; }
+  .item[data-sm="12"] { flex-basis: 100%;       max-width: 100%; }
+}
+
+/* MD Breakpoint */
+@media (min-width: 900px) {
+  .item[data-md="auto"] { flex-grow: 1; max-width: none; flex-basis: 0; }
+  .item[data-md="true"] { flex-grow: 1; max-width: 100%; flex-basis: 0; }
+  .item[data-md="1"]  { flex-basis: 8.333333%;  max-width: 8.333333%; }
+  .item[data-md="2"]  { flex-basis: 16.666667%; max-width: 16.666667%; }
+  .item[data-md="3"]  { flex-basis: 25%;        max-width: 25%; }
+  .item[data-md="4"]  { flex-basis: 33.333333%; max-width: 33.333333%; }
+  .item[data-md="5"]  { flex-basis: 41.666667%; max-width: 41.666667%; }
+  .item[data-md="6"]  { flex-basis: 50%;        max-width: 50%; }
+  .item[data-md="7"]  { flex-basis: 58.333333%; max-width: 58.333333%; }
+  .item[data-md="8"]  { flex-basis: 66.666667%; max-width: 66.666667%; }
+  .item[data-md="9"]  { flex-basis: 75%;        max-width: 75%; }
+  .item[data-md="10"] { flex-basis: 83.333333%; max-width: 83.333333%; }
+  .item[data-md="11"] { flex-basis: 91.666667%; max-width: 91.666667%; }
+  .item[data-md="12"] { flex-basis: 100%;       max-width: 100%; }
+}

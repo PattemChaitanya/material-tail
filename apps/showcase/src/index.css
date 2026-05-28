@@ -1,0 +1,158 @@
+body {
+  margin: 0;
+  font-family: var(--font-family, system-ui, -apple-system, sans-serif);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background, #fafafa);
+  color: var(--text-primary, rgba(0, 0, 0, 0.87));
+  min-height: 100vh;
+}
+
+/* ============================================================
+   material-tail — Design Tokens
+   Edit these variables to theme all components at once.
+   ============================================================ */
+
+/* --- material-tail-theme-start --- */
+:root {
+  /* Primary */
+  --primary:            #1976d2;
+  --primary-foreground: #ffffff;
+  --primary-hover:      color-mix(in srgb, var(--primary) 88%, black);
+  --primary-subtle:     color-mix(in srgb, var(--primary) 12%, transparent);
+
+  /* Secondary */
+  --secondary:            #9c27b0;
+  --secondary-foreground: #ffffff;
+  --secondary-hover:      color-mix(in srgb, var(--secondary) 88%, black);
+  --secondary-subtle:     color-mix(in srgb, var(--secondary) 12%, transparent);
+
+  /* Error */
+  --error:            #d32f2f;
+  --error-foreground: #ffffff;
+  --error-hover:      color-mix(in srgb, var(--error) 88%, black);
+  --error-subtle:     color-mix(in srgb, var(--error) 12%, transparent);
+
+  /* Warning */
+  --warning:            #ed6c02;
+  --warning-foreground: #ffffff;
+  --warning-hover:      color-mix(in srgb, var(--warning) 88%, black);
+  --warning-subtle:     color-mix(in srgb, var(--warning) 12%, transparent);
+
+  /* Info */
+  --info:            #0288d1;
+  --info-foreground: #ffffff;
+  --info-hover:      color-mix(in srgb, var(--info) 88%, black);
+  --info-subtle:     color-mix(in srgb, var(--info) 12%, transparent);
+
+  /* Success */
+  --success:            #2e7d32;
+  --success-foreground: #ffffff;
+  --success-hover:      color-mix(in srgb, var(--success) 88%, black);
+  --success-subtle:     color-mix(in srgb, var(--success) 12%, transparent);
+
+  /* Neutrals */
+  --background:         #ffffff;
+  --background-paper:   #ffffff;
+  --background-subtle:  #f5f5f5;
+  --text-primary:       rgba(0, 0, 0, 0.87);
+  --text-secondary:     rgba(0, 0, 0, 0.6);
+  --text-disabled:      rgba(0, 0, 0, 0.38);
+  --text-placeholder:   rgba(0, 0, 0, 0.38);
+  --border-color:       rgba(0, 0, 0, 0.23);
+  --divider:            rgba(0, 0, 0, 0.12);
+  --action-hover:       rgba(0, 0, 0, 0.04);
+  --action-selected:    rgba(0, 0, 0, 0.08);
+  --action-disabled-bg: rgba(0, 0, 0, 0.12);
+  --color-focus-ring:   var(--primary);
+  --input-filled-bg:       rgba(0, 0, 0, 0.06);
+  --input-filled-bg-hover: rgba(0, 0, 0, 0.09);
+
+  /* Typography */
+  --font-family:          system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-size-xs:   0.75rem;
+  --font-size-sm:   0.875rem;
+  --font-size-md:   1rem;
+  --font-size-lg:   1.125rem;
+  --font-size-xl:   1.25rem;
+  --font-size-2xl:  1.5rem;
+  --font-size-3xl:  1.875rem;
+  --font-size-4xl:  2.25rem;
+  --font-weight-light:    300;
+  --font-weight-regular:  400;
+  --font-weight-medium:   500;
+  --font-weight-semibold: 600;
+  --font-weight-bold:     700;
+  --line-height-tight:    1.25;
+  --line-height-normal:   1.5;
+  --line-height-relaxed:  1.75;
+
+  /* Spacing (base 4px) */
+  --spacing-0:   0px;
+  --spacing-1:   4px;
+  --spacing-2:   8px;
+  --spacing-3:   12px;
+  --spacing-4:   16px;
+  --spacing-5:   20px;
+  --spacing-6:   24px;
+  --spacing-8:   32px;
+  --spacing-10:  40px;
+  --spacing-12:  48px;
+  --spacing-16:  64px;
+
+  /* Border Radius */
+  --radius-none: 0px;
+  --radius-sm:   2px;
+  --radius-md:   4px;
+  --radius-lg:   8px;
+  --radius-xl:   12px;
+  --radius-2xl:  16px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-none: none;
+  --shadow-sm:   0px 1px 2px rgba(0, 0, 0, 0.08);
+  --shadow-md:   0px 2px 4px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-lg:   0px 4px 8px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.08);
+  --shadow-xl:   0px 8px 16px rgba(0, 0, 0, 0.12), 0px 4px 8px rgba(0, 0, 0, 0.08);
+  --shadow-2xl:  0px 16px 32px rgba(0, 0, 0, 0.15);
+
+  /* Transitions */
+  --transition-fast:   150ms ease;
+  --transition-normal: 200ms ease;
+  --transition-slow:   300ms ease;
+  --transition-spring: 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Z-index scale */
+  --z-below:    -1;
+  --z-base:      0;
+  --z-raised:    1;
+  --z-dropdown:  1000;
+  --z-sticky:    1100;
+  --z-overlay:   1200;
+  --z-modal:     1300;
+  --z-popover:   1400;
+  --z-tooltip:   1500;
+  --z-toast:     1600;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background:           #121212;
+    --background-paper:     #1e1e1e;
+    --background-subtle:    #2a2a2a;
+    --text-primary:         rgba(255, 255, 255, 0.87);
+    --text-secondary:       rgba(255, 255, 255, 0.6);
+    --text-disabled:        rgba(255, 255, 255, 0.38);
+    --text-placeholder:     rgba(255, 255, 255, 0.38);
+    --border-color:         rgba(255, 255, 255, 0.23);
+    --divider:              rgba(255, 255, 255, 0.12);
+    --action-hover:         rgba(255, 255, 255, 0.08);
+    --action-selected:      rgba(255, 255, 255, 0.12);
+    --action-disabled-bg:   rgba(255, 255, 255, 0.12);
+    --input-filled-bg:       rgba(255, 255, 255, 0.09);
+    --input-filled-bg-hover: rgba(255, 255, 255, 0.13);
+  }
+}
+/* --- material-tail-theme-end --- */
+

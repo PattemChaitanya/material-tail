@@ -1,0 +1,306 @@
+/* ============================================================
+   Input.module.css
+   Uses data-* attribute selectors on the root wrapper.
+   All colors derived from CSS custom properties (theme tokens).
+   Floating label animation included.
+   ============================================================ */
+
+/* ---- Root wrapper ---- */
+.input-root {
+  display: inline-flex;
+  flex-direction: column;
+  position: relative;
+  font-family: var(--font-family, system-ui, -apple-system, sans-serif);
+  font-size: var(--font-size-md, 1rem);
+}
+
+.input-root[data-full-width] {
+  width: 100%;
+}
+
+/* ============================================================
+   LABEL
+   ============================================================ */
+.label {
+  display: block;
+  margin-bottom: var(--spacing-1, 4px);
+  font-size: var(--font-size-sm, 0.875rem);
+  font-weight: var(--font-weight-medium, 500);
+  color: var(--text-secondary, rgba(0, 0, 0, 0.6));
+  transition: color var(--transition-fast, 150ms ease);
+  line-height: 1.4;
+}
+
+/* Label color changes when input is focused — via :focus-within on root */
+.input-root[data-color="primary"]:focus-within .label {
+  color: var(--primary, #1976d2);
+}
+.input-root[data-color="secondary"]:focus-within .label {
+  color: var(--secondary, #9c27b0);
+}
+.input-root[data-color="error"] .label {
+  color: var(--error, #d32f2f);
+}
+.input-root[data-color="warning"]:focus-within .label {
+  color: var(--warning, #ed6c02);
+}
+.input-root[data-color="info"]:focus-within .label {
+  color: var(--info, #0288d1);
+}
+.input-root[data-color="success"]:focus-within .label {
+  color: var(--success, #2e7d32);
+}
+
+.required {
+  color: var(--error, #d32f2f);
+}
+
+/* ============================================================
+   INPUT CONTAINER (the visual box/underline)
+   ============================================================ */
+.input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: var(--radius-md, 4px);
+  background-color: transparent;
+  transition:
+    border-color var(--transition-fast, 150ms ease),
+    background-color var(--transition-fast, 150ms ease),
+    box-shadow var(--transition-fast, 150ms ease);
+}
+
+/* ---- Variant: outlined ---- */
+.input-root[data-variant="outlined"] .input-container {
+  border: 1px solid var(--border-color, rgba(0, 0, 0, 0.23));
+}
+.input-root[data-variant="outlined"]:not([data-disabled]) .input-container:hover {
+  border-color: var(--text-primary, rgba(0, 0, 0, 0.87));
+}
+.input-root[data-variant="outlined"][data-color="primary"]:focus-within .input-container {
+  border-color: var(--primary, #1976d2);
+  border-width: 2px;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary, #1976d2) 15%, transparent);
+}
+.input-root[data-variant="outlined"][data-color="secondary"]:focus-within .input-container {
+  border-color: var(--secondary, #9c27b0);
+  border-width: 2px;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--secondary, #9c27b0) 15%, transparent);
+}
+.input-root[data-variant="outlined"][data-color="error"] .input-container,
+.input-root[data-variant="outlined"][data-color="error"]:focus-within .input-container {
+  border-color: var(--error, #d32f2f);
+  border-width: 2px;
+}
+.input-root[data-variant="outlined"][data-color="error"]:focus-within .input-container {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--error, #d32f2f) 15%, transparent);
+}
+.input-root[data-variant="outlined"][data-color="warning"]:focus-within .input-container {
+  border-color: var(--warning, #ed6c02);
+  border-width: 2px;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--warning, #ed6c02) 15%, transparent);
+}
+.input-root[data-variant="outlined"][data-color="info"]:focus-within .input-container {
+  border-color: var(--info, #0288d1);
+  border-width: 2px;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--info, #0288d1) 15%, transparent);
+}
+.input-root[data-variant="outlined"][data-color="success"]:focus-within .input-container {
+  border-color: var(--success, #2e7d32);
+  border-width: 2px;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--success, #2e7d32) 15%, transparent);
+}
+
+/* ---- Variant: filled ---- */
+.input-root[data-variant="filled"] .input-container {
+  border-radius: var(--radius-md, 4px) var(--radius-md, 4px) 0 0;
+  background-color: var(--input-filled-bg, rgba(0, 0, 0, 0.06));
+  border-bottom: 1px solid var(--border-color, rgba(0, 0, 0, 0.42));
+}
+.input-root[data-variant="filled"]:not([data-disabled]) .input-container:hover {
+  background-color: var(--input-filled-bg-hover, rgba(0, 0, 0, 0.09));
+}
+.input-root[data-variant="filled"][data-color="primary"]:focus-within .input-container {
+  border-bottom-color: var(--primary, #1976d2);
+  border-bottom-width: 2px;
+}
+.input-root[data-variant="filled"][data-color="secondary"]:focus-within .input-container {
+  border-bottom-color: var(--secondary, #9c27b0);
+  border-bottom-width: 2px;
+}
+.input-root[data-variant="filled"][data-color="error"] .input-container {
+  border-bottom-color: var(--error, #d32f2f);
+  border-bottom-width: 2px;
+}
+.input-root[data-variant="filled"][data-color="warning"]:focus-within .input-container {
+  border-bottom-color: var(--warning, #ed6c02);
+  border-bottom-width: 2px;
+}
+.input-root[data-variant="filled"][data-color="info"]:focus-within .input-container {
+  border-bottom-color: var(--info, #0288d1);
+  border-bottom-width: 2px;
+}
+.input-root[data-variant="filled"][data-color="success"]:focus-within .input-container {
+  border-bottom-color: var(--success, #2e7d32);
+  border-bottom-width: 2px;
+}
+
+/* ---- Variant: standard ---- */
+.input-root[data-variant="standard"] .input-container {
+  border-radius: 0;
+  border-bottom: 1px solid var(--border-color, rgba(0, 0, 0, 0.42));
+}
+.input-root[data-variant="standard"]:not([data-disabled]) .input-container:hover {
+  border-bottom-color: var(--text-primary, rgba(0, 0, 0, 0.87));
+}
+.input-root[data-variant="standard"][data-color="primary"]:focus-within .input-container {
+  border-bottom-color: var(--primary, #1976d2);
+  border-bottom-width: 2px;
+}
+.input-root[data-variant="standard"][data-color="secondary"]:focus-within .input-container {
+  border-bottom-color: var(--secondary, #9c27b0);
+  border-bottom-width: 2px;
+}
+.input-root[data-variant="standard"][data-color="error"] .input-container {
+  border-bottom-color: var(--error, #d32f2f);
+  border-bottom-width: 2px;
+}
+.input-root[data-variant="standard"][data-color="warning"]:focus-within .input-container {
+  border-bottom-color: var(--warning, #ed6c02);
+  border-bottom-width: 2px;
+}
+.input-root[data-variant="standard"][data-color="info"]:focus-within .input-container {
+  border-bottom-color: var(--info, #0288d1);
+  border-bottom-width: 2px;
+}
+.input-root[data-variant="standard"][data-color="success"]:focus-within .input-container {
+  border-bottom-color: var(--success, #2e7d32);
+  border-bottom-width: 2px;
+}
+
+/* ============================================================
+   NATIVE INPUT ELEMENT
+   ============================================================ */
+.input {
+  width: 100%;
+  box-sizing: border-box;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--text-primary, rgba(0, 0, 0, 0.87));
+  font-family: inherit;
+  font-size: inherit;
+  line-height: 1.5;
+}
+
+.input::placeholder {
+  color: var(--text-placeholder, rgba(0, 0, 0, 0.38));
+}
+
+/* ---- Paddings per variant and size ---- */
+.input-root[data-variant="outlined"][data-size="small"] .input {
+  padding: var(--spacing-2, 8px) var(--spacing-3, 12px);
+  font-size: var(--font-size-sm, 0.875rem);
+}
+.input-root[data-variant="outlined"][data-size="medium"] .input {
+  padding: var(--spacing-3, 12px) var(--spacing-4, 14px);
+  font-size: var(--font-size-md, 1rem);
+}
+.input-root[data-variant="outlined"][data-size="large"] .input {
+  padding: var(--spacing-4, 16px);
+  font-size: var(--font-size-lg, 1.125rem);
+}
+
+.input-root[data-variant="filled"][data-size="small"] .input,
+.input-root[data-variant="standard"][data-size="small"] .input {
+  padding: var(--spacing-1, 4px) 0;
+  font-size: var(--font-size-sm, 0.875rem);
+}
+.input-root[data-variant="filled"][data-size="medium"] .input,
+.input-root[data-variant="standard"][data-size="medium"] .input {
+  padding: var(--spacing-2, 8px) 0;
+  font-size: var(--font-size-md, 1rem);
+}
+.input-root[data-variant="filled"][data-size="large"] .input,
+.input-root[data-variant="standard"][data-size="large"] .input {
+  padding: var(--spacing-3, 12px) 0;
+  font-size: var(--font-size-lg, 1.125rem);
+}
+
+.input-root[data-variant="filled"][data-size="small"] .input {
+  padding-left: var(--spacing-3, 12px);
+  padding-right: var(--spacing-3, 12px);
+}
+.input-root[data-variant="filled"][data-size="medium"] .input {
+  padding-left: var(--spacing-3, 12px);
+  padding-right: var(--spacing-3, 12px);
+}
+.input-root[data-variant="filled"][data-size="large"] .input {
+  padding-left: var(--spacing-4, 16px);
+  padding-right: var(--spacing-4, 16px);
+}
+
+/* ============================================================
+   ICONS
+   ============================================================ */
+.icon-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary, rgba(0, 0, 0, 0.54));
+  flex-shrink: 0;
+  font-size: 1.25em;
+}
+
+.icon-start {
+  padding-left: var(--spacing-3, 12px);
+  padding-right: var(--spacing-1, 4px);
+}
+
+.icon-end {
+  padding-right: var(--spacing-3, 12px);
+  padding-left: var(--spacing-1, 4px);
+}
+
+.input-root[data-variant="standard"] .icon-start,
+.input-root[data-variant="filled"] .icon-start {
+  padding-left: 0;
+}
+
+/* ============================================================
+   HELPER TEXT
+   ============================================================ */
+.helper-text {
+  margin-top: var(--spacing-1, 4px);
+  padding-left: var(--spacing-1, 4px);
+  font-size: var(--font-size-xs, 0.75rem);
+  line-height: 1.4;
+  color: var(--text-secondary, rgba(0, 0, 0, 0.6));
+  transition: color var(--transition-fast, 150ms ease);
+}
+
+.input-root[data-color="error"] .helper-text {
+  color: var(--error, #d32f2f);
+}
+
+/* ============================================================
+   DISABLED STATE
+   ============================================================ */
+.input-root[data-disabled] {
+  cursor: not-allowed;
+}
+
+.input-root[data-disabled] .label {
+  color: var(--text-disabled, rgba(0, 0, 0, 0.38));
+}
+
+.input-root[data-disabled] .input-container {
+  opacity: 0.6;
+}
+
+.input-root[data-disabled] .input {
+  cursor: not-allowed;
+  color: var(--text-disabled, rgba(0, 0, 0, 0.38));
+}
