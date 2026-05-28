@@ -32,7 +32,7 @@ export const Sidebar = ({ onNavClick }: SidebarProps) => {
           {(() => {
             const isActive = location.pathname === "/";
             return (
-              <Link to="/" style={{ textDecoration: 'none', color: isActive ? '#fff' : 'var(--text-secondary)' }}>
+              <Link to="/" style={{ textDecoration: 'none', color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)' }}>
                 <ListItem 
                   button 
                   selected={isActive}
@@ -75,7 +75,7 @@ export const Sidebar = ({ onNavClick }: SidebarProps) => {
             {items.map((item) => {
               const isActive = location.pathname === `/docs/${item.id}`;
               return (
-                <Link key={item.id} to={`/docs/${item.id}`} style={{ textDecoration: 'none', color: isActive ? '#fff' : 'var(--text-secondary)' }}>
+                <Link key={item.id} to={`/docs/${item.id}`} style={{ textDecoration: 'none', color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)' }}>
                   <ListItem 
                     button 
                     selected={isActive}

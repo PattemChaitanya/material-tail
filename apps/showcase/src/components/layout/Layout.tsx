@@ -13,40 +13,25 @@ export const Layout = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <Box style={{ minHeight: "100vh", backgroundColor: "var(--background-default)" }}>
-      {/* Fixed Header */}
+    <div className="app-window">
       <Header onMenuClick={() => setMobileOpen(true)} />
+      
+      {/* Drawer for Mobile Sidebar */}
+      <Drawer open={mobileOpen} onClose={() => setMobileOpen(false)}>
+        <Sidebar onNavClick={() => setMobileOpen(false)} />
+      </Drawer>
 
-      <Flex style={{ paddingTop: "64px" /* height of header */ }}>
-        {/* Desktop Sidebar (Hidden on small screens) */}
-        <Box 
-          style={{ 
-            width: "280px", 
-            flexShrink: 0, 
-            height: "calc(100vh - 64px)",
-            position: "sticky",
-            top: "64px",
-            borderRight: "1px solid var(--border-color)",
-            overflowY: "auto",
-            display: "block" // We can hide via CSS media queries if we had standard global css for utility classes, but we will rely on drawer for mobile.
-          }}
-          className="desktop-sidebar"
-        >
-          <Sidebar />
+      <Flex style={{ flexGrow: 1, overflow: "hidden" }}>
+        {/* Desktop Sidebar */}
+        <Box className="desktop-sidebar" style={{ width: "240px", flexShrink: 0, borderRight: "1px solid var(--border-color)", overflowY: "auto" }}>
+          <Sidebar onNavClick={() => {}} />
         </Box>
 
-        {/* Mobile Sidebar (Drawer) */}
-        <Drawer anchor="left" open={mobileOpen} onClose={() => setMobileOpen(false)}>
-          <Box style={{ width: "280px", paddingTop: "16px" }}>
-            <Sidebar onNavClick={() => setMobileOpen(false)} />
-          </Box>
-        </Drawer>
-
-        {/* Main Content */}
-        <Box style={{ flexGrow: 1, minWidth: 0 }}>
+        {/* Main Content Area */}
+        <Box style={{ flexGrow: 1, overflowY: "auto", position: "relative" }}>
           <Outlet />
         </Box>
       </Flex>
-    </Box>
+    </div>
   );
 };

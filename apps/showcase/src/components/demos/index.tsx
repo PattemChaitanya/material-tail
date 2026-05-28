@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 // @ts-ignore
 import { Button } from "../ui/Button";
 // @ts-ignore
@@ -6,49 +6,96 @@ import { Input } from "../ui/Input";
 // @ts-ignore
 import { Alert } from "../ui/Alert";
 // @ts-ignore
-import { Select } from "../ui/Select";
+import { Select, SelectItem } from "../ui/Select";
+// @ts-ignore
+import { Switch } from "../ui/Switch";
+// @ts-ignore
+import { Flex } from "../ui/Flex";
 
-export const ButtonDemo = () => (
-  <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
-    <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-      <Button variant="contained" color="primary">Primary</Button>
-      <Button variant="contained" color="secondary">Secondary</Button>
-      <Button variant="contained" color="error">Error</Button>
-      <Button variant="contained" color="success">Success</Button>
-    </div>
-    <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-      <Button variant="outlined" color="primary">Outlined</Button>
-      <Button variant="text" color="primary">Text</Button>
-      <Button variant="ghost" color="primary">Ghost</Button>
-    </div>
-  </div>
-);
+export interface DemoControl {
+  name: string;
+  type: 'select';
+  options: string[];
+  defaultValue: string;
+}
 
-export const AlertDemo = () => (
-  <div style={{ display: "flex", flexDirection: "column", gap: "16px", width: "100%" }}>
-    <Alert severity="success" title="Success!">Your changes have been saved.</Alert>
-    <Alert severity="info" variant="filled">Here is some solid information for you.</Alert>
-    <Alert severity="warning" variant="outlined" onClose={() => {}}>Watch out! You might want to double check that.</Alert>
-    <Alert severity="error" title="Fatal Error">Something went horribly wrong.</Alert>
-  </div>
-);
+export interface DemoConfig {
+  controls: DemoControl[];
+  component: React.FC<any>;
+}
 
-export const SelectDemo = () => (
-  <div style={{ display: "flex", flexDirection: "column", gap: "16px", width: "100%", maxWidth: "300px" }}>
-    <Select label="Choose an option" variant="outlined" color="primary">
-      <option value="1">Option 1</option>
-      <option value="2">Option 2</option>
-      <option value="3">Option 3</option>
-    </Select>
-    <Select label="Filled Select" variant="filled" color="secondary" size="small">
-      <option value="a">Apple</option>
-      <option value="b">Banana</option>
-    </Select>
-  </div>
-);
-
-export const DemoRegistry: Record<string, React.ReactNode> = {
-  button: <ButtonDemo />,
-  alert: <AlertDemo />,
-  select: <SelectDemo />,
+export const DemoRegistry: Record<string, DemoConfig> = {
+  button: {
+    controls: [
+      { name: 'variant', type: 'select', options: ['default', 'secondary', 'ghost', 'link', 'text', 'outlined'], defaultValue: 'default' },
+      { name: 'size', type: 'select', options: ['small', 'medium', 'large'], defaultValue: 'medium' },
+      { name: 'color', type: 'select', options: ['primary', 'secondary', 'success', 'error', 'info', 'warning'], defaultValue: 'primary' },
+      { name: 'disabled', type: 'select', options: ['false', 'true'], defaultValue: 'false' },
+      { name: 'fullWidth', type: 'select', options: ['false', 'true'], defaultValue: 'false' }
+    ],
+    component: (props: any) => {
+      const disabled = props.disabled === 'true';
+      const fullWidth = props.fullWidth === 'true';
+      return (
+        <Button 
+          variant={props.variant} 
+          size={props.size} 
+          color={props.color} 
+          disabled={disabled}
+          fullWidth={fullWidth}
+        >
+          Primary Action
+        </Button>
+      );
+    }
+  },
+  input: {
+    controls: [
+      { name: 'disabled', type: 'select', options: ['false', 'true'], defaultValue: 'false' },
+      { name: 'error', type: 'select', options: ['false', 'true'], defaultValue: 'false' }
+    ],
+    component: (props: any) => (
+      <Input 
+        placeholder="Enter something..." 
+        disabled={props.disabled === 'true'} 
+        error={props.error === 'true'}
+      />
+    )
+  },
+  alert: {
+    controls: [
+      { name: 'variant', type: 'select', options: ['default', 'filled', 'outlined'], defaultValue: 'default' },
+      { name: 'severity', type: 'select', options: ['info', 'success', 'warning', 'error'], defaultValue: 'info' }
+    ],
+    component: (props: any) => (
+      <Alert variant={props.variant} severity={props.severity}>
+        This is an alert demonstrating the {props.severity} severity.
+      </Alert>
+    )
+  },
+  select: {
+    controls: [
+      { name: 'disabled', type: 'select', options: ['false', 'true'], defaultValue: 'false' },
+      { name: 'error', type: 'select', options: ['false', 'true'], defaultValue: 'false' }
+    ],
+    component: (props: any) => (
+      <Select placeholder="Choose an option" disabled={props.disabled === 'true'} error={props.error === 'true'}>
+        <SelectItem value="1">Option 1</SelectItem>
+        <SelectItem value="2">Option 2</SelectItem>
+        <SelectItem value="3">Option 3</SelectItem>
+      </Select>
+    )
+  },
+  switch: {
+    controls: [
+      { name: 'color', type: 'select', options: ['primary', 'secondary', 'success', 'error'], defaultValue: 'primary' },
+      { name: 'disabled', type: 'select', options: ['false', 'true'], defaultValue: 'false' }
+    ],
+    component: (props: any) => (
+      <Flex gap={12} align="center">
+        <Switch color={props.color} disabled={props.disabled === 'true'} />
+        <span style={{ color: "var(--text-primary)" }}>Toggle me</span>
+      </Flex>
+    )
+  }
 };
