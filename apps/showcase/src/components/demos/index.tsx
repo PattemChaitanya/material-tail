@@ -79,7 +79,8 @@ export const DemoRegistry: Record<string, DemoConfig> = {
       { name: 'error', type: 'select', options: ['false', 'true'], defaultValue: 'false' }
     ],
     component: (props: any) => (
-      <Select placeholder="Choose an option" disabled={props.disabled === 'true'} error={props.error === 'true'} style={{ width: "200px" }}>
+      <Select defaultValue="" disabled={props.disabled === 'true'} error={props.error === 'true'} style={{ width: "200px" }}>
+        <option value="" disabled>Choose an option</option>
         <option value="1">Option 1</option>
         <option value="2">Option 2</option>
         <option value="3">Option 3</option>
