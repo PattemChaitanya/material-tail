@@ -18,11 +18,11 @@ body {
 
 :root {
   /* Primary */
-  --primary:            #1976d2;
+  --primary:            #3b82f6;
   --primary-foreground: #ffffff;
-  --primary-hover:      color-mix(in srgb, var(--primary) 88%, black);
+  --primary-hover:      #2563eb;
   --primary-subtle:     color-mix(in srgb, var(--primary) 12%, transparent);
-  --primary-foreground-subtle: #0d47a1;
+  --primary-foreground-subtle: #93c5fd;
 
   /* Secondary */
   --secondary:            #9c27b0;
@@ -186,8 +186,12 @@ body {
   --input-filled-bg:       rgba(255, 255, 255, 0.05);
   --input-filled-bg-hover: rgba(255, 255, 255, 0.08);
 
-  --primary-foreground-subtle: #90caf9;
-  --secondary-foreground-subtle: #ce93d8;
+  --primary: #3b82f6;
+  --primary-hover: #60a5fa;
+  --primary-foreground: #ffffff;
+  --primary-foreground-subtle: #1e3a8a;
+  --secondary: #a78bfa;
+  --secondary-hover: #c4b5fd;
   --error-foreground-subtle: #f48fb1;
   --warning-foreground-subtle: #ffcc80;
   --info-foreground-subtle: #81d4fa;
@@ -211,37 +215,19 @@ body {
 }
 
 body.dark {
-  background-color: #06080d;
+  background-color: #0d1117; /* Very deep dark space color */
   background-image: 
-    radial-gradient(circle at 15% 30%, rgba(20, 184, 166, 0.15), transparent 40%),
-    radial-gradient(circle at 85% 70%, rgba(139, 92, 246, 0.15), transparent 40%),
-    linear-gradient(to bottom right, rgba(255,255,255,0.02) 1px, transparent 1px);
-  background-size: 100% 100%, 100% 100%, 40px 40px;
+    radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.1), transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.1), transparent 40%),
+    linear-gradient(to bottom right, rgba(255,255,255,0.015) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 60px 60px; /* Subtle geometric grid */
   background-attachment: fixed;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.app-window {
-  width: 100%;
-  max-width: 1400px;
-  height: calc(100vh - 40px);
-  margin: 20px;
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(18, 20, 24, 0.65);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  box-shadow: 0 32px 64px -12px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
+  /* Remove flex centering so the app flows naturally from the top */
 }
 
 @media (min-width: 900px) {
@@ -251,14 +237,6 @@ body {
 }
 
 @media (max-width: 899px) {
-  .app-window {
-    height: 100vh;
-    margin: 0;
-    border-radius: 0;
-    border: none;
-    background: var(--background);
-    backdrop-filter: none;
-  }
   .desktop-nav {
     display: none !important;
   }

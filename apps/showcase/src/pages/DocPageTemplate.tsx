@@ -59,8 +59,8 @@ const LazyPlayground = ({ config, title = "Playground" }: { config: any, title?:
       style={{ 
         padding: "1px", // Gradient border thickness
         borderRadius: "16px",
-        background: "linear-gradient(135deg, rgba(20, 184, 166, 0.8), rgba(139, 92, 246, 0.8))",
-        boxShadow: "0 8px 32px -4px rgba(20,184,166,0.2), 0 8px 32px -4px rgba(139,92,246,0.2)",
+        background: "linear-gradient(135deg, rgba(59, 130, 246, 0.8), rgba(139, 92, 246, 0.8))",
+        boxShadow: "0 8px 32px -4px rgba(59,130,246,0.2), 0 8px 32px -4px rgba(139,92,246,0.2)",
         minHeight: "360px",
         display: "flex",
         flexDirection: "column",
@@ -70,13 +70,14 @@ const LazyPlayground = ({ config, title = "Playground" }: { config: any, title?:
       <div style={{
         display: "flex",
         flexDirection: "column",
-        background: "var(--background-paper)",
+        background: "rgba(20, 24, 30, 0.8)",
+        backdropFilter: "blur(24px)",
         borderRadius: "15px", // Slightly smaller than wrapper to fit inside border
         flexGrow: 1,
         overflow: "hidden"
       }}>
         {/* Playground Header */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 20px", borderBottom: "1px solid var(--border-color)" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 20px", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
           <span style={{ fontSize: "0.9rem", fontWeight: 600, color: "var(--text-primary)" }}>{title}</span>
           <div style={{ display: "flex", gap: "12px", color: "var(--text-secondary)" }}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
@@ -87,12 +88,12 @@ const LazyPlayground = ({ config, title = "Playground" }: { config: any, title?:
         {/* Playground Body */}
         <div style={{ display: "flex", flexGrow: 1 }}>
           {/* Left: Preview */}
-          <div style={{ flexGrow: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "48px", background: "rgba(255,255,255,0.02)" }}>
+          <div style={{ flexGrow: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "48px", background: "transparent" }}>
             {isVisible && config.component ? <config.component {...propsState} /> : <div style={{ color: "var(--text-secondary)", animation: "pulse 2s infinite" }}>Loading playground...</div>}
           </div>
           
           {/* Right: Interactive Props Panel */}
-          <div style={{ width: "260px", borderLeft: "1px solid var(--border-color)", padding: "20px", display: "flex", flexDirection: "column", gap: "16px", background: "var(--background-subtle)" }}>
+          <div style={{ width: "260px", borderLeft: "1px solid rgba(255,255,255,0.05)", padding: "20px", display: "flex", flexDirection: "column", gap: "16px", background: "rgba(0,0,0,0.2)" }}>
             {config.controls?.map((control: any) => (
               <div key={control.name} style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <span style={{ fontSize: "0.85rem", color: "var(--text-secondary)", textTransform: "capitalize" }}>{control.name}</span>
@@ -101,8 +102,8 @@ const LazyPlayground = ({ config, title = "Playground" }: { config: any, title?:
                   onChange={(e) => setPropsState(prev => ({ ...prev, [control.name]: e.target.value }))}
                   style={{ 
                     padding: "6px 12px", 
-                    background: "var(--input-filled-bg)", 
-                    border: "1px solid var(--border-color)", 
+                    background: "rgba(255,255,255,0.05)", 
+                    border: "1px solid rgba(255,255,255,0.1)", 
                     borderRadius: "6px", 
                     fontSize: "0.85rem", 
                     minWidth: "110px", 
