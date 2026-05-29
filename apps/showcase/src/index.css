@@ -148,6 +148,13 @@ body {
   --glass-border: rgba(0, 0, 0, 0.08);
   --glass-shadow: 0 16px 40px -8px rgba(0, 0, 0, 0.1);
   --playground-panel: rgba(0, 0, 0, 0.03);
+
+  /* Body Background */
+  --body-bg: #f8fafc;
+  --body-bg-image: 
+    radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.05), transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.05), transparent 40%),
+    linear-gradient(to bottom right, rgba(0,0,0,0.03) 1px, transparent 1px);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -173,6 +180,13 @@ body {
     --warning-foreground-subtle: #ffcc80;
     --info-foreground-subtle: #81d4fa;
     --success-foreground-subtle: #a5d6a7;
+
+    /* Body Background */
+    --body-bg: #0d1117;
+    --body-bg-image: 
+      radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.1), transparent 40%),
+      radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.1), transparent 40%),
+      linear-gradient(to bottom right, rgba(255,255,255,0.015) 1px, transparent 1px);
   }
 }
 
@@ -208,6 +222,13 @@ body {
   --glass-border: rgba(255, 255, 255, 0.08);
   --glass-shadow: 0 16px 40px -8px rgba(0, 0, 0, 0.4);
   --playground-panel: rgba(0, 0, 0, 0.2);
+
+  /* Body Background */
+  --body-bg: #0d1117;
+  --body-bg-image: 
+    radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.1), transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.1), transparent 40%),
+    linear-gradient(to bottom right, rgba(255,255,255,0.015) 1px, transparent 1px);
 }
 
 /* Custom Scrollbar for a premium feel */
@@ -226,24 +247,11 @@ body {
   background: rgba(255, 255, 255, 0.2);
 }
 
-body.dark {
-  background-color: #0d1117; /* Very deep dark space color */
-  background-image: 
-    radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.1), transparent 40%),
-    radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.1), transparent 40%),
-    linear-gradient(to bottom right, rgba(255,255,255,0.015) 1px, transparent 1px);
-  background-size: 100% 100%, 100% 100%, 60px 60px; /* Subtle geometric grid */
-  background-attachment: fixed;
-}
-
 body {
   margin: 0;
   min-height: 100vh;
-  background-color: #f8fafc;
-  background-image: 
-    radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.05), transparent 40%),
-    radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.05), transparent 40%),
-    linear-gradient(to bottom right, rgba(0,0,0,0.03) 1px, transparent 1px);
+  background-color: var(--body-bg);
+  background-image: var(--body-bg-image);
   background-size: 100% 100%, 100% 100%, 60px 60px;
   background-attachment: fixed;
 }
