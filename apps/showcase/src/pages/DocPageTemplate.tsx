@@ -10,8 +10,9 @@ import { Box } from "../components/ui/Box";
 import { Flex } from "../components/ui/Flex";
 
 // Lazy loading wrapper for playgrounds
-const LazyPlayground = ({ config, title = "Playground" }: { config: any, title?: string }) => {
+const LazyPlayground = ({ config, componentName }: { config: any, componentName: string }) => {
   const [isVisible, setIsVisible] = useState(false);
+  const [copied, setCopied] = useState(false);
   const domRef = useRef<HTMLDivElement>(null);
 
   const [propsState, setPropsState] = useState<Record<string, string>>(() => {
@@ -51,6 +52,18 @@ const LazyPlayground = ({ config, title = "Playground" }: { config: any, title?:
     return () => observer.disconnect();
   }, []);
 
+  const handleCopy = () => {
+    const propsString = Object.entries(propsState)
+      .filter(([_, value]) => value !== "false" && value !== "")
+      .map(([key, value]) => (value === "true" ? key : `${key}="${value}"`))
+      .join(" ");
+    
+    const codeString = `<${componentName}${propsString ? ' ' + propsString : ''} />`;
+    navigator.clipboard.writeText(codeString);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   if (!config) return null;
 
   return (
@@ -78,10 +91,15 @@ const LazyPlayground = ({ config, title = "Playground" }: { config: any, title?:
       }}>
         {/* Playground Header */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 20px", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
-          <span style={{ fontSize: "0.9rem", fontWeight: 600, color: "var(--text-primary)" }}>{title}</span>
+          <span style={{ fontSize: "0.9rem", fontWeight: 600, color: "var(--text-primary)" }}>Playground</span>
           <div style={{ display: "flex", gap: "12px", color: "var(--text-secondary)" }}>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"></path><path d="M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"></path><path d="M12 2v2"></path><path d="M12 22v-2"></path><path d="m17 20.66-1-1.73"></path><path d="M11 5.07 10 3.34"></path><path d="m20.66 17-1.73-1"></path><path d="m3.34 7 1.73 1"></path><path d="M14 12h8"></path><path d="M2 12h2"></path><path d="m20.66 7-1.73 1"></path><path d="m3.34 17 1.73-1"></path><path d="m17 3.34-1 1.73"></path><path d="m11 18.93-1 1.73"></path></svg>
+            <button onClick={handleCopy} style={{ background: "transparent", border: "none", color: "var(--text-secondary)", cursor: "pointer", display: "flex", alignItems: "center", padding: 0 }} title="Copy Code">
+              {copied ? (
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              ) : (
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              )}
+            </button>
           </div>
         </div>
 
@@ -181,7 +199,7 @@ export const DocPageTemplate = () => {
       {demoConfig && (
         <div style={{ marginBottom: "48px" }}>
           <h2 style={{ fontSize: "1.5rem", marginBottom: "16px", fontWeight: "600", letterSpacing: "-0.02em" }}>Interactive Playground</h2>
-          <LazyPlayground config={demoConfig} />
+          <LazyPlayground config={demoConfig} componentName={doc.title} />
         </div>
       )}
 

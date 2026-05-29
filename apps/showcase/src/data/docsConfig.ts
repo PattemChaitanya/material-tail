@@ -14,8 +14,8 @@ export const docsConfig: Record<string, ComponentDoc> = {
     title: "Avatar",
     description: "An image element with a fallback for representing the user.",
     category: "Components",
-    install: "npm install @material-tail/react",
-    usage: `import { Avatar } from "@material-tail/react";
+    install: "npx @material-tail/cli add avatar",
+    usage: `import { Avatar } from "@/components/ui/Avatar";
 
 export default function App() {
   return <Avatar src="/user.png" alt="User Name" fallback="UN" />;
@@ -27,8 +27,9 @@ export default function App() {
     title: "Badge",
     description: "Displays a small badge or count on top of its children.",
     category: "Components",
-    install: "npm install @material-tail/react",
-    usage: `import { Badge, Button } from "@material-tail/react";
+    install: "npx @material-tail/cli add badge",
+    usage: `import { Badge } from "@/components/ui/Badge";
+import { Button } from "@/components/ui/Button";
 
 export default function App() {
   return (
@@ -44,14 +45,14 @@ export default function App() {
     title: "Breadcrumb",
     description: "Displays the path to the current resource using a hierarchy of links.",
     category: "Components",
-    install: "npm install @material-tail/react",
-    usage: `import { Breadcrumbs, Link } from "@material-tail/react";
+    install: "npx @material-tail/cli add breadcrumb",
+    usage: `import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 
 export default function App() {
   return (
     <Breadcrumbs>
-      <Link href="/">Home</Link>
-      <Link href="/components">Components</Link>
+      <a href="/">Home</a>
+      <a href="/components">Components</a>
       <span>Breadcrumb</span>
     </Breadcrumbs>
   );
@@ -63,8 +64,8 @@ export default function App() {
     title: "Button",
     description: "A versatile button component used to trigger an action or event.",
     category: "Components",
-    install: "npm install @material-tail/react",
-    usage: `import { Button } from '@material-tail/react';
+    install: "npx @material-tail/cli add button",
+    usage: `import { Button } from "@/components/ui/Button";
 
 function App() {
   return (
@@ -72,7 +73,6 @@ function App() {
       <Button variant="contained">Primary Action</Button>
       <Button variant="secondary">Secondary</Button>
       <Button variant="ghost">Ghost</Button>
-      <Button variant="text">Link Button</Button>
     </div>
   );
 }`,
@@ -87,14 +87,16 @@ function App() {
     title: "Card",
     description: "A container used to group related content and actions.",
     category: "Components",
-    install: "npm install @material-tail/react",
-    usage: `import { Card } from "@material-tail/react";
+    install: "npx @material-tail/cli add card",
+    usage: `import { Card, CardContent } from "@/components/ui/Card";
 
 export default function App() {
   return (
     <Card>
-      <h2>Card Title</h2>
-      <p>This is the card body content.</p>
+      <CardContent>
+        <h2>Card Title</h2>
+        <p>This is the card body content.</p>
+      </CardContent>
     </Card>
   );
 }`,
@@ -105,8 +107,8 @@ export default function App() {
     title: "Checkbox",
     description: "A control that allows the user to toggle between checked and not checked.",
     category: "Components",
-    install: "npm install @material-tail/react",
-    usage: `import { Checkbox } from "@material-tail/react";
+    install: "npx @material-tail/cli add checkbox",
+    usage: `import { Checkbox } from "@/components/ui/Checkbox";
 
 export default function App() {
   return <Checkbox label="Accept terms and conditions" />;
@@ -118,13 +120,16 @@ export default function App() {
     title: "Dialog",
     description: "A window overlaid on either the primary window or another dialog window.",
     category: "Components",
-    install: "npm install @material-tail/react",
-    usage: `import { Dialog } from "@material-tail/react";
+    install: "npx @material-tail/cli add dialog",
+    usage: `import { Dialog, DialogTitle, DialogContent } from "@/components/ui/Dialog";
 
 export default function App() {
   return (
-    <Dialog open={true} title="Are you sure?">
-      <p>This action cannot be undone.</p>
+    <Dialog open={true}>
+      <DialogTitle>Are you sure?</DialogTitle>
+      <DialogContent>
+        <p>This action cannot be undone.</p>
+      </DialogContent>
     </Dialog>
   );
 }`,
@@ -135,8 +140,8 @@ export default function App() {
     title: "Input",
     description: "A basic text field used to get user input.",
     category: "Components",
-    install: "npm install @material-tail/react",
-    usage: `import { Input } from "@material-tail/react";
+    install: "npx @material-tail/cli add input",
+    usage: `import { Input } from "@/components/ui/Input";
 
 export default function App() {
   return <Input placeholder="Enter your email" type="email" />;
@@ -148,8 +153,8 @@ export default function App() {
     title: "Select",
     description: "Displays a dropdown list of options.",
     category: "Components",
-    install: "npm install @material-tail/react",
-    usage: `import { Select } from "@material-tail/react";
+    install: "npx @material-tail/cli add select",
+    usage: `import { Select } from "@/components/ui/Select";
 
 export default function App() {
   return (
@@ -166,8 +171,8 @@ export default function App() {
     title: "Switch",
     description: "A control that allows the user to toggle between on and off states.",
     category: "Components",
-    install: "npm install @material-tail/react",
-    usage: `import { Switch } from "@material-tail/react";
+    install: "npx @material-tail/cli add switch",
+    usage: `import { Switch } from "@/components/ui/Switch";
 
 export default function App() {
   return <Switch label="Enable notifications" />;
