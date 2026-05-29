@@ -35,12 +35,12 @@ export const Layout = () => {
             height: "calc(100vh - 120px)", /* accounting for header + padding */
             position: "sticky", 
             top: "16px",
-            background: "rgba(20, 24, 30, 0.6)",
+            background: "var(--glass-bg)",
             backdropFilter: "blur(24px)",
             WebkitBackdropFilter: "blur(24px)",
             borderRadius: "16px",
-            border: "1px solid rgba(255, 255, 255, 0.08)",
-            boxShadow: "0 16px 40px -8px rgba(0,0,0,0.4)",
+            border: "1px solid var(--glass-border)",
+            boxShadow: "var(--glass-shadow)",
             overflowY: "auto" 
           }}
         >

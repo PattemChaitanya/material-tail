@@ -32,13 +32,13 @@ export const Header = ({ onMenuClick }: HeaderProps) => {
       <AppBar 
         position="relative" 
         style={{ 
-          backgroundColor: "rgba(20, 24, 30, 0.6)", 
+          backgroundColor: "var(--glass-bg)", 
           backdropFilter: "blur(24px)",
           WebkitBackdropFilter: "blur(24px)",
           color: "var(--text-primary)", 
-          border: "1px solid rgba(255, 255, 255, 0.08)", 
+          border: "1px solid var(--glass-border)", 
           borderRadius: "16px",
-          boxShadow: "0 16px 40px -8px rgba(0,0,0,0.4)", 
+          boxShadow: "var(--glass-shadow)", 
           zIndex: 1200 
         }}
       >

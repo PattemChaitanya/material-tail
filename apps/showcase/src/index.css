@@ -142,6 +142,12 @@ body {
   --z-popover:   1400;
   --z-tooltip:   1500;
   --z-toast:     1600;
+
+  /* Glassmorphism */
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(0, 0, 0, 0.08);
+  --glass-shadow: 0 16px 40px -8px rgba(0, 0, 0, 0.1);
+  --playground-panel: rgba(0, 0, 0, 0.03);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -196,6 +202,12 @@ body {
   --warning-foreground-subtle: #ffcc80;
   --info-foreground-subtle: #81d4fa;
   --success-foreground-subtle: #a5d6a7;
+
+  /* Glassmorphism */
+  --glass-bg: rgba(20, 24, 30, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-shadow: 0 16px 40px -8px rgba(0, 0, 0, 0.4);
+  --playground-panel: rgba(0, 0, 0, 0.2);
 }
 
 /* Custom Scrollbar for a premium feel */
@@ -227,7 +239,13 @@ body.dark {
 body {
   margin: 0;
   min-height: 100vh;
-  /* Remove flex centering so the app flows naturally from the top */
+  background-color: #f8fafc;
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.05), transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.05), transparent 40%),
+    linear-gradient(to bottom right, rgba(0,0,0,0.03) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 60px 60px;
+  background-attachment: fixed;
 }
 
 @media (min-width: 900px) {

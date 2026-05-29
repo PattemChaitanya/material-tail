@@ -83,14 +83,14 @@ const LazyPlayground = ({ config, componentName }: { config: any, componentName:
       <div style={{
         display: "flex",
         flexDirection: "column",
-        background: "rgba(20, 24, 30, 0.8)",
+        background: "var(--glass-bg)",
         backdropFilter: "blur(24px)",
         borderRadius: "15px", // Slightly smaller than wrapper to fit inside border
         flexGrow: 1,
         overflow: "hidden"
       }}>
         {/* Playground Header */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 20px", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 20px", borderBottom: "1px solid var(--glass-border)" }}>
           <span style={{ fontSize: "0.9rem", fontWeight: 600, color: "var(--text-primary)" }}>Playground</span>
           <div style={{ display: "flex", gap: "12px", color: "var(--text-secondary)" }}>
             <button onClick={handleCopy} style={{ background: "transparent", border: "none", color: "var(--text-secondary)", cursor: "pointer", display: "flex", alignItems: "center", padding: 0 }} title="Copy Code">
@@ -111,7 +111,7 @@ const LazyPlayground = ({ config, componentName }: { config: any, componentName:
           </div>
           
           {/* Right: Interactive Props Panel */}
-          <div style={{ width: "260px", borderLeft: "1px solid rgba(255,255,255,0.05)", padding: "20px", display: "flex", flexDirection: "column", gap: "16px", background: "rgba(0,0,0,0.2)" }}>
+          <div style={{ width: "260px", borderLeft: "1px solid var(--glass-border)", padding: "20px", display: "flex", flexDirection: "column", gap: "16px", background: "var(--playground-panel)" }}>
             {config.controls?.map((control: any) => (
               <div key={control.name} style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <span style={{ fontSize: "0.85rem", color: "var(--text-secondary)", textTransform: "capitalize" }}>{control.name}</span>
@@ -120,8 +120,8 @@ const LazyPlayground = ({ config, componentName }: { config: any, componentName:
                   onChange={(e) => setPropsState(prev => ({ ...prev, [control.name]: e.target.value }))}
                   style={{ 
                     padding: "6px 12px", 
-                    background: "rgba(255,255,255,0.05)", 
-                    border: "1px solid rgba(255,255,255,0.1)", 
+                    background: "var(--background-paper)", 
+                    border: "1px solid var(--border-color)", 
                     borderRadius: "6px", 
                     fontSize: "0.85rem", 
                     minWidth: "110px", 
