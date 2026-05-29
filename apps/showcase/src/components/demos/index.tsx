@@ -41,38 +41,41 @@ export const DemoRegistry: Record<string, DemoConfig> = {
       { name: 'color', type: 'select', options: ['default', 'primary', 'secondary', 'success', 'error', 'warning'], defaultValue: 'default' }
     ],
     component: (props: any) => (
-      <Avatar variant={props.variant} color={props.color} style={{ width: 64, height: 64, fontSize: 24 }}>AB</Avatar>
+      <Avatar variant={props.variant} color={props.color} style={{ width: 64, height: 64, fontSize: 24, color: "#ffffff", backgroundColor: props.color === 'default' ? 'var(--primary)' : undefined }}>AB</Avatar>
     )
   },
   badge: {
     controls: [
       { name: 'color', type: 'select', options: ['primary', 'secondary', 'error', 'success', 'warning'], defaultValue: 'error' },
       { name: 'variant', type: 'select', options: ['standard', 'dot'], defaultValue: 'standard' },
-      { name: 'invisible', type: 'select', options: ['false', 'true'], defaultValue: 'false' }
+      { name: 'invisible', type: 'select', options: ['false', 'true'], defaultValue: 'false' },
+      { name: 'max', type: 'select', options: ['9', '99', '999'], defaultValue: '99' }
     ],
     component: (props: any) => (
-      <Badge color={props.color} variant={props.variant} invisible={props.invisible === 'true'} badgeContent={props.variant === 'dot' ? undefined : 4}>
-        <Avatar variant="rounded" style={{ width: 48, height: 48, background: "rgba(255,255,255,0.1)" }} />
+      <Badge color={props.color} variant={props.variant} invisible={props.invisible === 'true'} max={Number(props.max)} badgeContent={props.variant === 'dot' ? undefined : 4}>
+        <Avatar variant="rounded" style={{ width: 48, height: 48, background: "var(--background-subtle)", color: "#fff" }}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        </Avatar>
       </Badge>
     )
   },
   breadcrumb: {
     controls: [
-      { name: 'separator', type: 'select', options: ['/', '>', '-'], defaultValue: '/' }
+      { name: 'separator', type: 'select', options: ['/', '>', '-', '→'], defaultValue: '/' }
     ],
     component: (props: any) => (
       <Breadcrumbs separator={props.separator}>
-        <a href="#" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Home</a>
-        <a href="#" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Components</a>
-        <span style={{ color: 'var(--text-primary)' }}>Breadcrumb</span>
+        <a href="#" style={{ color: 'var(--text-primary)', textDecoration: 'none', opacity: 0.8 }}>Home</a>
+        <a href="#" style={{ color: 'var(--text-primary)', textDecoration: 'none', opacity: 0.8 }}>Components</a>
+        <span style={{ color: 'var(--primary)', fontWeight: 600 }}>Breadcrumb</span>
       </Breadcrumbs>
     )
   },
   button: {
     controls: [
       { name: 'variant', type: 'select', options: ['contained', 'secondary', 'ghost', 'link', 'text', 'outlined'], defaultValue: 'contained' },
-      { name: 'size', type: 'select', options: ['small', 'medium', 'large'], defaultValue: 'medium' },
       { name: 'color', type: 'select', options: ['primary', 'secondary', 'success', 'error', 'info', 'warning'], defaultValue: 'primary' },
+      { name: 'size', type: 'select', options: ['small', 'medium', 'large'], defaultValue: 'medium' },
       { name: 'disabled', type: 'select', options: ['false', 'true'], defaultValue: 'false' },
       { name: 'fullWidth', type: 'select', options: ['false', 'true'], defaultValue: 'false' }
     ],
@@ -108,7 +111,7 @@ export const DemoRegistry: Record<string, DemoConfig> = {
   },
   checkbox: {
     controls: [
-      { name: 'color', type: 'select', options: ['primary', 'secondary', 'error', 'success'], defaultValue: 'primary' },
+      { name: 'color', type: 'select', options: ['primary', 'secondary', 'error', 'success', 'warning', 'info'], defaultValue: 'primary' },
       { name: 'size', type: 'select', options: ['small', 'medium', 'large'], defaultValue: 'medium' },
       { name: 'disabled', type: 'select', options: ['false', 'true'], defaultValue: 'false' }
     ],
@@ -117,21 +120,20 @@ export const DemoRegistry: Record<string, DemoConfig> = {
     )
   },
   dialog: {
-    controls: [
-      { name: 'open', type: 'select', options: ['false', 'true'], defaultValue: 'false' }
-    ],
-    component: (props: any) => {
+    controls: [],
+    component: () => {
+      const [open, setOpen] = useState(false);
       return (
         <React.Fragment>
-          <p style={{ color: 'var(--text-secondary)' }}>Change the 'open' prop to 'true' to see the dialog.</p>
-          <Dialog open={props.open === 'true'}>
+          <Button variant="contained" color="primary" onClick={() => setOpen(true)}>Open Dialog</Button>
+          <Dialog open={open}>
             <DialogTitle>Confirm Action</DialogTitle>
             <DialogContent>
               <p style={{ color: 'var(--text-secondary)', margin: 0 }}>Are you sure you want to perform this action? It cannot be undone.</p>
             </DialogContent>
             <DialogActions>
-              <Button variant="text" color="primary">Cancel</Button>
-              <Button variant="contained" color="primary">Confirm</Button>
+              <Button variant="text" color="primary" onClick={() => setOpen(false)}>Cancel</Button>
+              <Button variant="contained" color="primary" onClick={() => setOpen(false)}>Confirm</Button>
             </DialogActions>
           </Dialog>
         </React.Fragment>
@@ -140,24 +142,45 @@ export const DemoRegistry: Record<string, DemoConfig> = {
   },
   input: {
     controls: [
+      { name: 'variant', type: 'select', options: ['outlined', 'filled', 'standard'], defaultValue: 'outlined' },
+      { name: 'color', type: 'select', options: ['primary', 'secondary', 'error', 'success', 'warning', 'info'], defaultValue: 'primary' },
+      { name: 'size', type: 'select', options: ['small', 'medium', 'large'], defaultValue: 'medium' },
+      { name: 'error', type: 'select', options: ['false', 'true'], defaultValue: 'false' },
       { name: 'disabled', type: 'select', options: ['false', 'true'], defaultValue: 'false' },
-      { name: 'error', type: 'select', options: ['false', 'true'], defaultValue: 'false' }
+      { name: 'fullWidth', type: 'select', options: ['false', 'true'], defaultValue: 'false' }
     ],
     component: (props: any) => (
       <Input 
         placeholder="Enter your text..." 
+        variant={props.variant}
+        color={props.color}
+        size={props.size}
         disabled={props.disabled === 'true'} 
         error={props.error === 'true'}
+        fullWidth={props.fullWidth === 'true'}
       />
     )
   },
   select: {
     controls: [
+      { name: 'variant', type: 'select', options: ['outlined', 'filled', 'standard'], defaultValue: 'outlined' },
+      { name: 'color', type: 'select', options: ['primary', 'secondary', 'error', 'success', 'warning', 'info'], defaultValue: 'primary' },
+      { name: 'size', type: 'select', options: ['small', 'medium', 'large'], defaultValue: 'medium' },
+      { name: 'error', type: 'select', options: ['false', 'true'], defaultValue: 'false' },
       { name: 'disabled', type: 'select', options: ['false', 'true'], defaultValue: 'false' },
-      { name: 'error', type: 'select', options: ['false', 'true'], defaultValue: 'false' }
+      { name: 'fullWidth', type: 'select', options: ['false', 'true'], defaultValue: 'false' }
     ],
     component: (props: any) => (
-      <Select defaultValue="" disabled={props.disabled === 'true'} error={props.error === 'true'} style={{ width: "200px" }}>
+      <Select 
+        defaultValue="" 
+        variant={props.variant}
+        color={props.color}
+        size={props.size}
+        disabled={props.disabled === 'true'} 
+        error={props.error === 'true'}
+        fullWidth={props.fullWidth === 'true'} 
+        style={props.fullWidth === 'true' ? undefined : { width: "200px" }}
+      >
         <option value="" disabled>Choose an option</option>
         <option value="1">Option 1</option>
         <option value="2">Option 2</option>
@@ -167,12 +190,13 @@ export const DemoRegistry: Record<string, DemoConfig> = {
   },
   switch: {
     controls: [
-      { name: 'color', type: 'select', options: ['primary', 'secondary', 'success', 'error'], defaultValue: 'primary' },
+      { name: 'color', type: 'select', options: ['primary', 'secondary', 'success', 'error', 'warning', 'info'], defaultValue: 'primary' },
+      { name: 'size', type: 'select', options: ['small', 'medium', 'large'], defaultValue: 'medium' },
       { name: 'disabled', type: 'select', options: ['false', 'true'], defaultValue: 'false' }
     ],
     component: (props: any) => (
       <Flex gap={12} align="center">
-        <Switch color={props.color} disabled={props.disabled === 'true'} />
+        <Switch color={props.color} size={props.size} disabled={props.disabled === 'true'} />
         <span style={{ color: "var(--text-primary)" }}>Toggle feature</span>
       </Flex>
     )
