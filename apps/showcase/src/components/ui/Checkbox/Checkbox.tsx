@@ -17,6 +17,7 @@ export interface CheckboxProps
   size?: CheckboxSize;
   label?: React.ReactNode;
   error?: boolean;
+  indeterminate?: boolean;
 }
 
 export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
@@ -28,6 +29,8 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
       label,
       error = false,
       disabled,
+      indeterminate = false,
+      required,
       id,
       ...props
     },
@@ -35,6 +38,15 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
   ) => {
     const generatedId = React.useId();
     const checkboxId = id || generatedId;
+    
+    const internalRef = React.useRef<HTMLInputElement>(null);
+    const inputRef = (ref || internalRef) as React.MutableRefObject<HTMLInputElement | null>;
+
+    React.useEffect(() => {
+      if (inputRef.current) {
+        inputRef.current.indeterminate = indeterminate;
+      }
+    }, [indeterminate, inputRef]);
 
     return (
       <div
@@ -42,14 +54,16 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
         data-size={size}
         data-disabled={disabled || undefined}
         data-error={error || undefined}
+        data-indeterminate={indeterminate || undefined}
         className={cp(styles["checkbox-root"], className)}
       >
         <div className={styles["checkbox-container"]}>
           <input
             type="checkbox"
             id={checkboxId}
-            ref={ref}
+            ref={inputRef}
             disabled={disabled}
+            required={required}
             aria-invalid={error || undefined}
             className={styles.input}
             {...props}
@@ -61,19 +75,34 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <path
-                d="M5 12L10 17L19 7"
-                stroke="currentColor"
-                strokeWidth="3"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
+              {indeterminate ? (
+                <path
+                  d="M6 12L18 12"
+                  stroke="currentColor"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              ) : (
+                <path
+                  d="M5 12L10 17L19 7"
+                  stroke="currentColor"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              )}
             </svg>
           </div>
         </div>
         {label && (
           <label htmlFor={checkboxId} className={styles.label}>
             {label}
+            {required && (
+              <span className={styles.required} aria-hidden="true">
+                {" "}*
+              </span>
+            )}
           </label>
         )}
       </div>

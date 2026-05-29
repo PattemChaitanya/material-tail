@@ -67,33 +67,13 @@ const LazyPlayground = ({ config, componentName }: { config: any, componentName:
   if (!config) return null;
 
   return (
-    <div 
-      ref={domRef} 
-      style={{ 
-        padding: "1px", // Gradient border thickness
-        borderRadius: "16px",
-        background: "linear-gradient(135deg, rgba(59, 130, 246, 0.8), rgba(139, 92, 246, 0.8))",
-        boxShadow: "0 8px 32px -4px rgba(59,130,246,0.2), 0 8px 32px -4px rgba(139,92,246,0.2)",
-        minHeight: "360px",
-        display: "flex",
-        flexDirection: "column",
-      }}
-      className="playground-wrapper"
-    >
-      <div style={{
-        display: "flex",
-        flexDirection: "column",
-        background: "var(--glass-bg)",
-        backdropFilter: "blur(24px)",
-        borderRadius: "15px", // Slightly smaller than wrapper to fit inside border
-        flexGrow: 1,
-        overflow: "hidden"
-      }}>
+    <div ref={domRef} className="playground-wrapper">
+      <div className="playground-glass">
         {/* Playground Header */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 20px", borderBottom: "1px solid var(--glass-border)" }}>
+        <div className="playground-header">
           <span style={{ fontSize: "0.9rem", fontWeight: 600, color: "var(--text-primary)" }}>Playground</span>
           <div style={{ display: "flex", gap: "12px", color: "var(--text-secondary)" }}>
-            <button onClick={handleCopy} style={{ background: "transparent", border: "none", color: "var(--text-secondary)", cursor: "pointer", display: "flex", alignItems: "center", padding: 0 }} title="Copy Code">
+            <button onClick={handleCopy} className="playground-copy-btn" title="Copy Code">
               {copied ? (
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
               ) : (
@@ -104,31 +84,21 @@ const LazyPlayground = ({ config, componentName }: { config: any, componentName:
         </div>
 
         {/* Playground Body */}
-        <div style={{ display: "flex", flexGrow: 1 }}>
+        <div className="playground-body">
           {/* Left: Preview */}
-          <div style={{ flexGrow: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "48px", background: "transparent" }}>
+          <div className="playground-preview">
             {isVisible && config.component ? <config.component {...propsState} /> : <div style={{ color: "var(--text-secondary)", animation: "pulse 2s infinite" }}>Loading playground...</div>}
           </div>
           
           {/* Right: Interactive Props Panel */}
-          <div style={{ width: "260px", borderLeft: "1px solid var(--glass-border)", padding: "20px", display: "flex", flexDirection: "column", gap: "16px", background: "var(--playground-panel)" }}>
+          <div className="playground-panel">
             {config.controls?.map((control: any) => (
-              <div key={control.name} style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <span style={{ fontSize: "0.85rem", color: "var(--text-secondary)", textTransform: "capitalize" }}>{control.name}</span>
+              <div key={control.name} className="playground-control-row">
+                <span className="playground-control-label">{control.name}</span>
                 <select 
+                  className="playground-control-select"
                   value={propsState[control.name]} 
                   onChange={(e) => setPropsState(prev => ({ ...prev, [control.name]: e.target.value }))}
-                  style={{ 
-                    padding: "6px 12px", 
-                    background: "var(--background-paper)", 
-                    border: "1px solid var(--border-color)", 
-                    borderRadius: "6px", 
-                    fontSize: "0.85rem", 
-                    minWidth: "110px", 
-                    color: "var(--text-primary)",
-                    outline: "none",
-                    cursor: "pointer"
-                  }}
                 >
                   {control.options.map((opt: string) => (
                     <option key={opt} value={opt} style={{ background: "var(--background-paper)" }}>{opt}</option>
@@ -153,10 +123,10 @@ const CodeBlock = ({ language, code, title }: { language: string, code: string, 
   };
 
   return (
-    <div style={{ background: "var(--background-paper)", borderRadius: "12px", border: "1px solid var(--border-color)", overflow: "hidden", marginTop: "16px" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "8px 16px", background: "var(--background-subtle)", borderBottom: "1px solid var(--border-color)" }}>
-        <span style={{ fontSize: "0.8rem", color: "var(--text-secondary)", fontFamily: "monospace" }}>{title || language}</span>
-        <button onClick={handleCopy} style={{ background: "transparent", border: "none", color: "var(--text-secondary)", cursor: "pointer", display: "flex", alignItems: "center", padding: "4px" }}>
+    <div style={{ background: "#1e1e1e", borderRadius: "12px", overflow: "hidden", marginTop: "16px", boxShadow: "0 4px 6px rgba(0,0,0,0.1)" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "8px 16px", background: "#2d2d2d", borderBottom: "1px solid #404040" }}>
+        <span style={{ fontSize: "0.8rem", color: "#a3a3a3", fontFamily: "monospace" }}>{title || language}</span>
+        <button onClick={handleCopy} style={{ background: "transparent", border: "none", color: "#a3a3a3", cursor: "pointer", display: "flex", alignItems: "center", padding: "4px" }}>
           {copied ? (
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
           ) : (
@@ -176,6 +146,8 @@ const CodeBlock = ({ language, code, title }: { language: string, code: string, 
   );
 };
 
+import { SEO } from "../components/SEO";
+
 export const DocPageTemplate = () => {
   const { componentId } = useParams<{ componentId: string }>();
   
@@ -185,6 +157,7 @@ export const DocPageTemplate = () => {
   if (!doc) {
     return (
       <Box style={{ padding: "48px 24px", color: "var(--text-secondary)" }}>
+        <SEO title="Component Not Found - Material-Tail" description="The requested component documentation does not exist." />
         <h2>Component not found</h2>
         <p>The documentation for "{componentId}" does not exist.</p>
       </Box>
@@ -192,7 +165,12 @@ export const DocPageTemplate = () => {
   }
 
   return (
-    <Box style={{ padding: "48px 48px", maxWidth: "900px", margin: "0 auto", animation: "fadeIn 0.3s ease" }}>
+    <>
+      <SEO 
+        title={`${doc.title} Component - Material-Tail`} 
+        description={doc.description} 
+      />
+      <Box className="doc-page-container">
       <h1 style={{ fontSize: "2.5rem", fontWeight: "800", marginBottom: "16px", color: "var(--text-primary)", letterSpacing: "-0.04em" }}>{doc.title}</h1>
       <p style={{ fontSize: "1.25rem", color: "var(--text-secondary)", marginBottom: "48px", lineHeight: "1.6" }}>{doc.description}</p>
       
@@ -222,5 +200,6 @@ export const DocPageTemplate = () => {
         <CodeBlock language="css" code={doc.customization} title="css" />
       </div>
     </Box>
+    </>
   );
 };

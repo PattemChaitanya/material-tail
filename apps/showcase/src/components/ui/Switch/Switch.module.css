@@ -167,3 +167,7 @@
   color: var(--text-primary, rgba(0, 0, 0, 0.87));
   user-select: none;
 }
+
+.required {
+  color: var(--error, #d32f2f);
+}

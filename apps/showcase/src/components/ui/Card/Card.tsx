@@ -6,11 +6,22 @@ import { Paper, PaperProps } from "../Paper";
 // ==========================================
 // Card Component
 // ==========================================
-export interface CardProps extends PaperProps {}
+export interface CardProps extends PaperProps {
+  raised?: boolean;
+  interactive?: boolean;
+}
 
 export const Card = React.forwardRef<HTMLDivElement, CardProps>(
-  ({ className, ...props }, ref) => {
-    return <Paper ref={ref} className={cp(styles.card, className)} {...props} />;
+  ({ className, raised = false, interactive = false, ...props }, ref) => {
+    return (
+      <Paper 
+        ref={ref} 
+        data-raised={raised || undefined}
+        data-interactive={interactive || undefined}
+        className={cp(styles.card, className)} 
+        {...props} 
+      />
+    );
   }
 );
 Card.displayName = "Card";

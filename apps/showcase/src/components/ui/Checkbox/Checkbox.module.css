@@ -80,36 +80,44 @@
   outline: 2px solid transparent;
 }
 
-/* Checked state */
-.input:checked ~ .control {
+/* Checked & Indeterminate state */
+.input:checked ~ .control,
+.checkbox-root[data-indeterminate="true"] .control {
   border-color: transparent;
 }
 
-.input:checked ~ .control .icon {
+.input:checked ~ .control .icon,
+.checkbox-root[data-indeterminate="true"] .control .icon {
   opacity: 1;
   transform: scale(1);
 }
 
-/* Colors for Checked State */
-.checkbox-root[data-color="primary"] .input:checked ~ .control {
+/* Colors for Checked/Indeterminate State */
+.checkbox-root[data-color="primary"] .input:checked ~ .control,
+.checkbox-root[data-color="primary"][data-indeterminate="true"] .control {
   background-color: var(--primary, #1976d2);
 }
-.checkbox-root[data-color="secondary"] .input:checked ~ .control {
+.checkbox-root[data-color="secondary"] .input:checked ~ .control,
+.checkbox-root[data-color="secondary"][data-indeterminate="true"] .control {
   background-color: var(--secondary, #9c27b0);
 }
 .checkbox-root[data-color="error"] .control {
   border-color: var(--error, #d32f2f);
 }
-.checkbox-root[data-color="error"] .input:checked ~ .control {
+.checkbox-root[data-color="error"] .input:checked ~ .control,
+.checkbox-root[data-color="error"][data-indeterminate="true"] .control {
   background-color: var(--error, #d32f2f);
 }
-.checkbox-root[data-color="warning"] .input:checked ~ .control {
+.checkbox-root[data-color="warning"] .input:checked ~ .control,
+.checkbox-root[data-color="warning"][data-indeterminate="true"] .control {
   background-color: var(--warning, #ed6c02);
 }
-.checkbox-root[data-color="info"] .input:checked ~ .control {
+.checkbox-root[data-color="info"] .input:checked ~ .control,
+.checkbox-root[data-color="info"][data-indeterminate="true"] .control {
   background-color: var(--info, #0288d1);
 }
-.checkbox-root[data-color="success"] .input:checked ~ .control {
+.checkbox-root[data-color="success"] .input:checked ~ .control,
+.checkbox-root[data-color="success"][data-indeterminate="true"] .control {
   background-color: var(--success, #2e7d32);
 }
 
@@ -173,4 +181,8 @@
   font-size: var(--font-size-md, 1rem);
   color: var(--text-primary, rgba(0, 0, 0, 0.87));
   user-select: none;
+}
+
+.required {
+  color: var(--error, #d32f2f);
 }

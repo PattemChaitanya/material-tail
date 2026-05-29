@@ -5,18 +5,20 @@ import { cp } from "../../../lib/utils";
 export interface BreadcrumbsProps extends React.HTMLAttributes<HTMLElement> {
   separator?: React.ReactNode;
   maxItems?: number;
+  itemsBeforeCollapse?: number;
+  itemsAfterCollapse?: number;
 }
 
 export const Breadcrumbs = React.forwardRef<HTMLElement, BreadcrumbsProps>(
-  ({ className, separator = "/", maxItems = 8, children, ...props }, ref) => {
+  ({ className, separator = "/", maxItems = 8, itemsBeforeCollapse = 1, itemsAfterCollapse = 1, children, ...props }, ref) => {
     const allChildren = Children.toArray(children).filter((child) => React.isValidElement(child));
     
     let renderChildren = allChildren;
     if (allChildren.length > maxItems) {
       renderChildren = [
-        allChildren[0],
+        ...allChildren.slice(0, itemsBeforeCollapse),
         <span key="ellipsis" className={styles.ellipsis}>...</span>,
-        ...allChildren.slice(allChildren.length - (maxItems - 1))
+        ...allChildren.slice(allChildren.length - itemsAfterCollapse)
       ];
     }
 

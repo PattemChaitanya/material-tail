@@ -13,7 +13,7 @@ interface SidebarProps {
 export const Sidebar = ({ onNavClick }: SidebarProps) => {
   const location = useLocation();
 
-  // Group components by category
+  // Group components by category (no local filtering)
   const categories: Record<string, any[]> = {};
   Object.values(docsConfig).forEach((doc) => {
     if (!categories[doc.category]) {
@@ -23,7 +23,7 @@ export const Sidebar = ({ onNavClick }: SidebarProps) => {
   });
 
   return (
-    <Box style={{ padding: "16px 0" }}>
+    <Box style={{ padding: "16px 0", height: "100%", display: "flex", flexDirection: "column" }}>
       <div style={{ padding: "0 24px", marginBottom: "16px" }}>
         <h3 style={{ fontSize: "14px", fontWeight: "bold", textTransform: "uppercase", color: "var(--text-secondary)", margin: 0 }}>
           Getting Started

@@ -16,6 +16,7 @@ export interface SwitchProps
   color?: SwitchColor;
   size?: SwitchSize;
   label?: React.ReactNode;
+  required?: boolean;
 }
 
 export const Switch = React.forwardRef<HTMLInputElement, SwitchProps>(
@@ -26,6 +27,7 @@ export const Switch = React.forwardRef<HTMLInputElement, SwitchProps>(
       size = "medium",
       label,
       disabled,
+      required,
       id,
       ...props
     },
@@ -48,6 +50,7 @@ export const Switch = React.forwardRef<HTMLInputElement, SwitchProps>(
             id={switchId}
             ref={ref}
             disabled={disabled}
+            required={required}
             className={styles.input}
             {...props}
           />
@@ -58,6 +61,11 @@ export const Switch = React.forwardRef<HTMLInputElement, SwitchProps>(
         {label && (
           <label htmlFor={switchId} className={styles.label}>
             {label}
+            {required && (
+              <span className={styles.required} aria-hidden="true">
+                {" "}*
+              </span>
+            )}
           </label>
         )}
       </div>

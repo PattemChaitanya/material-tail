@@ -7,6 +7,9 @@ export interface DialogProps extends React.DialogHTMLAttributes<HTMLDialogElemen
   onClose?: () => void;
   maxWidth?: "xs" | "sm" | "md" | "lg" | "xl" | false;
   fullWidth?: boolean;
+  fullScreen?: boolean;
+  showCloseIcon?: boolean;
+  closeIcon?: React.ReactNode;
 }
 
 export const Dialog = React.forwardRef<HTMLDialogElement, DialogProps>(
@@ -17,6 +20,9 @@ export const Dialog = React.forwardRef<HTMLDialogElement, DialogProps>(
       onClose,
       maxWidth = "sm",
       fullWidth = false,
+      fullScreen = false,
+      showCloseIcon = false,
+      closeIcon,
       children,
       ...props
     },
@@ -57,9 +63,26 @@ export const Dialog = React.forwardRef<HTMLDialogElement, DialogProps>(
         }}
         data-max-width={maxWidth || undefined}
         data-full-width={fullWidth || undefined}
+        data-full-screen={fullScreen || undefined}
         {...props}
       >
-        <div className={styles.container}>{children}</div>
+        <div className={styles.container}>
+          {showCloseIcon && (
+            <button 
+              className={styles.closeButton} 
+              onClick={onClose} 
+              aria-label="close"
+            >
+              {closeIcon || (
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              )}
+            </button>
+          )}
+          {children}
+        </div>
       </dialog>
     );
   }

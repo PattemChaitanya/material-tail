@@ -1,3 +1,7 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: var(--font-family, system-ui, -apple-system, sans-serif);
@@ -263,11 +267,148 @@ body {
 }
 
 @media (max-width: 899px) {
+  html {
+    font-size: 14px; /* Slightly smaller typography for tablets/mobile */
+  }
   .desktop-nav {
     display: none !important;
   }
   .desktop-sidebar {
     display: none !important;
+  }
+}
+
+@media (max-width: 599px) {
+  html {
+    font-size: 13px; /* Even smaller for compact mobile phones */
+  }
+}
+
+/* Playground Layout System */
+.playground-wrapper {
+  padding: 1px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.8), rgba(139, 92, 246, 0.8));
+  box-shadow: 0 8px 32px -4px rgba(59,130,246,0.2), 0 8px 32px -4px rgba(139,92,246,0.2);
+  min-height: 360px;
+  display: flex;
+  flex-direction: column;
+}
+
+.playground-glass {
+  display: flex;
+  flex-direction: column;
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-radius: 15px;
+  flex-grow: 1;
+}
+
+.playground-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--glass-border);
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.playground-copy-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0;
+}
+
+.playground-body {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+}
+
+.playground-preview {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px;
+  background: transparent;
+  border-bottom-left-radius: 15px;
+}
+
+.playground-panel {
+  flex: 0 0 260px;
+  border-left: 1px solid var(--glass-border);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: var(--playground-panel);
+  border-bottom-right-radius: 15px;
+}
+
+.playground-control-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.playground-control-label {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  text-transform: capitalize;
+  white-space: nowrap;
+}
+
+.playground-control-select {
+  width: 160px;
+  padding: 6px 12px;
+  background: var(--background-paper);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  outline: none;
+  cursor: pointer;
+}
+
+/* Playground Responsive Breakdown */
+@media (max-width: 899px) {
+  .playground-body {
+    flex-direction: column;
+  }
+  
+  .playground-preview {
+    border-bottom-left-radius: 0px;
+  }
+
+  .playground-panel {
+    flex: none;
+    width: 100%;
+    border-left: none;
+    border-top: 1px solid var(--glass-border);
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+  }
+}
+
+/* Also ensure the doc page container padding is responsive */
+.doc-page-container {
+  padding: 48px;
+  max-width: 900px;
+  margin: 0 auto;
+  animation: fadeIn 0.3s ease;
+}
+
+@media (max-width: 899px) {
+  .doc-page-container {
+    padding: 24px 16px;
   }
 }
 

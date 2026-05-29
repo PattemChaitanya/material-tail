@@ -178,5 +178,186 @@ export default function App() {
   return <Switch label="Enable notifications" />;
 }`,
     customization: `/* Customize switch track */\n.track {\n  background-color: var(--secondary);\n}`
+  },
+  tabs: {
+    id: "tabs",
+    title: "Tabs",
+    description: "Organize and allow navigation between groups of content that are related and at the same level of hierarchy.",
+    category: "Navigation",
+    install: "npx @material-tail/cli add tabs",
+    usage: `import { Tabs, Tab, TabPanel } from "@/components/ui/Tabs";
+
+export default function App() {
+  return (
+    <Tabs defaultValue="1">
+      <Tab value="1" label="Tab One" />
+      <Tab value="2" label="Tab Two" />
+      <TabPanel value="1">Content One</TabPanel>
+      <TabPanel value="2">Content Two</TabPanel>
+    </Tabs>
+  );
+}`,
+    customization: `/* Customize active tab indicator */\n.tab[data-active="true"] {\n  border-bottom-color: var(--primary);\n}`
+  },
+  list: {
+    id: "list",
+    title: "List",
+    description: "Continuous, vertical indexes of text or images.",
+    category: "Data Display",
+    install: "npx @material-tail/cli add list",
+    usage: `import { List, ListItem, ListItemText } from "@/components/ui/List";
+
+export default function App() {
+  return (
+    <List>
+      <ListItem>
+        <ListItemText primary="Item 1" secondary="Description 1" />
+      </ListItem>
+      <ListItem>
+        <ListItemText primary="Item 2" />
+      </ListItem>
+    </List>
+  );
+}`,
+    customization: `/* Customize list item hover */\n.listItem:hover {\n  background-color: var(--action-hover);\n}`
+  },
+  pagination: {
+    id: "pagination",
+    title: "Pagination",
+    description: "Enables the user to select a specific page from a range of pages.",
+    category: "Navigation",
+    install: "npx @material-tail/cli add pagination",
+    usage: `import { Pagination } from "@/components/ui/Pagination";
+
+export default function App() {
+  return <Pagination count={10} page={1} />;
+}`,
+    customization: `/* Customize active page */\n.item[data-selected="true"] {\n  background-color: var(--primary);\n}`
+  },
+  paper: {
+    id: "paper",
+    title: "Paper",
+    description: "A surface container for displaying content on an elevated background.",
+    category: "Surfaces",
+    install: "npx @material-tail/cli add paper",
+    usage: `import { Paper } from "@/components/ui/Paper";
+
+export default function App() {
+  return <Paper elevation={2}>Content goes here</Paper>;
+}`,
+    customization: `/* Customize paper background */\n.paper {\n  background-color: var(--background-paper);\n}`
+  },
+  table: {
+    id: "table",
+    title: "Table",
+    description: "Displays sets of data across rows and columns.",
+    category: "Data Display",
+    install: "npx @material-tail/cli add table",
+    usage: `import { Table, TableHead, TableBody, TableRow, TableCell } from "@/components/ui/Table";
+
+export default function App() {
+  return (
+    <Table>
+      <TableHead>
+        <TableRow>
+          <TableCell>Header 1</TableCell>
+          <TableCell>Header 2</TableCell>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        <TableRow>
+          <TableCell>Data 1</TableCell>
+          <TableCell>Data 2</TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
+  );
+}`,
+    customization: `/* Customize table borders */\n.cell {\n  border-bottom: 1px solid var(--divider);\n}`
+  },
+  appbar: {
+    id: "appbar",
+    title: "App Bar",
+    description: "The top App Bar provides content and actions related to the current screen.",
+    category: "Surfaces",
+    install: "npx @material-tail/cli add appbar",
+    usage: `import { AppBar, Toolbar } from "@/components/ui/AppBar";
+
+export default function App() {
+  return (
+    <AppBar position="static">
+      <Toolbar>
+        <h3>My Application</h3>
+      </Toolbar>
+    </AppBar>
+  );
+}`,
+    customization: `/* Customize appbar shadow */\n.appBar {\n  box-shadow: var(--shadow-md);\n}`
+  },
+  drawer: {
+    id: "drawer",
+    title: "Drawer",
+    description: "Navigation drawers provide access to destinations in your app.",
+    category: "Navigation",
+    install: "npx @material-tail/cli add drawer",
+    usage: `import { Drawer } from "@/components/ui/Drawer";
+
+export default function App() {
+  return (
+    <Drawer open={true} anchor="left">
+      <p>Drawer Content</p>
+    </Drawer>
+  );
+}`,
+    customization: `/* Customize drawer width */\n.drawerPaper {\n  width: 250px;\n}`
+  },
+  box: {
+    id: "box",
+    title: "Box",
+    description: "The Box component serves as a wrapper component for most of the CSS utility needs.",
+    category: "Layout",
+    install: "npx @material-tail/cli add box",
+    usage: `import { Box } from "@/components/ui/Box";
+
+export default function App() {
+  return <Box style={{ padding: "16px", background: "red" }}>Box Content</Box>;
+}`,
+    customization: `/* Box uses inline styles or utility classes directly. */`
+  },
+  flex: {
+    id: "flex",
+    title: "Flex",
+    description: "A specialized Box component with display: flex enabled by default.",
+    category: "Layout",
+    install: "npx @material-tail/cli add flex",
+    usage: `import { Flex } from "@/components/ui/Flex";
+
+export default function App() {
+  return (
+    <Flex align="center" justify="space-between" gap={16}>
+      <div>Left</div>
+      <div>Right</div>
+    </Flex>
+  );
+}`,
+    customization: `/* Flex uses flexbox utilities under the hood. */`
+  },
+  grid: {
+    id: "grid",
+    title: "Grid",
+    description: "The Grid component provides a flexible grid layout system.",
+    category: "Layout",
+    install: "npx @material-tail/cli add grid",
+    usage: `import { Grid, GridItem } from "@/components/ui/Grid";
+
+export default function App() {
+  return (
+    <Grid container spacing={2}>
+      <GridItem xs={6}>Half Width</GridItem>
+      <GridItem xs={6}>Half Width</GridItem>
+    </Grid>
+  );
+}`,
+    customization: `/* Grid uses CSS grid or flexbox grid under the hood. */`
   }
 };

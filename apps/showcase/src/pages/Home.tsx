@@ -4,11 +4,17 @@ import { Link } from "react-router-dom";
 import { Box } from "../components/ui/Box";
 // @ts-ignore
 import { Button } from "../components/ui/Button";
+import { SEO } from "../components/SEO";
 
 export const Home = () => {
   return (
-    <Box style={{ padding: "80px 40px", maxWidth: "800px", margin: "0 auto", textAlign: "center", color: "var(--text-primary)" }}>
-      <div style={{ width: "80px", height: "80px", margin: "0 auto 32px", borderRadius: "20px", background: "linear-gradient(135deg, var(--primary), var(--primary-foreground-subtle, #90caf9))", boxShadow: "0 8px 32px rgba(0,0,0,0.15)" }}></div>
+    <>
+      <SEO 
+        title="Material-Tail - Beautiful UI Components" 
+        description="A modern, highly customizable UI component library for React using standard CSS Modules. Build beautiful, accessible interfaces."
+      />
+      <Box style={{ padding: "80px 40px", maxWidth: "800px", margin: "0 auto", textAlign: "center", color: "var(--text-primary)" }}>
+        <div style={{ width: "80px", height: "80px", margin: "0 auto 32px", borderRadius: "20px", background: "linear-gradient(135deg, var(--primary), var(--primary-foreground-subtle, #90caf9))", boxShadow: "0 8px 32px rgba(0,0,0,0.15)" }}></div>
       <h1 style={{ fontSize: "4rem", fontWeight: "900", marginBottom: "24px", letterSpacing: "-0.04em", lineHeight: "1.1" }}>
         Build Beautiful UIs. <br />
         <span style={{ background: "linear-gradient(to right, var(--primary), var(--primary-foreground-subtle, #90caf9))", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Own your code.</span>
@@ -30,5 +36,6 @@ export const Home = () => {
         </a>
       </div>
     </Box>
+    </>
   );
 };

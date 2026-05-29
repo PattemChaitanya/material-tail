@@ -18,6 +18,7 @@ export interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
   srcSet?: string;
   variant?: AvatarVariant;
   color?: AvatarColor;
+  fallback?: React.ReactNode;
 }
 
 const defaultIcon = (
@@ -36,6 +37,7 @@ export const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
       srcSet,
       variant = "circular",
       color = "default",
+      fallback,
       children,
       ...props
     },
@@ -62,6 +64,8 @@ export const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
             className={styles.image}
             onError={() => setHasError(true)}
           />
+        ) : fallback != null ? (
+          fallback
         ) : children != null ? (
           children
         ) : (

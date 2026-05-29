@@ -4,6 +4,20 @@
 
 .card {
   overflow: hidden; /* Important so media doesn't break border-radius */
+  transition: box-shadow var(--transition-normal, 300ms cubic-bezier(0.4, 0, 0.2, 1)), transform var(--transition-normal, 300ms cubic-bezier(0.4, 0, 0.2, 1));
+}
+
+.card[data-raised] {
+  box-shadow: var(--shadow-xl, 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04));
+}
+
+.card[data-interactive] {
+  cursor: pointer;
+}
+
+.card[data-interactive]:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-xl, 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04));
 }
 
 /* ============================================================

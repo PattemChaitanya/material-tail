@@ -13,6 +13,11 @@ export type BadgeColor =
 
 export type BadgeVariant = "standard" | "dot";
 
+export interface BadgeOrigin {
+  vertical: 'top' | 'bottom';
+  horizontal: 'left' | 'right';
+}
+
 export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
   badgeContent?: React.ReactNode;
   color?: BadgeColor;
@@ -20,6 +25,8 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
   max?: number;
   showZero?: boolean;
   invisible?: boolean;
+  anchorOrigin?: BadgeOrigin;
+  overlap?: 'rectangular' | 'circular';
 }
 
 export const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
@@ -32,6 +39,8 @@ export const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
       max = 99,
       showZero = false,
       invisible = false,
+      anchorOrigin = { vertical: 'top', horizontal: 'right' },
+      overlap = 'rectangular',
       children,
       ...props
     },
@@ -48,6 +57,7 @@ export const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
     }
 
     const isHidden = invisible || (variant === "standard" && (badgeContent === undefined || badgeContent === null));
+    const anchorOriginString = `${anchorOrigin.vertical}-${anchorOrigin.horizontal}`;
 
     return (
       <div className={cp(styles.root, className)} ref={ref} {...props}>
@@ -56,6 +66,8 @@ export const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
           data-color={color}
           data-variant={variant}
           data-invisible={isHidden || undefined}
+          data-anchor={anchorOriginString}
+          data-overlap={overlap}
           className={styles.badge}
         >
           {variant === "standard" ? displayValue : null}

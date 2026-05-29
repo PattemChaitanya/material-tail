@@ -8,15 +8,16 @@ import { Box } from "../ui/Box";
 import { Flex } from "../ui/Flex";
 // @ts-ignore
 import { Drawer } from "../ui/Drawer";
+import { CommandPalette } from "./CommandPalette";
 
 export const Layout = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh", maxWidth: "1600px", margin: "0 auto" }}>
+    <div style={{ display: "flex", flexDirection: "column", height: "100vh", maxWidth: "1600px", margin: "0 auto", overflow: "hidden" }}>
       
       {/* 1. The Header Entity */}
-      <Box style={{ padding: "16px 24px 0 24px" }}>
+      <Box style={{ padding: "16px 24px 0 24px", flexShrink: 0 }}>
         <Header onMenuClick={() => setMobileOpen(true)} />
       </Box>
       
@@ -25,16 +26,14 @@ export const Layout = () => {
         <Sidebar onNavClick={() => setMobileOpen(false)} />
       </Drawer>
 
-      <Flex style={{ flexGrow: 1, padding: "16px 24px 24px 24px", gap: "24px", alignItems: "flex-start" }}>
+      <Flex style={{ flexGrow: 1, padding: "16px 24px 24px 24px", gap: "24px", alignItems: "flex-start", overflow: "hidden" }}>
         {/* 2. The Sidebar Entity */}
         <Box 
           className="desktop-sidebar" 
           style={{ 
             width: "280px", 
             flexShrink: 0, 
-            height: "calc(100vh - 120px)", /* accounting for header + padding */
-            position: "sticky", 
-            top: "16px",
+            height: "100%", 
             background: "var(--glass-bg)",
             backdropFilter: "blur(24px)",
             WebkitBackdropFilter: "blur(24px)",
@@ -48,10 +47,12 @@ export const Layout = () => {
         </Box>
 
         {/* 3. The Main Content Entity (Transparent) */}
-        <Box style={{ flexGrow: 1, minWidth: 0 }}>
+        <Box style={{ flexGrow: 1, minWidth: 0, height: "100%", overflowY: "auto", borderRadius: "16px" }}>
           <Outlet />
         </Box>
       </Flex>
+      {/* Command Palette Overlay */}
+      <CommandPalette />
     </div>
   );
 };

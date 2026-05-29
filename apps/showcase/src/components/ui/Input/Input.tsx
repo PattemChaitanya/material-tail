@@ -13,7 +13,7 @@ export type InputColor =
 export type InputSize = "small" | "medium" | "large";
 
 export interface InputProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size"> {
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement>, "size"> {
   variant?: InputVariant;
   color?: InputColor;
   size?: InputSize;
@@ -23,9 +23,11 @@ export interface InputProps
   fullWidth?: boolean;
   startIcon?: React.ReactNode;
   endIcon?: React.ReactNode;
+  multiline?: boolean;
+  rows?: number;
 }
 
-export const Input = React.forwardRef<HTMLInputElement, InputProps>(
+export const Input = React.forwardRef<HTMLInputElement | HTMLTextAreaElement, InputProps>(
   (
     {
       className,
@@ -40,6 +42,8 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       endIcon,
       required,
       disabled,
+      multiline = false,
+      rows = 3,
       id,
       ...props
     },
@@ -58,6 +62,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         data-full-width={fullWidth || undefined}
         data-error={error || undefined}
         data-disabled={disabled || undefined}
+        data-multiline={multiline || undefined}
         className={styles["input-root"]}
       >
         {label && (
@@ -84,17 +89,32 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             </span>
           )}
 
-          <input
-            id={inputId}
-            ref={ref}
-            disabled={disabled}
-            required={required}
-            aria-invalid={error || undefined}
-            aria-describedby={helperId}
-            aria-required={required || undefined}
-            className={cp(styles.input, className)}
-            {...props}
-          />
+          {multiline ? (
+            <textarea
+              id={inputId}
+              ref={ref as React.Ref<HTMLTextAreaElement>}
+              disabled={disabled}
+              required={required}
+              rows={rows}
+              aria-invalid={error || undefined}
+              aria-describedby={helperId}
+              aria-required={required || undefined}
+              className={cp(styles.input, className)}
+              {...(props as React.TextareaHTMLAttributes<HTMLTextAreaElement>)}
+            />
+          ) : (
+            <input
+              id={inputId}
+              ref={ref as React.Ref<HTMLInputElement>}
+              disabled={disabled}
+              required={required}
+              aria-invalid={error || undefined}
+              aria-describedby={helperId}
+              aria-required={required || undefined}
+              className={cp(styles.input, className)}
+              {...(props as React.InputHTMLAttributes<HTMLInputElement>)}
+            />
+          )}
 
           {endIcon && (
             <span

@@ -13,7 +13,7 @@ export type SelectColor =
 export type SelectSize = "small" | "medium" | "large";
 
 export interface SelectProps
-  extends Omit<React.SelectHTMLAttributes<HTMLSelectElement>, "size"> {
+  extends Omit<React.SelectHTMLAttributes<HTMLSelectElement>, "size" | "multiple"> {
   variant?: SelectVariant;
   color?: SelectColor;
   size?: SelectSize;
@@ -21,6 +21,8 @@ export interface SelectProps
   error?: boolean;
   helperText?: string;
   fullWidth?: boolean;
+  multiple?: boolean;
+  native?: boolean;
 }
 
 export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
@@ -36,6 +38,8 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
       fullWidth = false,
       required,
       disabled,
+      multiple = false,
+      native = true,
       id,
       children,
       ...props
@@ -54,6 +58,8 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
         data-full-width={fullWidth || undefined}
         data-error={error || undefined}
         data-disabled={disabled || undefined}
+        data-multiple={multiple || undefined}
+        data-native={native || undefined}
         className={styles["select-root"]}
       >
         {label && (
@@ -73,6 +79,7 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
             ref={ref}
             disabled={disabled}
             required={required}
+            multiple={multiple}
             aria-invalid={error || undefined}
             aria-describedby={helperId}
             aria-required={required || undefined}
@@ -82,16 +89,18 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
             {children}
           </select>
 
-          <span className={styles["icon-wrapper"]} aria-hidden="true">
-            <svg
-              focusable="false"
-              aria-hidden="true"
-              viewBox="0 0 24 24"
-              className={styles.icon}
-            >
-              <path d="M7 10l5 5 5-5z"></path>
-            </svg>
-          </span>
+          {!multiple && (
+            <span className={styles["icon-wrapper"]} aria-hidden="true">
+              <svg
+                focusable="false"
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                className={styles.icon}
+              >
+                <path d="M7 10l5 5 5-5z"></path>
+              </svg>
+            </span>
+          )}
         </div>
 
         {helperText && (
